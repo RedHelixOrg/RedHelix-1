@@ -20,15 +20,18 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import org.apache.olingo.client.api.ODataClient;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientEntitySet;
 import org.apache.olingo.client.api.domain.ClientProperty;
-import org.apache.olingo.client.core.ODataClientFactory;
-import org.apache.olingo.commons.api.format.ODataFormat;
+import org.redhelix.core.service.root.RedHxServiceRootId;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
-import org.redhelix.core.util.RedHxServiceRootLocator;
+import org.redhelix.core.service.root.RedHxServiceRootLocator;
+import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
+import static org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum.HTTPS;
+import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +46,7 @@ import org.slf4j.LoggerFactory;
 class ServiceRootReader
 {
 
-    private static final String ENTITY_SET_CHASSIS = "odata";
+    private static final String ENTITY_SET_NAME = "odata";    // from the Redfish specification.
     private static final String KEY_OEM = "Oem";
     private static final String KEY_REDFISH_SERVICE = "Service";
     private static final String KEY_ACCOUNT_SERVICE = "AccountService";
@@ -55,48 +58,56 @@ class ServiceRootReader
     private static final String KEY_SESSIONS = "Sessions";
     private static final String KEY_SESSION_SERVICE = "SessionService";
     private static final String KEY_SYSTEMS = "Systems";
-    private static final String SERVICE_ROOT = "http://localhost:9080/mockup1/redfish/v1/";
     private static final String KEY_TASKS = "Tasks";
     private static final Map<String, RedHxServiceRootIdEum> ODATA_STRING_TO_ENUM_MAP = createStringToIdMap();
-    private final ODataClient client;
 
-    public enum TcpProtocol
+    private ServiceRootReader()
     {
-        HTTP,
-        HTTPS
-    }
-    private final Logger logger = LoggerFactory.getLogger(ServiceRootReader.class);
-
-    ServiceRootReader()
-    {
-        client = ODataClientFactory.getClient();
-        client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);    // ContentType.JSON_NO_METADATA);
     }
 
-    public ClientEntity getCar(int key)
-    {
-        final URI carEntityURI
-                  = client.newURIBuilder(SERVICE_ROOT).appendEntitySetSegment(ENTITY_SET_CHASSIS).appendKeySegment(key).build();
-        final ODataRetrieveResponse<ClientEntity> car = client.getRetrieveRequestFactory().getEntityRequest(carEntityURI).execute();
-
-        return car.getBody();
-    }
-
-    public RedHxServiceRootLocator getServiceRootLocator(TcpProtocol protocol,
-                                                         String hostName,
-                                                         int tcpPortNumber)
+    /**
+     * read from a URL the Redfish services available on the host.
+     *
+     * @param ctx the context of the server to read from.
+     * @param httpProtocol the type of http protocol to use with each of the Redffish services. This value is not used for the Root Service
+     * because the Redfish specification mandates that it uses http only.
+     * @param hostName the name of the host to read from.
+     * @param tcpPortNumber the TCP pprt number to read the service from.
+     * @param servicePrefix the prefix that appears in the URI immedialy after the TCP port number and before the string redfish. This may
+     * be null.
+     *
+     * @param redfishProtocolVersion the redfish protocol version.
+     * @return the locator containing all Redfish services available on the host:tcp port number
+     * @throws URISyntaxException
+     */
+    public static RedHxServiceRootLocator getServiceRootLocator(final ODataClient client,
+                                                                final RedHxTcpProtocolTypeEnum httpProtocol,
+                                                                final String hostName,
+                                                                final int tcpPortNumber,
+                                                                final String servicePrefix,
+                                                                final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
             throws URISyntaxException
     {
-        final URI carsEntitySetURI = client.newURIBuilder(SERVICE_ROOT).appendEntitySetSegment(ENTITY_SET_CHASSIS).build();
+
+        RedHxServiceRootId serviceRoot = new RedHxServiceRootId(
+                httpProtocol,
+                hostName,
+                tcpPortNumber,
+                servicePrefix,
+                redfishProtocolVersion);
+        
+
+        final String serviceRootStr = serviceRoot.getServiceRootString();
+        final URI redfishEntitySetURI = client.newURIBuilder(serviceRootStr).appendEntitySetSegment(ENTITY_SET_NAME).build();
 
         client.getRetrieveRequestFactory();
 
         final ODataRetrieveResponse<ClientEntitySet> chassisEntitySetResponse
-                                                     = client.getRetrieveRequestFactory().getEntitySetRequest(carsEntitySetURI).execute();
+                                                     = client.getRetrieveRequestFactory().getEntitySetRequest(redfishEntitySetURI).execute();
         final List<ClientEntity> list;
         final String tcpProtocolStr;
 
-        switch (protocol)
+        switch (httpProtocol)
         {
             case HTTP:
                 tcpProtocolStr = "http";
@@ -107,16 +118,20 @@ class ServiceRootReader
 
                 break;
             default:
-                throw new IllegalArgumentException("Argument \"potocol\" contains an unknown value of " + protocol);
+                throw new IllegalArgumentException("Argument \"potocol\" contains an unknown value of " + httpProtocol);
         }
 
         RedHxServiceRootLocator locator = null;
+        final Logger logger = LoggerFactory.getLogger(ServiceRootReader.class);
 
         if (chassisEntitySetResponse.getStatusCode() == 200)
         {
             list = chassisEntitySetResponse.getBody().getEntities();
 
-            Map<RedHxServiceRootIdEum, URI> idToUriMap = new HashMap<>();
+            /**
+             * Use a treemap so when the items are printed out in toString they are always in the same order.
+             */
+            Map<RedHxServiceRootIdEum, URI> idToUriMap = new TreeMap<>();
 
             for (final ClientEntity entity : list)
             {
@@ -143,24 +158,27 @@ class ServiceRootReader
 
                             idToUriMap.put(serviceId,
                                            serviceUri);
-
                         }
                         else
                         {
-                            String msg = "Can not find service for " + serviceRootName + " set by host " + hostName + ":"
-                                    + tcpPortNumber;
+                            String msg = "Can not find service for " + serviceRootName + " set by host " + hostName + ":" + tcpPortNumber;
+
                             logger.error(msg);
+
                             throw new IllegalArgumentException();
                         }
                     }
                 }
 
-                locator = new RedHxServiceRootLocator(idToUriMap);
+                locator = new RedHxServiceRootLocator(
+                        serviceRoot,
+                        idToUriMap);
             }
         }
         else
         {
-            logger.info("error retriving JSON message from " + hostName + ":" + tcpPortNumber + ". HTML error is " + chassisEntitySetResponse.getStatusCode());
+            logger.info("error retriving JSON message from " + hostName + ":" + tcpPortNumber + ". HTML error is "
+                    + chassisEntitySetResponse.getStatusCode());
             list = null;
         }
 

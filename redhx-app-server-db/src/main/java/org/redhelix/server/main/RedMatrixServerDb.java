@@ -18,12 +18,17 @@ package org.redhelix.server.main;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.redhelix.core.util.RedHxServiceRootLocator;
+import org.redhelix.core.chassis.RedHxChassisCollection;
+import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
+import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 
 /**
  *
- * @author Hank Bruning Date: $Date$ <br><br>Git SHA: $Id$
- * @since RedHelix Version 0.0.1
+ * <br><br>
+ * Git SHA: $Id$
+ *
+ * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
+ * @author Hank Bruning
  *
  */
 public class RedMatrixServerDb
@@ -37,13 +42,24 @@ public class RedMatrixServerDb
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
 
-        final ServiceRootReader serviceRootReader = new ServiceRootReader();
+        
+        
+        RedHxServerConnectionContext ctx = new RedHxServerConnectionContext();
 
         try
         {
-            RedHxServiceRootLocator serviceRootLocator = serviceRootReader.getServiceRootLocator(ServiceRootReader.TcpProtocol.HTTP, "localhost", 9080);
+            ctx.openConnection(
+                   RedHxTcpProtocolTypeEnum.HTTP,
+                    "localhost",
+                    9080,
+                    "mockup1",
+                    RedHxRedfishProtocolVersionEnum.VERSION_1);
 
-            System.out.println("HFB5: " + serviceRootLocator);
+            RedHxChassisCollection chassisCollection = ChassisCollectionReader.readChassisCollection(ctx);
+            if (chassisCollection != null)
+            {
+                System.out.println("HFB5:  chassisCollection= " + chassisCollection);
+            }
         }
         catch (URISyntaxException ex)
         {
@@ -52,5 +68,4 @@ public class RedMatrixServerDb
                                                                     ex);
         }
     }
-
 }

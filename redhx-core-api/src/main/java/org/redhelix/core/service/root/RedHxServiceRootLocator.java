@@ -16,13 +16,12 @@
 
 
 
-package org.redhelix.core.util;
+package org.redhelix.core.service.root;
 
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 
 /**
  * Convert from a Redfish root service ID to the URL of the service. The URL contains the Redfish protocol version number and path to the
@@ -36,15 +35,19 @@ import org.redhelix.core.service.root.RedHxServiceRootIdEum;
  */
 public class RedHxServiceRootLocator
 {
+    private final RedHxServiceRootId              serviceRoot;
     private final Map<RedHxServiceRootIdEum, URI> serviceToUriMap;
 
-    public RedHxServiceRootLocator( Map<RedHxServiceRootIdEum, URI> serviceToUriMap )
+    public RedHxServiceRootLocator( RedHxServiceRootId              serviceRoot,
+                                    Map<RedHxServiceRootIdEum, URI> serviceToUriMap )
     {
+        this.serviceRoot     = serviceRoot;
         this.serviceToUriMap = Collections.unmodifiableMap(serviceToUriMap);
     }
 
     private RedHxServiceRootLocator( )
     {
+        this.serviceRoot     = null;
         this.serviceToUriMap = null;
     }
 
@@ -73,7 +76,17 @@ public class RedHxServiceRootLocator
             return false;
         }
 
+        if (!Objects.equals(this.serviceRoot, other.serviceRoot))
+        {
+            return false;
+        }
+
         return true;
+    }
+
+    public RedHxServiceRootId getServiceRoot( )
+    {
+        return serviceRoot;
     }
 
     public URI getUri( RedHxServiceRootIdEum serviceId )
@@ -88,7 +101,8 @@ public class RedHxServiceRootLocator
     {
         int hash = 7;
 
-        hash = 89 * hash + Objects.hashCode(this.serviceToUriMap);
+        hash = 71 * hash + Objects.hashCode(this.serviceToUriMap);
+        hash = 71 * hash + Objects.hashCode(this.serviceRoot);
 
         return hash;
     }
@@ -107,7 +121,6 @@ public class RedHxServiceRootLocator
             if (isCommaInserted)
             {
                 sb.append(", ");
-              
             }
 
             URI uri = serviceToUriMap.get(id);
@@ -117,7 +130,7 @@ public class RedHxServiceRootLocator
             sb.append(", ");
             sb.append(uri);
             sb.append("]");
-              isCommaInserted = true;
+            isCommaInserted = true;
         }
 
         sb.append(" ]");
