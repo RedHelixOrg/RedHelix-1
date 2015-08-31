@@ -19,7 +19,7 @@
 package org.redhelix.core.util;
 
 /**
- *
+ * identify the Redfish JSON schema version.
  * @since RedHelix Version 0.0.1
  * @author Hank Bruning
  */

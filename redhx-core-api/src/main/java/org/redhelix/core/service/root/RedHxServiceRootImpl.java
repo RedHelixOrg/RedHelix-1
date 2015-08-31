@@ -19,7 +19,6 @@
 package org.redhelix.core.service.root;
 
 import org.redhelix.core.account.service.RedHxAccountService;
-import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.computer.system.RedHxComputerSystemCollection;
 import org.redhelix.core.event.service.RedHxEventService;
 import org.redhelix.core.manager.collection.RedHxManagerCollection;

@@ -14,6 +14,9 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.server.main;
 
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
@@ -22,13 +25,16 @@ import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientProperty;
 import org.apache.olingo.client.api.domain.ClientValue;
-import org.redhelix.core.chassis.RedHxChassisCollection;
+
 import org.redhelix.core.chassis.RedHxChassisParseException;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- *
+ * read zero or more links, each one pointing to a unique chassis. This class does not have a constructor.
  * <br><br>
  * Git SHA: $Id$
  *
@@ -38,56 +44,80 @@ import org.redhelix.core.util.RedHxHttpResponseException;
  */
 final class ChassisCollectionReader
 {
+    /**
+     * The JSON property that identifies an array of chassis. This is derived from the Redfish file ChassisCollection.json.
+     */
+    private static final String JSON_CHASSIS_COLLECTION_KEYWORD = "Members";
 
-    ChassisCollectionReader(RedHxServerConnectionContext ctx)
+    /**
+     * This identifies the URL to a single chassis.
+     */
+    private static final String ODATA_SINGLE_CHASSIS_KEYWORD = "odata.id";
+
+    ChassisCollectionReader( RedHxServerConnectionContext ctx ) {}
+
+    /**
+     * get a set Strings used to identify unique chassis. Each String can be used in a URL to identify a chassis.
+     *
+     * @param ctx the communication context to single Redfish server.
+     * @return A set of String. No element in the set is null.
+     * @throws RedHxChassisParseException
+     * @throws RedHxHttpResponseException
+     */
+    static Set<String> readChassisCollection( RedHxServerConnectionContext ctx )
+            throws RedHxChassisParseException,
+                   RedHxHttpResponseException
     {
-    }
-
-    static RedHxChassisCollection readChassisCollection(RedHxServerConnectionContext ctx)
-            throws RedHxChassisParseException, RedHxHttpResponseException
-    {
-
         final ODataRetrieveResponse<ClientEntity> chassisCollectionResponse = ctx.getChassisEntityRequest().execute();
+        Set<String>                               chassisLinkSet            = new HashSet<>();
 
         if (chassisCollectionResponse.getStatusCode() == 200)
         {
             ClientEntity entity = chassisCollectionResponse.getBody();
 
-            ClientProperty chassisProperty = entity.getProperty("Members");
+            /**
+             * get the JSON entity
+             */
+            ClientProperty chassisProperty = entity.getProperty(JSON_CHASSIS_COLLECTION_KEYWORD);
 
-            //       System.out.println("HFB5: pvalue "+chassisProperty);
             for (ClientValue chassisValue : chassisProperty.getCollectionValue())
             {
-
                 ClientComplexValue cplx = chassisValue.asComplex();
+
                 if (cplx != null)
                 {
                     ClientAnnotation anno = cplx.getAnnotations().get(0);
-                    if (anno.getTerm().equals("odata.id"))
+
+                    if (anno.getTerm().equals(ODATA_SINGLE_CHASSIS_KEYWORD))
                     {
                         String chassisUrl = anno.getValue().toString();
 
-                        System.out.println("HFB5: chassis=" + chassisUrl);
+                        if (chassisUrl == null)
+                        {
+                            throw new RedHxChassisParseException("The JSON annotation pointing to a specific chassis was null.");
+                        }
+
+                        chassisLinkSet.add(chassisUrl);
                     }
                     else
                     {
-                        throw new RedHxChassisParseException("");
+                        throw new RedHxChassisParseException("Unable to find keyword " + ODATA_SINGLE_CHASSIS_KEYWORD);
                     }
                 }
                 else
                 {
-                    throw new RedHxChassisParseException("");
+                    throw new RedHxChassisParseException("The JSON message did not contains a class "
+                            + ClientComplexValue.class.getSimpleName());
                 }
-
             }
-
         }
         else
         {
-            throw new RedHxHttpResponseException(RedHxServiceRootIdEum.CHASSIS, chassisCollectionResponse.getStatusCode(), "Can not read Chassis Collection.");
-
+            throw new RedHxHttpResponseException(RedHxServiceRootIdEum.CHASSIS,
+                    chassisCollectionResponse.getStatusCode(),
+                    "Can not read Chassis Collection.");
         }
 
-        return null;
+        return chassisLinkSet;
     }
 }
