@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,31 +14,32 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.sensor;
 
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-public class RedHxSensorName extends RedHxAbstractStringProperty
+public class RedHxSensorName
+        extends RedHxAbstractStringProperty
 {
-
     public static final byte MAX_CHARACTER_COUNT = 30;
 
     /**
      * @param maxCharCount
      * @param propName
      */
-    public RedHxSensorName(String propName)
+    public RedHxSensorName( String propName )
     {
-        super(MAX_CHARACTER_COUNT, propName);
-
+        super(MAX_CHARACTER_COUNT,
+              propName);
     }
-
 }

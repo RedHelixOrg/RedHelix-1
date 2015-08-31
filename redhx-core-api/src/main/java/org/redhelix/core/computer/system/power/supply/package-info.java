@@ -1,3 +1,4 @@
+
 /**
  * Details of a power supplies associated with this system or device.
  */

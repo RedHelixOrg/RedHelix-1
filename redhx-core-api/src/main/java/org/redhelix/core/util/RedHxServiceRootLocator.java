@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,68 +14,114 @@
  * limitations under the License
  */
 
-package org.redhelix.server.main;
+
+
+package org.redhelix.core.util;
 
 import java.net.URI;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-import org.apache.olingo.client.api.Configuration;
-import org.apache.olingo.client.api.uri.URIBuilder;
-import org.apache.olingo.client.core.ConfigurationImpl;
-import org.apache.olingo.client.core.uri.URIBuilderImpl;
-import org.apache.olingo.commons.api.format.ODataFormat;
+import java.util.Objects;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
-import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 
 /**
- * 
- * Git SHA: $Id$
- * 
- * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will
- *        be replaced when checked in to the master branch
+ * Convert from a Redfish root service ID to the URL of the service. The URL contains the Redfish protocol version number and path to the
+ * Redfish service. This allows each server to present a Redfish implemention of different UDP ports with any URL path the service that a
+ * vendor may choose.
+ * <br><br>Git SHA: $Id$
+ *
+ * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will be replaced when checked in to the master branch
  * @author Hank Bruning
  *
  */
 public class RedHxServiceRootLocator
 {
-    private static final String SERVICE_ROOT = "http://localhost:8080/odata-server-sample/cars.svc/";
     private final Map<RedHxServiceRootIdEum, URI> serviceToUriMap;
 
-    private RedHxServiceRootLocator()
+    public RedHxServiceRootLocator( Map<RedHxServiceRootIdEum, URI> serviceToUriMap )
+    {
+        this.serviceToUriMap = Collections.unmodifiableMap(serviceToUriMap);
+    }
+
+    private RedHxServiceRootLocator( )
     {
         this.serviceToUriMap = null;
     }
 
-    public RedHxServiceRootLocator(RedHxRedfishProtocolVersionEnum protocolVersion, Map<RedHxServiceRootIdEum, String> serviceToStringiMap)
+    @Override
+    public boolean equals( Object obj )
     {
-        this.serviceToUriMap = new HashMap<RedHxServiceRootIdEum, URI>();
-        final Configuration conf = new ConfigurationImpl();
-        conf.setDefaultMediaFormat(ODataFormat.APPLICATION_JSON);
-        final URIBuilder builder = new URIBuilderImpl(conf, SERVICE_ROOT);
-        for (final RedHxServiceRootIdEum id : serviceToStringiMap.keySet())
+        if (this == obj)
         {
-            final String loc = serviceToStringiMap.get(id);
-            if (protocolVersion == RedHxRedfishProtocolVersionEnum.VERSION_1)
-            {
-                builder.appendNavigationSegment("v1");
-            }
-            else
-            {
-                throw new IllegalArgumentException("Unknown Redfish protocol version " + protocolVersion);
-            }
-            builder.appendNavigationSegment(loc);
-
-            final URI uri = builder.build();
-            serviceToUriMap.put(id, uri);
+            return true;
         }
 
+        if (obj == null)
+        {
+            return false;
+        }
+
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+
+        final RedHxServiceRootLocator other = (RedHxServiceRootLocator) obj;
+
+        if (!Objects.equals(this.serviceToUriMap, other.serviceToUriMap))
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public URI getUri(RedHxServiceRootIdEum serviceId)
+    public URI getUri( RedHxServiceRootIdEum serviceId )
     {
         final URI uri = serviceToUriMap.get(serviceId);
 
         return uri;
     }
 
+    @Override
+    public int hashCode( )
+    {
+        int hash = 7;
+
+        hash = 89 * hash + Objects.hashCode(this.serviceToUriMap);
+
+        return hash;
+    }
+
+    @Override
+    public String toString( )
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[ ");
+
+        boolean isCommaInserted = false;
+
+        for (RedHxServiceRootIdEum id : serviceToUriMap.keySet())
+        {
+            if (isCommaInserted)
+            {
+                sb.append(", ");
+              
+            }
+
+            URI uri = serviceToUriMap.get(id);
+
+            sb.append("[");
+            sb.append(id);
+            sb.append(", ");
+            sb.append(uri);
+            sb.append("]");
+              isCommaInserted = true;
+        }
+
+        sb.append(" ]");
+
+        return sb.toString();
+    }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,25 +14,27 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.power.metric;
 
 import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-public class RedHxPowerAverageConsumedWatts extends RedHxAbstractPowerWatts
+public class RedHxPowerAverageConsumedWatts
+        extends RedHxAbstractPowerWatts
 {
-
-    public RedHxPowerAverageConsumedWatts(final short wattsMajor, final byte wattsMinor)
+    public RedHxPowerAverageConsumedWatts( final short wattsMajor,
+            final byte                                 wattsMinor )
     {
-        super(wattsMajor, wattsMinor);
-
+        super(wattsMajor,
+              wattsMinor);
     }
-
 }

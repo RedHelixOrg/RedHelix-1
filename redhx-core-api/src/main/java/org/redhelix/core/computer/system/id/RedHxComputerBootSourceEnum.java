@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the License);
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.id;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will
  *        be replaced when checked in to the master branch
  * @author Hank Bruning
@@ -38,16 +40,16 @@ public enum RedHxComputerBootSourceEnum
     UEFI_TARGET("Boot to the UEFI Device specified in the UefiTargetBootSourceOverride property"),
     USB("Boot from a USB device as specified by the system BIOS"),
     UTILITIES("Boot the manufacturer's Utilities program(s)");
+
     private final String desc;
 
-    private RedHxComputerBootSourceEnum(String desc)
+    private RedHxComputerBootSourceEnum( String desc )
     {
         this.desc = desc;
     }
 
-    public String getDescription()
+    public String getDescription( )
     {
         return desc;
     }
-
 }

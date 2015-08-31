@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,42 +14,45 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.power.supply;
 
 import org.redhelix.core.computer.system.power.RedHxAbstractPowerVoltageReading;
 
 /**
  * A voltage reading for the line supplying the power supply.
- * 
+ *
  * @I
- *    Git SHA: $Id$
- * 
+ *    <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-public class RedHxPowerSupplyLineInputVoltage extends RedHxAbstractPowerVoltageReading
+public class RedHxPowerSupplyLineInputVoltage
+        extends RedHxAbstractPowerVoltageReading
 {
     /**
      * A voltage reading for the line supplying the power supply.
-     * 
+     *
      * @param voltageMajor
      *            the voltage as a whole number. The range is between
      *            {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MIN_VOLTAGE_MAJOR_READING}
      *            and
      *            {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MAX_VOLTAGE_MAJOR_READING}
      *            .
-     * 
+     *
      * @param voltageMinor
      *            the voltage in 1/10 of a volts. The range is between
      *            {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MIN_VOLTAGE_MINOR_READING}
      *            and
      *            {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MAX_VOLTAGE_MINOR_READING}
      */
-    public RedHxPowerSupplyLineInputVoltage(short voltageMajor, byte voltageMinor)
+    public RedHxPowerSupplyLineInputVoltage( short voltageMajor,
+            byte                                   voltageMinor )
     {
-        super(voltageMajor, voltageMinor);
-
+        super(voltageMajor,
+              voltageMinor);
     }
-
 }

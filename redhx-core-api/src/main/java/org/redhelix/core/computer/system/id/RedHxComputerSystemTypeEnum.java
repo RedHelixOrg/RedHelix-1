@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.id;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
@@ -31,14 +33,15 @@ public enum RedHxComputerSystemTypeEnum
     PHYSICALLY_PARTITIONED("A hardware-based partition of a computer system"),
     VIRTUAL("A virtual machine instance running on this system"),
     VIRTUALLY_PARTITIONED("A virtual or software-based partition of a computer system");
+
     private final String desc;
 
-    private RedHxComputerSystemTypeEnum(String desc)
+    private RedHxComputerSystemTypeEnum( String desc )
     {
         this.desc = desc;
     }
 
-    public String getDescription()
+    public String getDescription( )
     {
         return desc;
     }

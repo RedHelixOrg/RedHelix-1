@@ -1,3 +1,4 @@
+
 /**
  * Classes derived from the Redfish Power json schema.
  */

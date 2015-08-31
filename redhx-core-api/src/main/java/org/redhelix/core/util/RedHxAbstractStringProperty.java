@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.util;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
@@ -29,58 +31,65 @@ public abstract class RedHxAbstractStringProperty
     /**
      * The maximum number of characters allowed in a
      */
-    // public final static short MAX_CHAR_COUNT=;//arbitrary
-    private final int maxCharCount;
 
+    // public final static short MAX_CHAR_COUNT=;//arbitrary
+    private final int    maxCharCount;
     private final String propName;
 
-    private RedHxAbstractStringProperty()
-    {
-        this.maxCharCount = 0;
-        this.propName = null;
-    }
-
-    protected RedHxAbstractStringProperty(int maxCharCount, String propName)
+    protected RedHxAbstractStringProperty( int maxCharCount,
+            String                             propName )
     {
         if (propName == null)
         {
             throw new NullPointerException("The argument propName can not be null.");
         }
+
         if (propName.length() > maxCharCount)
         {
             throw new IllegalArgumentException("The argument propName contains too many characters. The maximum is " + maxCharCount
-                    + " and it contains " + propName.length() + ". Invalid string is \"" + propName + "\".");
-
+                                               + " and it contains " + propName.length() + ". Invalid string is \"" + propName + "\".");
         }
+
         this.maxCharCount = maxCharCount;
-        this.propName = propName;
+        this.propName     = propName;
+    }
+
+    private RedHxAbstractStringProperty( )
+    {
+        this.maxCharCount = 0;
+        this.propName     = null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
             return true;
         }
+
         if (obj == null)
         {
             return false;
         }
+
         if (getClass() != obj.getClass())
         {
             return false;
         }
+
         final RedHxAbstractStringProperty other = (RedHxAbstractStringProperty) obj;
+
         if (maxCharCount != other.maxCharCount)
         {
             return false;
         }
+
         if (propName == null)
         {
             if (other.propName != null)
@@ -92,37 +101,43 @@ public abstract class RedHxAbstractStringProperty
         {
             return false;
         }
-        return true;
-    }
 
-    protected String getValue()
-    {
-        return propName;
+        return true;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
+
         result = prime * result + maxCharCount;
-        result = prime * result + ((propName == null) ? 0 : propName.hashCode());
+        result = prime * result + ((propName == null)
+                                   ? 0
+                                   : propName.hashCode());
+
         return result;
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         final StringBuilder sb = new StringBuilder();
+
         sb.append("[maxCharCount" + maxCharCount);
         sb.append(", value=" + propName);
         sb.append("]");
+
         return sb.toString();
     }
 
+    protected String getValue( )
+    {
+        return propName;
+    }
 }

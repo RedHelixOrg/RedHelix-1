@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,87 +14,96 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.sensor;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
 public class RedHxSensorNumber
 {
-
     private final int sensorNumber;
 
-    private RedHxSensorNumber()
-    {
-        this.sensorNumber = 0;
-    }
-
-    public RedHxSensorNumber(final int sensorNumber)
+    public RedHxSensorNumber( final int sensorNumber )
     {
         this.sensorNumber = sensorNumber;
     }
 
+    private RedHxSensorNumber( )
+    {
+        this.sensorNumber = 0;
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
             return true;
         }
+
         if (obj == null)
         {
             return false;
         }
+
         if (getClass() != obj.getClass())
         {
             return false;
         }
+
         final RedHxSensorNumber other = (RedHxSensorNumber) obj;
+
         if (sensorNumber != other.sensorNumber)
         {
             return false;
         }
+
         return true;
     }
 
-    public int getSensorNumber()
+    public int getSensorNumber( )
     {
         return sensorNumber;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
+
         result = prime * result + sensorNumber;
+
         return result;
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         final StringBuilder sb = new StringBuilder();
+
         sb.append("[");
         sb.append("sensorNumber=, " + sensorNumber);
         sb.append(", ");
         sb.append("]");
+
         return sb.toString();
     }
-
 }

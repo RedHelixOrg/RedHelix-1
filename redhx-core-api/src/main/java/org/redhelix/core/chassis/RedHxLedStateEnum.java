@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.chassis;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version 0.0.1
  * @author Hank Bruning
  */
@@ -30,8 +32,5 @@ enum RedHxLedStateEnum
     OFF("The Indicator LED is off."),
     UNKNOWN("The state of the Indicator LED cannot be determined.");
 
-    private RedHxLedStateEnum(String desc)
-    {
-
-    }
+    private RedHxLedStateEnum( String desc ) {}
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.sensor;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
@@ -30,16 +32,15 @@ public interface RedHxGenericSensor
 
     /**
      * get the sensor name.
-     * 
+     *
      * @return the sensorName. A null is not returned.
      */
-    RedHxSensorName getSensorName();
+    RedHxSensorName getSensorName( );
 
     /**
      * get the sensor number.
-     * 
+     *
      * @return the sensorNumber A null is not returned.
      */
-    RedHxSensorNumber getSensorNumber();
-
+    RedHxSensorNumber getSensorNumber( );
 }

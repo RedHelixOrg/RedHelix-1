@@ -25,22 +25,7 @@
             </plugin>
         </plugins>
     </build>
-    <!--
-    <repositories>
-        <repository>
-            <id>org.apache.olingo</id>
-            <url>https://git-wip-us.apache.org/repos/asf/olingo-odata4</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-    -->
+    
     <dependencies>
         <dependency>
             <groupId>org.redhelix.core</groupId>
@@ -68,14 +53,7 @@
             <version>4.0.0-beta-03</version>
         </dependency>
         
-        <!--
-        <dependency>
-            <groupId>org.apache.olingo</groupId>
-            <artifactId>odata-parent</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        -->
+      
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

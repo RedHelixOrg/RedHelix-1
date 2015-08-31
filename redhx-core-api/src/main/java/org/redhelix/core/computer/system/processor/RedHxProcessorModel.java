@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.processor;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
@@ -29,40 +31,44 @@ public class RedHxProcessorModel
     /**
      * The maximum number of characters allowed in a Processor Model Name.
      */
-    public static final byte MAX_CHAR_COUNT = 30; // arbrartray.
-    private final String model;
+    public static final byte MAX_CHAR_COUNT = 30;    // arbrartray.
+    private final String     model;
 
-    private RedHxProcessorModel()
-    {
-        this.model = null;
-    }
-
-    public RedHxProcessorModel(String model)
+    public RedHxProcessorModel( String model )
     {
         this.model = model;
     }
 
+    private RedHxProcessorModel( )
+    {
+        this.model = null;
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
             return true;
         }
+
         if (obj == null)
         {
             return false;
         }
+
         if (getClass() != obj.getClass())
         {
             return false;
         }
+
         final RedHxProcessorModel other = (RedHxProcessorModel) obj;
+
         if (model == null)
         {
             if (other.model != null)
@@ -74,27 +80,31 @@ public class RedHxProcessorModel
         {
             return false;
         }
+
         return true;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((model == null) ? 0 : model.hashCode());
+        final int prime  = 31;
+        int       result = 1;
+
+        result = prime * result + ((model == null)
+                                   ? 0
+                                   : model.hashCode());
+
         return result;
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         return model;
     }
-
 }

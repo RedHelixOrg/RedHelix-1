@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,72 +14,72 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.power.supply;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
 public interface RedHxPowerSuppyUnit
 {
-
     /**
      * @return the capacityWatts
      */
-    RedHxPowerSupplyCapacityWatts getPowerSupplyCapacityWatts();
+    RedHxPowerSupplyCapacityWatts getPowerSupplyCapacityWatts( );
 
     /**
      * @return the firmwareVersion
      */
-    RedHxPowerSupplyFirmwareVersion getPowerSupplyFirmwareVersion();
+    RedHxPowerSupplyFirmwareVersion getPowerSupplyFirmwareVersion( );
 
     /**
      * @return the lastOutputWatts
      */
-    RedHxPowerSupplyLastOutputWatts getPowerSupplyLastOutputWatts();
+    RedHxPowerSupplyLastOutputWatts getPowerSupplyLastOutputWatts( );
 
     /**
      * @return the lineInputVoltage
      */
-    RedHxPowerSupplyLineInputVoltage getPowerSupplyLineInputVoltage();
+    RedHxPowerSupplyLineInputVoltage getPowerSupplyLineInputVoltage( );
 
     /**
      * @return the lineInputVoltageType
      */
-    RedHxPowerSupplyLineInputVoltageTypeEnum getPowerSupplyLineInputVoltageType();
+    RedHxPowerSupplyLineInputVoltageTypeEnum getPowerSupplyLineInputVoltageType( );
 
     /**
      * @return the modelNumber
      */
-    RedHxPowerSupplyModelNumber getPowerSupplyModelNumber();
+    RedHxPowerSupplyModelNumber getPowerSupplyModelNumber( );
 
     /**
      * @return the powerSupplyName
      */
-    RedHxPowerSupplyName getPowerSupplyName();
+    RedHxPowerSupplyName getPowerSupplyName( );
 
     /**
      * @return the partNumber
      */
-    RedHxPowerSupplyPartNumber getPowerSupplyPartNumber();
+    RedHxPowerSupplyPartNumber getPowerSupplyPartNumber( );
 
     /**
      * @return the serialNumber
      */
-    RedHxPowerSupplySerialNumber getPowerSupplySerialNumber();
+    RedHxPowerSupplySerialNumber getPowerSupplySerialNumber( );
 
     /**
      * @return the sparePartNumber
      */
-    RedHxPowerSupplySparePartNumber getPowerSupplySparePartNumber();
+    RedHxPowerSupplySparePartNumber getPowerSupplySparePartNumber( );
 
     /**
      * @return the powerSupplyType
      */
-    RedHxPowerSupplyTypeEnum getPowerSupplyType();
-
+    RedHxPowerSupplyTypeEnum getPowerSupplyType( );
 }

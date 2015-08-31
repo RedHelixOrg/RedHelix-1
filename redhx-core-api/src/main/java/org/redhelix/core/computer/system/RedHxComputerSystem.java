@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,9 +14,9 @@
  * limitations under the License
  */
 
-package org.redhelix.core.computer.system;
 
-import java.util.UUID;
+
+package org.redhelix.core.computer.system;
 
 import org.redhelix.core.computer.system.id.RedHxBootSourceOverrideEnabledEnum;
 import org.redhelix.core.computer.system.id.RedHxComputerBootSourceEnum;
@@ -25,10 +25,12 @@ import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostName;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 
+import java.util.UUID;
+
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
@@ -38,35 +40,35 @@ public interface RedHxComputerSystem
     /**
      * @return the bootSource
      */
-    RedHxComputerBootSourceEnum getBootSource();
+    RedHxComputerBootSourceEnum getBootSource( );
 
     /**
      * @return the hostname
      */
-    RedHxDnsHostName getHostname();
+    RedHxDnsHostName getHostname( );
 
     /**
      * @return the indicatorLed
      */
-    RedHxIndicatorLedStateEnum getIndicatorLed();
+    RedHxIndicatorLedStateEnum getIndicatorLed( );
 
     /**
      * @return the overrideEnabled
      */
-    RedHxBootSourceOverrideEnabledEnum getOverrideEnabled();
+    RedHxBootSourceOverrideEnabledEnum getOverrideEnabled( );
 
     /**
      * @return the systemType
      */
-    RedHxComputerSystemTypeEnum getSystemType();
+    RedHxComputerSystemTypeEnum getSystemType( );
 
     /**
      * @return the uefiTargetSourcePath
      */
-    RedHxComputerBootUefiTargetSourceOverride getUefiTargetSourcePath();
+    RedHxComputerBootUefiTargetSourceOverride getUefiTargetSourcePath( );
 
     /**
      * @return the uuid
      */
-    UUID getUuid();
+    UUID getUuid( );
 }

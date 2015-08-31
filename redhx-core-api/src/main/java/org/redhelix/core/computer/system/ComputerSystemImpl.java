@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,9 +14,9 @@
  * limitations under the License
  */
 
-package org.redhelix.core.computer.system;
 
-import java.util.UUID;
+
+package org.redhelix.core.computer.system;
 
 import org.redhelix.core.computer.system.id.RedHxBootSourceOverrideEnabledEnum;
 import org.redhelix.core.computer.system.id.RedHxComputerBootSourceEnum;
@@ -25,26 +25,28 @@ import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostName;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 
+import java.util.UUID;
+
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-class ComputerSystemImpl implements RedHxComputerSystem
-{ /*
-   * sorted in alpha order by class name.
-   */
-    private final RedHxComputerBootSourceEnum bootSource;
-    private final RedHxDnsHostName hostname;
-    private final RedHxIndicatorLedStateEnum indicatorLed;
-
-    private final RedHxBootSourceOverrideEnabledEnum overrideEnabled;
-    private final RedHxComputerSystemTypeEnum systemType;
+class ComputerSystemImpl
+        implements RedHxComputerSystem
+{    /*
+      * sorted in alpha order by class name.
+      */
+private final RedHxComputerBootSourceEnum                   bootSource;
+    private final RedHxDnsHostName                          hostname;
+    private final RedHxIndicatorLedStateEnum                indicatorLed;
+    private final RedHxBootSourceOverrideEnabledEnum        overrideEnabled;
+    private final RedHxComputerSystemTypeEnum               systemType;
     private final RedHxComputerBootUefiTargetSourceOverride uefiTargetSourcePath;
-    private final UUID uuid;
+    private final UUID                                      uuid;
 
     /**
      * @param bootSource
@@ -55,100 +57,98 @@ class ComputerSystemImpl implements RedHxComputerSystem
      * @param uefiTargetSourcePath
      * @param uuid
      */
-    public ComputerSystemImpl(
-            RedHxComputerBootSourceEnum bootSource,
-            RedHxDnsHostName hostname,
-            RedHxIndicatorLedStateEnum indicatorLed,
-            RedHxBootSourceOverrideEnabledEnum overrideEnabled,
-            RedHxComputerSystemTypeEnum systemType,
-            RedHxComputerBootUefiTargetSourceOverride uefiTargetSourcePath,
-            UUID uuid)
+    public ComputerSystemImpl( RedHxComputerBootSourceEnum               bootSource,
+                               RedHxDnsHostName                          hostname,
+                               RedHxIndicatorLedStateEnum                indicatorLed,
+                               RedHxBootSourceOverrideEnabledEnum        overrideEnabled,
+                               RedHxComputerSystemTypeEnum               systemType,
+                               RedHxComputerBootUefiTargetSourceOverride uefiTargetSourcePath,
+                               UUID                                      uuid )
     {
         super();
-        this.bootSource = bootSource;
-        this.hostname = hostname;
-        this.indicatorLed = indicatorLed;
-        this.overrideEnabled = overrideEnabled;
-        this.systemType = systemType;
+        this.bootSource           = bootSource;
+        this.hostname             = hostname;
+        this.indicatorLed         = indicatorLed;
+        this.overrideEnabled      = overrideEnabled;
+        this.systemType           = systemType;
         this.uefiTargetSourcePath = uefiTargetSourcePath;
-        this.uuid = uuid;
+        this.uuid                 = uuid;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getBootSource()
      */
     @Override
-    public RedHxComputerBootSourceEnum getBootSource()
+    public RedHxComputerBootSourceEnum getBootSource( )
     {
         return bootSource;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getHostname()
      */
     @Override
-    public RedHxDnsHostName getHostname()
+    public RedHxDnsHostName getHostname( )
     {
         return hostname;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getIndicatorLed()
      */
     @Override
-    public RedHxIndicatorLedStateEnum getIndicatorLed()
+    public RedHxIndicatorLedStateEnum getIndicatorLed( )
     {
         return indicatorLed;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getOverrideEnabled()
      */
     @Override
-    public RedHxBootSourceOverrideEnabledEnum getOverrideEnabled()
+    public RedHxBootSourceOverrideEnabledEnum getOverrideEnabled( )
     {
         return overrideEnabled;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getSystemType()
      */
     @Override
-    public RedHxComputerSystemTypeEnum getSystemType()
+    public RedHxComputerSystemTypeEnum getSystemType( )
     {
         return systemType;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getUefiTargetSourcePath()
      */
     @Override
-    public RedHxComputerBootUefiTargetSourceOverride getUefiTargetSourcePath()
+    public RedHxComputerBootUefiTargetSourceOverride getUefiTargetSourcePath( )
     {
         return uefiTargetSourcePath;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.redhelix.core.computer.system.TT#getUuid()
      */
     @Override
-    public UUID getUuid()
+    public UUID getUuid( )
     {
         return uuid;
     }
-
 }

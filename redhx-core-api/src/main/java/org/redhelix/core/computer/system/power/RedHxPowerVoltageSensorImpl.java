@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,6 +14,8 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.power;
 
 import org.redhelix.core.annotations.Immutable;
@@ -22,27 +24,30 @@ import org.redhelix.core.sensor.RedHxSensorName;
 import org.redhelix.core.sensor.RedHxSensorNumber;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
 @Immutable
-public class RedHxPowerVoltageSensorImpl extends RedHxAbstractSensor implements RedHxPowerVoltageSensor
+public class RedHxPowerVoltageSensorImpl
+        extends RedHxAbstractSensor
+        implements RedHxPowerVoltageSensor
 {
-
     private final RedHxPowerVoltageReading voltage;
 
     /**
      * @param sensorName
      * @param sensorNumber
      */
-    public RedHxPowerVoltageSensorImpl(RedHxSensorName sensorName, RedHxSensorNumber sensorNumber, final RedHxPowerVoltageReading voltage)
+    public RedHxPowerVoltageSensorImpl( RedHxSensorName sensorName,
+            RedHxSensorNumber                           sensorNumber,
+            final RedHxPowerVoltageReading              voltage )
     {
-        super(sensorName, sensorNumber);
-
+        super(sensorName,
+              sensorNumber);
         this.voltage = voltage;
     }
 
@@ -50,9 +55,8 @@ public class RedHxPowerVoltageSensorImpl extends RedHxAbstractSensor implements 
      * @return the voltage
      */
     @Override
-    public RedHxPowerVoltageReading getVoltage()
+    public RedHxPowerVoltageReading getVoltage( )
     {
         return voltage;
     }
-
 }

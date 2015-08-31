@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
+
+
 
 package org.redhelix.core.service.root;
 
@@ -31,15 +33,16 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 import org.redhelix.core.util.RedHxRedfishSchemaVersionEnum;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version 0.0.1
  * @author Hank Bruning
  */
-public class RedHxServiceRootImpl implements RedHxServiceRoot
+public class RedHxServiceRootImpl
+        implements RedHxServiceRoot
 {
-    private final RedHxAccountService accountService;
+    private final RedHxAccountService    accountService;
     private final RedHxChassisCollection chassisCollection;
 
     //
@@ -76,18 +79,17 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
     // }
     // },
     // "Oem": {}
-
-    private final RedHxComputerSystemCollection computerSystemCollection;
-    private final RedHxEventService eventService;
-    private final RedHxManagerCollection managerCollection;
-    private final RedHxMessageVignette messageVignette;
+    private final RedHxComputerSystemCollection              computerSystemCollection;
+    private final RedHxEventService                          eventService;
+    private final RedHxManagerCollection                     managerCollection;
+    private final RedHxMessageVignette                       messageVignette;
     private final RedHxMessageVignetteRegistryFileCollection messageVignetteRegistryFileCollection;
-    private final RedHxRedfishProtocolVersionEnum protocolVersion;
-    private final RedHxSchemaFileCollection schemaFileCollection;
-    private final RedHxRedfishSchemaVersionEnum schemaVersion;
-    private final RedHxSessionCollection sessionCollection;
-    private final RedHxSessionService SessionService;
-    private final RedHxTaskService taskService;
+    private final RedHxRedfishProtocolVersionEnum            protocolVersion;
+    private final RedHxSchemaFileCollection                  schemaFileCollection;
+    private final RedHxRedfishSchemaVersionEnum              schemaVersion;
+    private final RedHxSessionCollection                     sessionCollection;
+    private final RedHxSessionService                        SessionService;
+    private final RedHxTaskService                           taskService;
 
     /**
      * @param protocolVersion
@@ -104,53 +106,56 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
      * @param sessionService
      * @param taskService
      */
-    public RedHxServiceRootImpl(
-            RedHxRedfishProtocolVersionEnum protocolVersion,
-            RedHxRedfishSchemaVersionEnum schemaVersion,
-            RedHxAccountService accountService,
-            RedHxChassisCollection chassisCollection,
-            RedHxComputerSystemCollection computerSystemCollection,
-            RedHxEventService eventService,
-            RedHxManagerCollection managerCollection,
-            RedHxMessageVignette messageVignette,
-            RedHxMessageVignetteRegistryFileCollection messageVignetteRegistryFileCollection,
-            RedHxSchemaFileCollection schemaFileCollection,
-            RedHxSessionCollection sessionCollection,
-            RedHxSessionService sessionService,
-            RedHxTaskService taskService)
+    public RedHxServiceRootImpl( RedHxRedfishProtocolVersionEnum            protocolVersion,
+                                 RedHxRedfishSchemaVersionEnum              schemaVersion,
+                                 RedHxAccountService                        accountService,
+                                 RedHxChassisCollection                     chassisCollection,
+                                 RedHxComputerSystemCollection              computerSystemCollection,
+                                 RedHxEventService                          eventService,
+                                 RedHxManagerCollection                     managerCollection,
+                                 RedHxMessageVignette                       messageVignette,
+                                 RedHxMessageVignetteRegistryFileCollection messageVignetteRegistryFileCollection,
+                                 RedHxSchemaFileCollection                  schemaFileCollection,
+                                 RedHxSessionCollection                     sessionCollection,
+                                 RedHxSessionService                        sessionService,
+                                 RedHxTaskService                           taskService )
     {
         super();
-        this.protocolVersion = protocolVersion;
-        this.schemaVersion = schemaVersion;
-        this.accountService = accountService;
-        this.chassisCollection = chassisCollection;
-        this.computerSystemCollection = computerSystemCollection;
-        this.eventService = eventService;
-        this.managerCollection = managerCollection;
-        this.messageVignette = messageVignette;
+        this.protocolVersion                       = protocolVersion;
+        this.schemaVersion                         = schemaVersion;
+        this.accountService                        = accountService;
+        this.chassisCollection                     = chassisCollection;
+        this.computerSystemCollection              = computerSystemCollection;
+        this.eventService                          = eventService;
+        this.managerCollection                     = managerCollection;
+        this.messageVignette                       = messageVignette;
         this.messageVignetteRegistryFileCollection = messageVignetteRegistryFileCollection;
-        this.schemaFileCollection = schemaFileCollection;
-        this.sessionCollection = sessionCollection;
-        SessionService = sessionService;
-        this.taskService = taskService;
+        this.schemaFileCollection                  = schemaFileCollection;
+        this.sessionCollection                     = sessionCollection;
+        SessionService                             = sessionService;
+        this.taskService                           = taskService;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
             return true;
         }
+
         if (obj == null)
         {
             return false;
         }
+
         if (getClass() != obj.getClass())
         {
             return false;
         }
+
         final RedHxServiceRootImpl other = (RedHxServiceRootImpl) obj;
+
         if (SessionService == null)
         {
             if (other.SessionService != null)
@@ -162,6 +167,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (accountService == null)
         {
             if (other.accountService != null)
@@ -173,6 +179,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (chassisCollection == null)
         {
             if (other.chassisCollection != null)
@@ -184,6 +191,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (computerSystemCollection == null)
         {
             if (other.computerSystemCollection != null)
@@ -195,6 +203,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (eventService == null)
         {
             if (other.eventService != null)
@@ -206,6 +215,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (managerCollection == null)
         {
             if (other.managerCollection != null)
@@ -217,6 +227,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (messageVignette == null)
         {
             if (other.messageVignette != null)
@@ -228,6 +239,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (messageVignetteRegistryFileCollection == null)
         {
             if (other.messageVignetteRegistryFileCollection != null)
@@ -239,10 +251,12 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (protocolVersion != other.protocolVersion)
         {
             return false;
         }
+
         if (schemaFileCollection == null)
         {
             if (other.schemaFileCollection != null)
@@ -254,10 +268,12 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (schemaVersion != other.schemaVersion)
         {
             return false;
         }
+
         if (sessionCollection == null)
         {
             if (other.sessionCollection != null)
@@ -269,6 +285,7 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         if (taskService == null)
         {
             if (other.taskService != null)
@@ -280,93 +297,121 @@ public class RedHxServiceRootImpl implements RedHxServiceRoot
         {
             return false;
         }
+
         return true;
     }
 
-    public RedHxAccountService getAccountService()
+    public RedHxAccountService getAccountService( )
     {
         return accountService;
     }
 
-    public RedHxChassisCollection getChassisCollection()
+    public RedHxChassisCollection getChassisCollection( )
     {
         return chassisCollection;
     }
 
-    public RedHxComputerSystemCollection getComputerSystemCollection()
+    public RedHxComputerSystemCollection getComputerSystemCollection( )
     {
         return computerSystemCollection;
     }
 
-    public RedHxEventService getEventService()
+    public RedHxEventService getEventService( )
     {
         return eventService;
     }
 
-    public RedHxManagerCollection getManagerCollection()
+    public RedHxManagerCollection getManagerCollection( )
     {
         return managerCollection;
     }
 
-    public RedHxMessageVignette getMessageVignette()
+    public RedHxMessageVignette getMessageVignette( )
     {
         return messageVignette;
     }
 
-    public RedHxMessageVignetteRegistryFileCollection getMessageVignetteRegistryFileCollection()
+    public RedHxMessageVignetteRegistryFileCollection getMessageVignetteRegistryFileCollection( )
     {
         return messageVignetteRegistryFileCollection;
     }
 
-    public RedHxRedfishProtocolVersionEnum getProtocolVersion()
+    public RedHxRedfishProtocolVersionEnum getProtocolVersion( )
     {
         return protocolVersion;
     }
 
-    public RedHxSchemaFileCollection getSchemaFileCollection()
+    public RedHxSchemaFileCollection getSchemaFileCollection( )
     {
         return schemaFileCollection;
     }
 
-    public RedHxRedfishSchemaVersionEnum getSchemaVersion()
+    public RedHxRedfishSchemaVersionEnum getSchemaVersion( )
     {
         return schemaVersion;
     }
 
-    public RedHxSessionCollection getSessionCollection()
+    public RedHxSessionCollection getSessionCollection( )
     {
         return sessionCollection;
     }
 
-    public RedHxSessionService getSessionService()
+    public RedHxSessionService getSessionService( )
     {
         return SessionService;
     }
 
-    public RedHxTaskService getTaskService()
+    public RedHxTaskService getTaskService( )
     {
         return taskService;
     }
 
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((SessionService == null) ? 0 : SessionService.hashCode());
-        result = prime * result + ((accountService == null) ? 0 : accountService.hashCode());
-        result = prime * result + ((chassisCollection == null) ? 0 : chassisCollection.hashCode());
-        result = prime * result + ((computerSystemCollection == null) ? 0 : computerSystemCollection.hashCode());
-        result = prime * result + ((eventService == null) ? 0 : eventService.hashCode());
-        result = prime * result + ((managerCollection == null) ? 0 : managerCollection.hashCode());
-        result = prime * result + ((messageVignette == null) ? 0 : messageVignette.hashCode());
-        result = prime * result + ((messageVignetteRegistryFileCollection == null) ? 0 : messageVignetteRegistryFileCollection.hashCode());
-        result = prime * result + ((protocolVersion == null) ? 0 : protocolVersion.hashCode());
-        result = prime * result + ((schemaFileCollection == null) ? 0 : schemaFileCollection.hashCode());
-        result = prime * result + ((schemaVersion == null) ? 0 : schemaVersion.hashCode());
-        result = prime * result + ((sessionCollection == null) ? 0 : sessionCollection.hashCode());
-        result = prime * result + ((taskService == null) ? 0 : taskService.hashCode());
+        final int prime  = 31;
+        int       result = 1;
+
+        result = prime * result + ((SessionService == null)
+                                   ? 0
+                                   : SessionService.hashCode());
+        result = prime * result + ((accountService == null)
+                                   ? 0
+                                   : accountService.hashCode());
+        result = prime * result + ((chassisCollection == null)
+                                   ? 0
+                                   : chassisCollection.hashCode());
+        result = prime * result + ((computerSystemCollection == null)
+                                   ? 0
+                                   : computerSystemCollection.hashCode());
+        result = prime * result + ((eventService == null)
+                                   ? 0
+                                   : eventService.hashCode());
+        result = prime * result + ((managerCollection == null)
+                                   ? 0
+                                   : managerCollection.hashCode());
+        result = prime * result + ((messageVignette == null)
+                                   ? 0
+                                   : messageVignette.hashCode());
+        result = prime * result + ((messageVignetteRegistryFileCollection == null)
+                                   ? 0
+                                   : messageVignetteRegistryFileCollection.hashCode());
+        result = prime * result + ((protocolVersion == null)
+                                   ? 0
+                                   : protocolVersion.hashCode());
+        result = prime * result + ((schemaFileCollection == null)
+                                   ? 0
+                                   : schemaFileCollection.hashCode());
+        result = prime * result + ((schemaVersion == null)
+                                   ? 0
+                                   : schemaVersion.hashCode());
+        result = prime * result + ((sessionCollection == null)
+                                   ? 0
+                                   : sessionCollection.hashCode());
+        result = prime * result + ((taskService == null)
+                                   ? 0
+                                   : taskService.hashCode());
+
         return result;
     }
-
 }

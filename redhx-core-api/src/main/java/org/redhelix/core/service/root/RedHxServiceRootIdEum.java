@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.service.root;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ * The types of service that could be in the top level OData service root description.
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will
  *        be replaced when checked in to the master branch
  * @author Hank Bruning
@@ -33,10 +35,10 @@ public enum RedHxServiceRootIdEum
     JSON_SCHEMAS,
     MANAGERS,
     OEM,
+    REDFISH_SERVICE,
     REGISTRIES,
-    SESSION_ACTIVE,
+    SESSIONS_ACTIVE,
     SESSION_SERVICE,
     SYSTEMS,
-    TASK_SERIVCE;
-
+    TASK_SERIVCE,
 }

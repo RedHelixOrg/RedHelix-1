@@ -22,7 +22,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
 
 /**
  *
- * Git SHA: $Id$
+ * <br><br>Git SHA: $Id$
  *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning

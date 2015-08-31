@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,25 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-
 package org.redhelix.server.main;
 
-import java.net.URI;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.olingo.client.api.ODataClient;
-import org.apache.olingo.client.api.communication.request.retrieve.ODataServiceDocumentRequest;
-import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
-import org.apache.olingo.client.api.domain.ClientEntity;
-import org.apache.olingo.client.api.domain.ClientServiceDocument;
-import org.apache.olingo.client.core.ODataClientFactory;
-import org.apache.olingo.commons.api.format.ContentType;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.redhelix.core.util.RedHxServiceRootLocator;
 
 /**
- * 
- * @author Hank Bruning Date: $Date$ Git SHA: $Id$
+ *
+ * @author Hank Bruning Date: $Date$ <br><br>Git SHA: $Id$
  * @since RedHelix Version 0.0.1
  *
  */
@@ -43,57 +34,23 @@ public class RedMatrixServerDb
      */
     public static void main(String[] args)
     {
-        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "error");
+        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
+                           "error");
 
-        final ChassisReader chassisReader = new ChassisReader();
+        final ServiceRootReader serviceRootReader = new ServiceRootReader();
 
-        final List<ClientEntity> list = chassisReader.getAllChassis();
-        System.out.println("HFB15: The enitity list contained " + list.size() + " entitys");
-
-        if (list != null)
+        try
         {
-            for (final ClientEntity entity : list)
-            {
+            RedHxServiceRootLocator serviceRootLocator = serviceRootReader.getServiceRootLocator(ServiceRootReader.TcpProtocol.HTTP, "localhost", 9080);
 
-                System.out.println("HFB15: ######################");
-
-            }
+            System.out.println("HFB5: " + serviceRootLocator);
         }
-    }
-
-    private void bad()
-    {
-        // System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
-        // "error");
-
-        final ODataClient client = ODataClientFactory.getClient();
-        client.getConfiguration().setDefaultPubFormat(ContentType.APPLICATION_JSON);
-
-        final String serviceRoot = "http://localhost:9080/mockup1/redfish/v1"; /// Chassis/1";
-
-        final ODataServiceDocumentRequest req = client.getRetrieveRequestFactory().getServiceDocumentRequest(serviceRoot);
-
-        final ODataRetrieveResponse<ClientServiceDocument> res = req.execute();
-
-        if (res.getStatusCode() == 200)
+        catch (URISyntaxException ex)
         {
-            System.out.println("HFB15: res=" + res.getContentType());
-
-            final ClientServiceDocument serviceDocument = res.getBody();
-
-            final Collection<String> entitySetNames = serviceDocument.getEntitySetNames();
-            final Map<String, URI> entitySets = serviceDocument.getEntitySets();
-            final Map<String, URI> singletons = serviceDocument.getSingletons();
-            final Map<String, URI> functionImports = serviceDocument.getFunctionImports();
-            // URI productsUri = serviceDocument.getEntitySetURI("Products");
-            System.out.println("HFB15: ");
+            Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
+                                                                    null,
+                                                                    ex);
         }
-        else
-        {
-            System.out.println("HFB15: unable to read index.html from server. " + res.getStatusCode());
-
-        }
-
     }
 
 }

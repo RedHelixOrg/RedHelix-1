@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,14 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.id;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will
  *        be replaced when checked in to the master branch
  * @author Hank Bruning
@@ -30,14 +32,15 @@ public enum RedHxBootSourceOverrideEnabledEnum
     CONTINUOUS("The system will boot to the target specified in the BootSourceOverrideTarget until this property is set to Disabled."),
     DISABLED("The system will boot as normal"),
     ONCE("ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
+
     private final String desc;
 
-    private RedHxBootSourceOverrideEnabledEnum(String desc)
+    private RedHxBootSourceOverrideEnabledEnum( String desc )
     {
         this.desc = desc;
     }
 
-    public String getDescription()
+    public String getDescription( )
     {
         return desc;
     }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,38 +14,41 @@
  * limitations under the License
  */
 
+
+
 package org.redhelix.core.computer.system.id;
 
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- * 
- * Git SHA: $Id$
- * 
+ *
+ * <br><br>Git SHA: $Id$
+ *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-public class RedHxComputerSKU extends RedHxAbstractStringProperty
+public class RedHxComputerSKU
+        extends RedHxAbstractStringProperty
 {
     /**
      * The maximum number of characters allowed in a SKU.
      */
-    public final static short MAX_CHAR_COUNT = 40;// arbitrary
+    public final static short MAX_CHAR_COUNT = 40;    // arbitrary
 
     /**
      * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerSKU(int maxCharCount, String propName)
+    public RedHxComputerSKU( int    maxCharCount,
+                             String propName )
     {
-        super(maxCharCount, propName);
-
+        super(maxCharCount,
+              propName);
     }
 
-    public String getSkuValue()
+    public String getSkuValue( )
     {
         return super.getValue();
     }
-
 }
