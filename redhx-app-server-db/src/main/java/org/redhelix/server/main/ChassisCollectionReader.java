@@ -14,15 +14,18 @@
  *  limitations under the License
  *
  */
-
-
-
 package org.redhelix.server.main;
 
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
+import org.apache.olingo.client.api.domain.ClientAnnotation;
+import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
-
+import org.apache.olingo.client.api.domain.ClientProperty;
+import org.apache.olingo.client.api.domain.ClientValue;
 import org.redhelix.core.chassis.RedHxChassisCollection;
+import org.redhelix.core.chassis.RedHxChassisParseException;
+import org.redhelix.core.service.root.RedHxServiceRootIdEum;
+import org.redhelix.core.util.RedHxHttpResponseException;
 
 /**
  *
@@ -35,32 +38,54 @@ import org.redhelix.core.chassis.RedHxChassisCollection;
  */
 final class ChassisCollectionReader
 {
-    ChassisCollectionReader( RedHxServerConnectionContext ctx ) {}
 
-//  public ClientEntity getCar(int key)
-//  {
-//      final URI carEntityURI
-//                = client.newURIBuilder(SERVICE_ROOT).appendEntitySetSegment(ENTITY_SET_CHASSIS).appendKeySegment(key).build();
-//      final ODataRetrieveResponse<ClientEntity> car = client.getRetrieveRequestFactory().getEntityRequest(carEntityURI).execute();
-//
-//      return car.getBody();
-//  }
-    static RedHxChassisCollection readChassisCollection( RedHxServerConnectionContext ctx )
+    ChassisCollectionReader(RedHxServerConnectionContext ctx)
+    {
+    }
+
+    static RedHxChassisCollection readChassisCollection(RedHxServerConnectionContext ctx)
+            throws RedHxChassisParseException, RedHxHttpResponseException
     {
 
-//      final URI carEntityURI
-//                = client.newURIBuilder(SERVICE_ROOT).appendEntitySetSegment(ENTITY_SET_CHASSIS).appendKeySegment(key).build();
         final ODataRetrieveResponse<ClientEntity> chassisCollectionResponse = ctx.getChassisEntityRequest().execute();
 
         if (chassisCollectionResponse.getStatusCode() == 200)
         {
             ClientEntity entity = chassisCollectionResponse.getBody();
 
-            System.out.println("HFB5: got chassis entity " + entity);
+            ClientProperty chassisProperty = entity.getProperty("Members");
+
+            //       System.out.println("HFB5: pvalue "+chassisProperty);
+            for (ClientValue chassisValue : chassisProperty.getCollectionValue())
+            {
+
+                ClientComplexValue cplx = chassisValue.asComplex();
+                if (cplx != null)
+                {
+                    ClientAnnotation anno = cplx.getAnnotations().get(0);
+                    if (anno.getTerm().equals("odata.id"))
+                    {
+                        String chassisUrl = anno.getValue().toString();
+
+                        System.out.println("HFB5: chassis=" + chassisUrl);
+                    }
+                    else
+                    {
+                        throw new RedHxChassisParseException("");
+                    }
+                }
+                else
+                {
+                    throw new RedHxChassisParseException("");
+                }
+
+            }
+
         }
         else
         {
-            System.out.println("HFB5: failed  to get chassis entity. error  " + chassisCollectionResponse.getStatusCode());
+            throw new RedHxHttpResponseException(RedHxServiceRootIdEum.CHASSIS, chassisCollectionResponse.getStatusCode(), "Can not read Chassis Collection.");
+
         }
 
         return null;

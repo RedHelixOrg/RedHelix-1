@@ -14,24 +14,19 @@
  *  limitations under the License
  *
  */
-
-
-
 package org.redhelix.server.main;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.apache.olingo.client.api.ODataClient;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.domain.ClientEntity;
-import org.apache.olingo.client.api.ODataClient;
 import org.apache.olingo.client.core.ODataClientFactory;
 import org.apache.olingo.commons.api.format.ODataFormat;
-
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.service.root.RedHxServiceRootLocator;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  *
@@ -44,36 +39,48 @@ import java.net.URISyntaxException;
  */
 public final class RedHxServerConnectionContext
 {
-    private final ODataClient       client;
+
+    private final ODataClient client;
     private RedHxServiceRootLocator serviceRootLocator;
 
-    RedHxServerConnectionContext( )
+    private final RedHxRedfishProtocolVersionEnum redfishProtocolVersion;
+
+    RedHxServerConnectionContext(final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
     {
-        client = ODataClientFactory.getClient();
-        client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);    // ContentType.JSON_NO_METADATA);
+        this.redfishProtocolVersion = redfishProtocolVersion;
+       this. client = ODataClientFactory.getClient();
+         this.  client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);    // ContentType.JSON_NO_METADATA);
     }
 
-    public ODataEntityRequest<ClientEntity> getChassisEntityRequest( )
+    private RedHxServerConnectionContext()
     {
-        URI                              chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
-        ODataEntityRequest<ClientEntity> req        = client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
+        this.redfishProtocolVersion = null;
+           this. client =null;
+    }
+
+    public ODataEntityRequest<ClientEntity> getChassisEntityRequest()
+    {
+        URI chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
+        ODataEntityRequest<ClientEntity> req = client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
 
         return req;
     }
 
-//  public ODataClient getOdataClient()
-//  {
-//      return client;
-//  }
-    public void openConnection( final RedHxTcpProtocolTypeEnum        httpProtocol,
-                                final String                          hostName,
-                                final int                             tcpPortNumber,
-                                final String                          servicePrefix,
-                                final RedHxRedfishProtocolVersionEnum redfishProtocolVersion )
+    public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion()
+    {
+        return redfishProtocolVersion;
+    }
+
+
+    public void openConnection(final RedHxTcpProtocolTypeEnum httpProtocol,
+                               final String hostName,
+                               final int tcpPortNumber,
+                               final String servicePrefix
+    )
             throws URISyntaxException
     {
         serviceRootLocator = ServiceRootReader.getServiceRootLocator(client, httpProtocol, hostName, tcpPortNumber, servicePrefix,
-                RedHxRedfishProtocolVersionEnum.VERSION_1);
+                                                                     RedHxRedfishProtocolVersionEnum.VERSION_1);
         System.out.println("HFB5: " + serviceRootLocator);
     }
 }

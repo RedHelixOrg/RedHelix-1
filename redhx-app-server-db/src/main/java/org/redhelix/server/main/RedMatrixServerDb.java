@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-
-
-
 package org.redhelix.server.main;
 
-import org.redhelix.core.chassis.RedHxChassisCollection;
-import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
-import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
-
 import java.net.URISyntaxException;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.redhelix.core.chassis.RedHxChassisCollection;
+import org.redhelix.core.chassis.RedHxChassisParseException;
+import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
+import org.redhelix.core.util.RedHxHttpResponseException;
+import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 
 /**
  *
@@ -38,36 +35,47 @@ import java.util.logging.Logger;
  */
 public class RedMatrixServerDb
 {
+
     /**
      * @param args
      */
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
 
-        RedHxServerConnectionContext ctx = new RedHxServerConnectionContext();
+        RedHxServerConnectionContext ctx = new RedHxServerConnectionContext(RedHxRedfishProtocolVersionEnum.VERSION_1);
 
         try
         {
             ctx.openConnection(RedHxTcpProtocolTypeEnum.HTTP,
                                "localhost",
                                9080,
-                               "mockup1",
-                               RedHxRedfishProtocolVersionEnum.VERSION_1);
+                               "mockup1"
+            );
 
-            RedHxChassisCollection chassisCollection = ChassisCollectionReader.readChassisCollection(ctx);
-
-            if (chassisCollection != null)
+            RedHxChassisCollection chassisCollection;
+            try
             {
-                System.out.println("HFB5:  chassisCollection= " + chassisCollection);
+                chassisCollection = ChassisCollectionReader.readChassisCollection(ctx);
+                 System.out.println("HFB5:  chassisCollection= " + chassisCollection);
             }
+            catch (RedHxChassisParseException ex)
+            {
+                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (RedHxHttpResponseException ex)
+            {
+                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+          
         }
         catch (URISyntaxException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                    null,
-                    ex);
+                                                                    null,
+                                                                    ex);
         }
     }
 }

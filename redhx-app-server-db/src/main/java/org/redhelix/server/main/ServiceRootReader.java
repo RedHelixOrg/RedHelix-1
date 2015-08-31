@@ -18,30 +18,25 @@
 
 package org.redhelix.server.main;
 
-import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
-import org.apache.olingo.client.api.domain.ClientEntity;
-import org.apache.olingo.client.api.domain.ClientEntitySet;
-import org.apache.olingo.client.api.domain.ClientProperty;
-import org.apache.olingo.client.api.ODataClient;
-
-import org.redhelix.core.service.root.RedHxServiceRootId;
-import org.redhelix.core.service.root.RedHxServiceRootIdEum;
-import org.redhelix.core.service.root.RedHxServiceRootLocator;
-import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
-import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum.HTTPS;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.apache.olingo.client.api.ODataClient;
+import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
+import org.apache.olingo.client.api.domain.ClientEntity;
+import org.apache.olingo.client.api.domain.ClientEntitySet;
+import org.apache.olingo.client.api.domain.ClientProperty;
+import org.redhelix.core.service.root.RedHxServiceRootId;
+import org.redhelix.core.service.root.RedHxServiceRootIdEum;
+import org.redhelix.core.service.root.RedHxServiceRootLocator;
+import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
+import static org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum.HTTPS;
+import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -129,6 +124,7 @@ class ServiceRootReader
         {
             list = chassisEntitySetResponse.getBody().getEntities();
 
+            
             /**
              * Use a treemap so when the items are printed out in toString they are always in the same order.
              */

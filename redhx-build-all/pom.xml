@@ -5,6 +5,7 @@
     <artifactId>redhx-build-all</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.redhelix.core</groupId>
@@ -15,6 +16,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>redhx-app-server-db</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.redhelix.core.impl</groupId>
+            <artifactId>redhx-core-impl</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <properties>
