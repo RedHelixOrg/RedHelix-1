@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
+
+
+
 package org.redhelix.server.main;
 
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
+
+import java.net.URISyntaxException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,29 +38,26 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
  */
 public class RedMatrixServerDb
 {
-
     /**
      * @param args
      */
-    public static void main(String[] args)
+    public static void main( String[] args )
     {
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
 
-        
-        
         RedHxServerConnectionContext ctx = new RedHxServerConnectionContext();
 
         try
         {
-            ctx.openConnection(
-                   RedHxTcpProtocolTypeEnum.HTTP,
-                    "localhost",
-                    9080,
-                    "mockup1",
-                    RedHxRedfishProtocolVersionEnum.VERSION_1);
+            ctx.openConnection(RedHxTcpProtocolTypeEnum.HTTP,
+                               "localhost",
+                               9080,
+                               "mockup1",
+                               RedHxRedfishProtocolVersionEnum.VERSION_1);
 
             RedHxChassisCollection chassisCollection = ChassisCollectionReader.readChassisCollection(ctx);
+
             if (chassisCollection != null)
             {
                 System.out.println("HFB5:  chassisCollection= " + chassisCollection);
@@ -64,8 +66,8 @@ public class RedMatrixServerDb
         catch (URISyntaxException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+                    null,
+                    ex);
         }
     }
 }

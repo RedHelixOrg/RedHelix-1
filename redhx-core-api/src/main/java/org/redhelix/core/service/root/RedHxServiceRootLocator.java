@@ -19,6 +19,7 @@
 package org.redhelix.core.service.root;
 
 import java.net.URI;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
