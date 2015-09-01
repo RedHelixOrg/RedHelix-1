@@ -19,24 +19,21 @@
 
 package org.redhelix.server.main;
 
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.util.Iterator;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
 import org.apache.olingo.client.api.domain.ClientAnnotation;
 import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientProperty;
-
-import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
-import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisBuilder;
+import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
+import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
-
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-
-import java.util.Iterator;
 
 /**
  *
@@ -48,11 +45,73 @@ import java.util.Iterator;
  *
  */
 final class ChassisReader
+        extends AbstractRedfishJsonReader
 {
-    private ChassisReader( ) {}
+   ChassisReader( RedHxServerConnectionContext ctx,
+                           String                       chassisLink )
+            throws URISyntaxException,
+                   RedHxHttpResponseException
+    {
+        super(ctx,
+              RedHxServiceRootIdEum.CHASSIS,
+              chassisLink);
+    }
 
-    static RedHxChassis readChassis( RedHxServerConnectionContext ctx,
-                                     String                       chassisLink )
+    /*
+     * HFB5: property name Id, 1
+     * HFB5: property name Name, Computer System Chassis
+     * HFB5: property name ChassisType, RackMount
+     * HFB5: property name Manufacturer, ManufacturerName
+     * HFB5: property name Model, ProductModelName
+     * HFB5: property name SKU,
+     * HFB5: property name SerialNumber, 2M220100SL
+     * HFB5: property name PartNumber,
+     * HFB5: property name AssetTag, CustomerWritableThingy
+     * HFB5: property name IndicatorLED, Lit
+     * HFB5:     prop2 primitive=State, Enabled
+     * HFB5:     prop2 primitive=Health, OK
+     * HFB5: anno-0=odata.id, /redfish/v1/Chassis/1/Thermal
+     * HFB5: anno-0=odata.id, /redfish/v1/Chassis/1/Power
+     * HFB5:     prop2 Unknown=ComputerSystems, []
+     * HFB5:     prop2 cplx2=odata.id, /redfish/v1/Chassis/Rack1
+     * HFB5:     prop2 Unknown=ManagedBy, []
+     */
+
+    /**
+     *
+     * @param ctx
+     * @param chassisLink
+     * @return
+     * @throws RedHxHttpResponseException
+     * @throws URISyntaxException
+     */
+    RedHxChassis readChassis( )
+            throws RedHxHttpResponseException,
+                   URISyntaxException
+    {
+        final RedHxChassis chassis;
+
+        System.out.println("HFB5: HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+
+        RedHxChassisManufacturerName manufacturerName = null;
+        RedHxChassisSerialNumber     serialNumber     = null;
+        RedHxChassisBuilder          builder          = new RedHxChassisBuilder(manufacturerName,
+                serialNumber);
+        String                       tmpStr;
+
+        tmpStr = getOptionalProperty("Id");
+        System.out.println("HFB5: id=" + tmpStr);
+        tmpStr = getOptionalProperty("Name");
+        System.out.println("HFB5: name=" + tmpStr);
+        tmpStr = getOptionalProperty("ChassisType");
+        System.out.println("HFB5: chassisType=" + tmpStr);
+        chassis = builder.getInstance();
+
+        return chassis;
+    }
+
+    static RedHxChassis readChassisXXXXX( RedHxServerConnectionContext ctx,
+            String                                                     chassisLink )
             throws RedHxHttpResponseException,
                    URISyntaxException
     {

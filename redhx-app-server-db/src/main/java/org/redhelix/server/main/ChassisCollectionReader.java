@@ -19,13 +19,14 @@
 
 package org.redhelix.server.main;
 
-import org.redhelix.core.chassis.RedHxChassis;
-import org.redhelix.core.chassis.RedHxChassisCollection;
-import org.redhelix.core.chassis.RedHxChassisCollectionImpl;
-
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.redhelix.core.chassis.RedHxChassis;
+import org.redhelix.core.chassis.RedHxChassisCollection;
+import org.redhelix.core.chassis.RedHxChassisCollectionImpl;
+import org.redhelix.core.util.RedHxHttpResponseException;
 
 /**
  *
@@ -42,13 +43,16 @@ final class ChassisCollectionReader
 
     static RedHxChassisCollection chassisCollectionReader( RedHxServerConnectionContext ctx,
             Set<String>                                                                 chassisLinkSet )
+            throws RedHxHttpResponseException,
+                   URISyntaxException
     {
         final List<RedHxChassis> list = new ArrayList<>();
 
         for (String link : chassisLinkSet)
         {
-            RedHxChassis chassis = ChassisReader.readChassis(ctx,
+            ChassisReader reader  = new ChassisReader(ctx,
                     link);
+            RedHxChassis  chassis = reader.readChassis();
 
             if (chassis != null)
             {
