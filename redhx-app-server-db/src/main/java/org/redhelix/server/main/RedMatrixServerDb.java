@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
+
+
+
 package org.redhelix.server.main;
 
-import java.net.URISyntaxException;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.chassis.RedHxChassisParseException;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
+
+import java.net.URISyntaxException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Set;
 
 /**
  *
@@ -37,11 +42,10 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
  */
 public class RedMatrixServerDb
 {
-
     /**
      * @param args
      */
-    public static void main(String[] args)
+    public static void main( String[] args )
     {
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
@@ -59,9 +63,10 @@ public class RedMatrixServerDb
 
             try
             {
-                chassisLinkSet = ChassisCollectionReader.readChassisCollection(ctx);
+                chassisLinkSet = ChassisLinkCollectionReader.readChassisCollection(ctx);
 
-                RedHxChassisCollection chassisCollection = ChassisReader.chassisReader(ctx, chassisLinkSet);
+                RedHxChassisCollection chassisCollection = ChassisCollectionReader.chassisCollectionReader(ctx,
+                        chassisLinkSet);
 
                 for (RedHxChassis chassis : chassisCollection)
                 {
@@ -71,27 +76,27 @@ public class RedMatrixServerDb
             catch (RedHxChassisParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                        null,
+                        ex);
             }
             catch (RedHxHttpResponseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                        null,
+                        ex);
             }
         }
         catch (URISyntaxException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+                    null,
+                    ex);
         }
         catch (RedHxHttpResponseException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+                    null,
+                    ex);
         }
     }
 }

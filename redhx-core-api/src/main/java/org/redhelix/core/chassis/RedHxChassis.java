@@ -18,6 +18,14 @@
 
 package org.redhelix.core.chassis;
 
+import org.redhelix.core.chassis.id.RedHxChassisAssetTag;
+import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
+import org.redhelix.core.chassis.id.RedHxChassisModelName;
+import org.redhelix.core.chassis.id.RedHxChassisPartNumber;
+import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
+import org.redhelix.core.chassis.id.RedHxChassisSKU;
+import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
+
 /**
  *
  * <br><br>Git SHA: $Id$
@@ -27,4 +35,19 @@ package org.redhelix.core.chassis;
  */
 public interface RedHxChassis
 {
+    RedHxChassisAssetTag getAssetTag( );
+
+    RedHxChassisTypeEnum getChassisType( );
+
+    RedHxIndicatorLedStateEnum getLedState( );
+
+    RedHxChassisManufacturerName getManufacturerName( );
+
+    RedHxChassisModelName getModelName( );
+
+    RedHxChassisPartNumber getPartNumber( );
+
+    RedHxChassisSerialNumber getSerialNumber( );
+
+    RedHxChassisSKU getSku( );
 }

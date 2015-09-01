@@ -16,7 +16,7 @@
 
 
 
-package org.redhelix.core.computer.system.id;
+package org.redhelix.core.chassis.id;
 
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
@@ -28,7 +28,7 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxComputerModelName
+public class RedHxChassisModelName
         extends RedHxAbstractStringProperty
 {
     /**
@@ -40,8 +40,8 @@ public class RedHxComputerModelName
      * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerModelName( int    maxCharCount,
-                                   String propName )
+    public RedHxChassisModelName( int    maxCharCount,
+                                  String propName )
     {
         super(maxCharCount,
               propName);

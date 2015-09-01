@@ -16,8 +16,9 @@
 
 
 
-package org.redhelix.core.computer.system.id;
+package org.redhelix.core.chassis.id;
 
+import org.redhelix.core.computer.system.id.*;
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
@@ -28,28 +29,26 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxComputerModelName
+public class RedHxChassisSKU
         extends RedHxAbstractStringProperty
 {
     /**
-     * The maximum number of characters allowed in a manufacturer name.
+     * The maximum number of characters allowed in a SKU.
      */
-    public final static short MAX_CHAR_COUNT = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT = 40;    // arbitrary
 
     /**
      * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerModelName( int    maxCharCount,
-                                   String propName )
+    public RedHxChassisSKU( int    maxCharCount,
+                            String propName )
     {
         super(maxCharCount,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
-    public String getModelName( )
+    public String getSkuValue( )
     {
         return super.getValue();
     }

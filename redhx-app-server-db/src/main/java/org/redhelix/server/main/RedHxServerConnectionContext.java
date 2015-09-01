@@ -70,6 +70,15 @@ public final class RedHxServerConnectionContext
         return req;
     }
 
+    public ODataEntityRequest<ClientEntity> getEntityRequest( String link )
+            throws URISyntaxException
+    {
+        URI                              myUri = serviceRootLocator.getUri(link);
+        ODataEntityRequest<ClientEntity> req   = client.getRetrieveRequestFactory().getEntityRequest(myUri);
+
+        return req;
+    }
+
     public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion( )
     {
         return redfishProtocolVersion;

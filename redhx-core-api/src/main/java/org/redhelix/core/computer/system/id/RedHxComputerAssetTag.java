@@ -45,11 +45,9 @@ public class RedHxComputerAssetTag
     {
         super(maxCharCount,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
-    public String getAssetTagValue( )
+    public String getAssetTag( )
     {
         return super.getValue();
     }

@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum.HTTPS;
 
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -127,7 +128,7 @@ class ServiceRootReader
         RedHxServiceRootLocator locator = null;
         final Logger            logger  = LoggerFactory.getLogger(ServiceRootReader.class);
 
-        if (serviceRootResponse.getStatusCode() == 200)
+        if (serviceRootResponse.getStatusCode() == HttpURLConnection.HTTP_OK)
         {
             list = serviceRootResponse.getBody().getEntities();
 
@@ -174,6 +175,9 @@ class ServiceRootReader
                 }
 
                 locator = new RedHxServiceRootLocator(serviceRoot,
+                        tcpProtocolStr,
+                        hostName,
+                        tcpPortNumber,
                         idToUriMap);
             }
         }

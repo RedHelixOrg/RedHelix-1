@@ -45,11 +45,9 @@ public class RedHxComputerManufacturerName
     {
         super(maxCharCount,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
-    public String getModel( )
+    public String getManufacturerName( )
     {
         return super.getValue();
     }
