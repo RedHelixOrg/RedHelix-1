@@ -47,8 +47,31 @@ import org.redhelix.core.util.RedHxHttpResponseException;
 final class ChassisReader
         extends AbstractRedfishJsonReader
 {
-   ChassisReader( RedHxServerConnectionContext ctx,
-                           String                       chassisLink )
+    private final static String JSON_KEY_ACTIONS              = "Actions";
+    private final static String JSON_KEY_ASSET_TAG            = "AssetTag";
+    private final static String JSON_KEY_CHASSIS_TYPE         = "ChassisType";    // required by the JSON schema
+    private final static String JSON_KEY_DESCRIPTION          = "Description";
+    private final static String JSON_KEY_ID                   = "Id";
+    private final static String JSON_KEY_INDICATOR_LED        = "IndicatorLED";
+    private final static String JSON_KEY_LOG_SERVICES         = "LogServices";
+    private final static String JSON_KEY_MANUFACTURER         = "Manufacturer";
+    private final static String JSON_KEY_MODEL                = "Model";
+    private final static String JSON_KEY_NAME                 = "Name";
+    private final static String JSON_KEY_PART_NUMBER          = "PartNumber";
+    private final static String JSON_KEY_POWER                = "Power";
+    private final static String JSON_KEY_SERIALNUMBER         = "SerialNumber";
+    private final static String JSON_KEY_SKU                  = "SKU";
+    private final static String JSON_KEY_STATUS               = "Status";
+    private final static String JSON_ANOTATION_KEY_THERMAL    = "Thermal";
+    private final static String JSON_ANOTATION_KEY_POWER      = "Power";
+    private final static String JSON_SUB_KEY_STATUS_STATE     = "State";
+    private final static String JSON_SUB_KEY_STATUS_HEALTH    = "Health";
+    private final static String JSON_LINK_KEY_COMPUTER_SYSTEM = "ComputerSystems";
+    private final static String JSON_LINK_KEY_CONTAINED_BY    = "ContainedBy";
+    private final static String JSON_LINK_KEY_MANAGED_BY      = "ManagedBy";
+
+    ChassisReader( RedHxServerConnectionContext ctx,
+                   String                       chassisLink )
             throws URISyntaxException,
                    RedHxHttpResponseException
     {
@@ -99,19 +122,39 @@ final class ChassisReader
                 serialNumber);
         String                       tmpStr;
 
-        tmpStr = getOptionalProperty("Id");
+        tmpStr = getOptionalProperty(JSON_KEY_ID);
         System.out.println("HFB5: id=" + tmpStr);
-        tmpStr = getOptionalProperty("Name");
+        tmpStr = getOptionalProperty(JSON_KEY_NAME);
         System.out.println("HFB5: name=" + tmpStr);
-        tmpStr = getOptionalProperty("ChassisType");
+        tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_TYPE);
         System.out.println("HFB5: chassisType=" + tmpStr);
+        tmpStr = getComplexValue(JSON_KEY_STATUS, JSON_SUB_KEY_STATUS_HEALTH);
+        System.out.println("HFB5: status health=" + tmpStr);
+        tmpStr = getComplexValue(JSON_KEY_STATUS, JSON_SUB_KEY_STATUS_STATE);
+        System.out.println("HFB5: status state=" + tmpStr);
+        tmpStr = getAnnotation(JSON_ANOTATION_KEY_POWER);
+        System.out.println("HFB5: power=" + tmpStr);
+        tmpStr = getAnnotation(JSON_ANOTATION_KEY_THERMAL);
+        System.out.println("HFB5: thermal=" + tmpStr);
+        tmpStr = getOptionalProperty(JSON_KEY_INDICATOR_LED);
+        System.out.println("HFB5: indicator led=" + tmpStr);
+
+        //
+        tmpStr = getLinkArray(JSON_LINK_KEY_COMPUTER_SYSTEM);
+        System.out.println("HFB5: computer systems=" + tmpStr);
+        tmpStr = getLinkSingle(JSON_LINK_KEY_CONTAINED_BY);
+        System.out.println("HFB5: contained by=" + tmpStr);
+        tmpStr = getLinkArray(JSON_LINK_KEY_MANAGED_BY);
+        System.out.println("HFB5: managed by=" + tmpStr);
+
+        //
         chassis = builder.getInstance();
 
         return chassis;
     }
 
-    static RedHxChassis readChassisXXXXX( RedHxServerConnectionContext ctx,
-            String                                                     chassisLink )
+    static RedHxChassis readChassis( RedHxServerConnectionContext ctx,
+                                     String                       chassisLink )
             throws RedHxHttpResponseException,
                    URISyntaxException
     {

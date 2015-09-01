@@ -1,13 +1,16 @@
 # RedHelix GitHub Repository
 ##Overview
-RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. The RedHelix server uses the Redfish
-specification to monitor multiple devices. It builds a in memory database representing the inventory and status of the devices and provides
-a Restfull API to query the history of the devices.
+RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
+The RedHelix server uses the Redfish specification to monitor multiple devices. It builds a in memory database representing the inventory
+and status of the devices and provides a Restfull API to query the history of the devices.
+
+## License
+All RedHelix software is under the Apache 2.0 license.
 
 ## What is the difference between Redfish and RedHelix ?
 Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix provides a database of multiple servers and the history for
 each server. At present the database is only in limited to what is in memory and when the Java Virtual Machine shuts down all history is destroyed.
-From a user perspective RedHelix will have a RESTful interface to the browser.
+From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
 
 ## Development Status
 At present, September 2, 2015 there is no hardware implementing Redfish for sale or available to RedHelix for testing. If you have Redfish capable

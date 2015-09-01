@@ -50,10 +50,14 @@ final class ChassisCollectionReader
 
         for (String link : chassisLinkSet)
         {
+            
+            
             ChassisReader reader  = new ChassisReader(ctx,
                     link);
             RedHxChassis  chassis = reader.readChassis();
 
+ //              RedHxChassis  chassis =     ChassisReader.readChassis(ctx, link);
+            
             if (chassis != null)
             {
                 list.add(chassis);
