@@ -21,6 +21,7 @@ package org.redhelix.server.main;
 
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
@@ -34,7 +35,8 @@ import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 
 /**
- *
+ * execute olingo commands to read the Redfish resources and links. This class executes the HTTP request to read data from the server and subclasses
+ * do not have to execute any HTTP commands. They do have to parse the JSON response.
  * <br><br>
  * Git SHA: $Id$
  *
@@ -48,6 +50,16 @@ abstract class AbstractRedfishJsonReader
     private final ClientEntity  entity;
     private final boolean       isResponseValid;
 
+    /**
+     * create a reader and exeucte an HTTP get for the data in Redfish link. If the response has an
+     * HTTP error an exception is throw an no other methods in the class can be called. As a result all methods
+     * in subclass of this do not perform error checking for the HTTP response.
+     * @param ctx
+     * @param serviceRootId
+     * @param linkToResource
+     * @throws URISyntaxException
+     * @throws RedHxHttpResponseException 
+     */
     protected AbstractRedfishJsonReader( final RedHxServerConnectionContext ctx,
             final RedHxServiceRootIdEum                                     serviceRootId,
             final String                                                    linkToResource )
@@ -77,6 +89,11 @@ abstract class AbstractRedfishJsonReader
         this.isResponseValid = false;
     }
 
+    /**
+     * from the JSON response get the value of an anotation. 
+     * @param propName
+     * @return 
+     */
     protected String getAnnotation( String propName )
     {
         final ClientProperty clientProp = entity.getProperty(propName);
@@ -108,10 +125,16 @@ abstract class AbstractRedfishJsonReader
         return retVal;
     }
 
-    protected String getComplexValue( String propName,
-                                      String propName2 )
+    /**
+     * from the JSON response parse a key composed of a primary and secondary key to single value. 
+     * @param primaryKeyName
+     * @param subKeyName
+     * @return 
+     */
+    protected String getComplexValue( String primaryKeyName,
+                                      String subKeyName )
     {
-        final ClientProperty clientProp = entity.getProperty(propName);
+        final ClientProperty clientProp = entity.getProperty(primaryKeyName);
         String               retVal;
 
         if (clientProp != null)
@@ -123,7 +146,7 @@ abstract class AbstractRedfishJsonReader
              *   final ClientProperty subProp = cplx.get(propName2);
              *   retVal = subProp.getValue().toString();
              */
-            retVal = (String) cplx.asJavaMap().get(propName2);
+            retVal = (String) cplx.asJavaMap().get(subKeyName);
         }
         else
         {
@@ -133,14 +156,19 @@ abstract class AbstractRedfishJsonReader
         return retVal;
     }
 
-    protected String getLinkArray( String propName )
+    /**
+     * from the JSON response parse an array of links.
+     * @param propName the top level JSON property name.
+     * @return 
+     */
+    protected List<String> getLinkArray( String propName )
     {
         final ClientProperty clientProp = entity.getProperty("Links");
-        String               retVal;
+       List< String >              list= new ArrayList<>();
 
         if (clientProp != null)
         {
-            retVal = null;
+           
 
             ClientComplexValue cplx  = clientProp.getComplexValue();
             ClientProperty     prop2 = cplx.get(propName);
@@ -162,22 +190,24 @@ abstract class AbstractRedfishJsonReader
 
                         if (anno.getTerm().equals(ODATA_ID_FLAG))
                         {
-                            retVal = anno.getValue().toString();
+                           String link = anno.getValue().toString();
 
-                            break;
+                           list.add(link);
+                       
                         }
                     }
                 }
             }
         }
-        else
-        {
-            retVal = null;
-        }
-
-        return retVal;
+       
+        return list;
     }
 
+    /**
+     * from the JSON response get a single link for a resource on the Redfish server.
+     * @param propName
+     * @return 
+     */
     protected String getLinkSingle( String propName )
     {
         final ClientProperty clientProp = entity.getProperty("Links");
@@ -213,6 +243,11 @@ abstract class AbstractRedfishJsonReader
         return retVal;
     }
 
+    /**
+     * from the JSON response read a property they may be present. If it is not a null is returned.
+     * @param propName
+     * @return 
+     */
     protected String getOptionalProperty( String propName )
     {
         final ClientProperty clientProp = entity.getProperty(propName);
@@ -230,8 +265,4 @@ abstract class AbstractRedfishJsonReader
         return retVal;
     }
 
-    protected boolean isHttpResponseValid( )
-    {
-        return isResponseValid;
-    }
 }

@@ -56,7 +56,7 @@ final class ChassisCollectionReader
                     link);
             RedHxChassis  chassis = reader.readChassis();
 
- //              RedHxChassis  chassis =     ChassisReader.readChassis(ctx, link);
+
             
             if (chassis != null)
             {
