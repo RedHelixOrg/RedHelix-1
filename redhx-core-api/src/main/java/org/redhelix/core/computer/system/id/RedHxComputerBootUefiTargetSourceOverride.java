@@ -25,7 +25,7 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * BootSourceOverrideSupported is UefiTarget.
  * <br><br>Git SHA: $Id$
  *
- * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */

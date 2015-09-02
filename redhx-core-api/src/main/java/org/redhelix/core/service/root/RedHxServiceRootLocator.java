@@ -31,7 +31,7 @@ import java.util.Objects;
  * vendor may choose.
  * <br><br>Git SHA: $Id$
  *
- * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will be replaced when checked in to the master branch
+ * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
  * @author Hank Bruning
  *
  */

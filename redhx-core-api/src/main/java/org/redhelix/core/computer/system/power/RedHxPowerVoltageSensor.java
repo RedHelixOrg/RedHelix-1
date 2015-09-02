@@ -24,7 +24,7 @@ import org.redhelix.core.sensor.RedHxGenericSensor;
  * A voltage sensor with an identification and a voltage readiing.
  * <br><br>Git SHA: $Id$
  *
- * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */

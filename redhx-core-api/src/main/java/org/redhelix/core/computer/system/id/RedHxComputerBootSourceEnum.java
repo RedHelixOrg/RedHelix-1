@@ -22,7 +22,7 @@ package org.redhelix.core.computer.system.id;
  *
  * <br><br>Git SHA: $Id$
  *
- * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line. It will
+ * @since RedHelix Version 0.1 It will
  *        be replaced when checked in to the master branch
  * @author Hank Bruning
  *
