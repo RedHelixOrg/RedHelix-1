@@ -1,18 +1,15 @@
 /*
  * Copyright 2015 JBlade LLC
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License
- *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License
  */
 
 
@@ -44,8 +41,8 @@ import java.util.TreeSet;
 /**
  * execute olingo commands to read the Redfish resources and links. This class executes the HTTP request to read data from the server and
  * subclasses do not have to execute any HTTP commands. They do have to parse the JSON response.
- * <br><br>
- * Git SHA: $Id$
+ *
+ *
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -176,9 +173,9 @@ abstract class AbstractRedfishJsonReader
             ClientComplexValue cplx = clientProp.getComplexValue();
 
             /*
-             *   I would expect this code that is commented out should work but does not. It only gets the first element(the propName2 im the complex type
-             *   final ClientProperty subProp = cplx.get(propName2);
-             *   retVal = subProp.getValue().toString();
+             * I would expect this code that is commented out should work but does not. It only gets the
+             * first element(the propName2 im the complex type final ClientProperty subProp =
+             * cplx.get(propName2); retVal = subProp.getValue().toString();
              */
             retVal = (String) cplx.asJavaMap().get(subKeyName);
         }

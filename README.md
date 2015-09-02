@@ -8,8 +8,9 @@ and status of the devices and provides a Restfull API to query the history of th
 ## License
 All RedHelix software is under the Apache 2.0 license.
 
-## What is the difference between Redfish and RedHelix ?
-Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix provides a database of multiple servers and the history for
+## Redfish vs. RedHelix 
+Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix does not. RedHelix provides a databasecontaning 
+multiple servers that implement Redfish and the history for
 each server. At present the database is only in limited to what is in memory and when the Java Virtual Machine shuts down all history is destroyed.
 From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
 
@@ -20,8 +21,14 @@ is tested with the DMTF Redfish mockup files. This prevents any development of R
 to reboot it.  The software is undergoing massive changes. It's pre-alpa and not ready to use but you can see the direction it is going.
 
 ##Roadmap
-As of September 2, 2015 RedHelix will be developed with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order:
+As of September 2, 2015 RedHelix will be developed with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
+
 1. HTTP reading of the Chassis messages and saving them in Java classes. Done.
-2. Browsers interface to RedHelixDb using AngularJs.
-3. HTTP reading of the Computer System messages and saving them in Java classes.
-4. Standalone server called RedHelixDb containing an in memory databases of the Chassis and Computer System.
+2. Implement the Java threads used to monitor a single Redfish server and store the chassis information in the RedHelixDb database.
+3. A browsers interface to RedHelixDb using AngularJs.
+4. HTTP reading of the Computer System messages and saving them in Java classes.
+5. Standalone server called RedHelixDb containing an in memory databases of the Chassis and Computer System.
+
+## Other information
+1. [RedHelix Development](./doc/development.md)
+
