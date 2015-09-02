@@ -29,6 +29,26 @@ As of September 2, 2015 RedHelix will be developed with the DMTF mockup files fo
 4. HTTP reading of the Computer System messages and saving them in Java classes.
 5. Standalone server called RedHelixDb containing an in memory databases of the Chassis and Computer System.
 
+## Architecture
+RedHelix is designed to run in a single Java Virtual Machine(JVM). The connection to manage servers implementing Redfish is accomplished using
+the Apache Olingo library for version 4 of the OData protocol. The connection to the Web Browsers will use Google's AngularJS, an implemntation of JavaScript.
+As of RedHelix 0.1 this has not been implemented.
+![Image](./doc/redhelix-toplevel-architecture-1.svg?raw=true)
+
+### Java package org.redhelix.core.*
+The classes in the Java package org.redhelix.core.* are immutable thread safe 
+implementations of the Redfish JSON messages. This package does not implement Java threads. As of version 0.1 there are 107 classes with and 
+the most interesting interface is org.redhelix.core.chassis.RedHxChassis. The core class does not depend on the Olingo library. 
+
+## Architecture Risk
+While desirable to scale the single JVM to handle more than 40,000 servers,
+comparable to the IPMI implementation of [Hemi DC](http://jblade.com/products/hemi/hemiDC/HemiDcOverview.jsf) it is not clear that can be done with
+HTTP and Olingo. The issue that needs to be addressed is once a HTTP Get is sent by RedHelix does a Java Thread then block waiting on the TCP 
+socket for a response. If so the JVM will run out of Threads. Under IPMI this was not an issue because due to the connectionless nature of UDP
+10 threads could handle in all incomming traffic from the 40,000+ servers.
+
+
 ## Other information
 1. [RedHelix Development](./doc/development.md)
+2. [RedHelix Design](./doc/design.md)
 
