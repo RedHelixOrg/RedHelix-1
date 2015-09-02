@@ -1,18 +1,15 @@
 /*
  * Copyright 2015 JBlade LLC
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License
- *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License
  */
 
 
@@ -44,8 +41,6 @@ import java.util.Set;
 
 /**
  *
- * <br><br>
- * Git SHA: $Id$
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -55,12 +50,12 @@ public class RedHxChassisBuilder
 {
     private static final Map<String, RedHxChassisTypeEnum>       CHASSIS_STRING_TO_TYPE_MAP = createChassisTypeMap();
     private static final Map<String, RedHxIndicatorLedStateEnum> LED_STRING_TO_TYPE_MAP     = createLedTypeMap();
-    private final RedHxChassisTypeEnum                           chassisType;
     private RedHxActionGroup                                     actionGroup;
     private RedHxChassisAssetTag                                 assetTag;
     private RedHxChassisDescription                              chassisDescription;
     private RedHxChassisId                                       chassisId;
     private RedHxChassisName                                     chassisName;
+    private RedHxChassisTypeEnum                                 chassisType;
     private List<RedHxUriPath>                                   computerSystemUriPathList;
     private RedHxUriPath                                         containedByUriPath;
     private List<RedHxUriPath>                                   containsList;
@@ -81,9 +76,7 @@ public class RedHxChassisBuilder
 
     public RedHxChassisBuilder( RedHxChassisTypeEnum chassisType )
     {
-        this.chassisType      = chassisType;
-        this.serialNumber     = serialNumber;
-        this.manufacturerName = manufacturerName;
+        this.chassisType = chassisType;
     }
 
     /**
@@ -99,14 +92,31 @@ public class RedHxChassisBuilder
 
     public RedHxChassis getInstance( )
     {
-        return new ChassisImpl(modelNumber,
-                               partNumber,
-                               sku,
-                               serialNumber,
-                               chassisType,
-                               manufacturerName,
-                               ledState,
-                               assetTag);
+        RedHxChassis chassis = new ChassisImpl(actionGroup,
+                assetTag,
+                chassisDescription,
+                chassisId,
+                chassisName,
+                chassisType,
+                computerSystemUriPathList,
+                containedByUriPath,
+                containsList,
+                cooledByUriPathList,
+                ledState,
+                logServicesUriPath,
+                manufacturerName,
+                modelNumber,
+                operatingHealth,
+                operatingState,
+                partNumber,
+                poweredByList,
+                powerUriPath,
+                serialNumber,
+                sku,
+                systemManagerUriPathList,
+                thermalUriPath);
+
+        return chassis;
     }
 
     public void setActions( Set<RedHxActionProperties> actionSet )
@@ -116,27 +126,62 @@ public class RedHxChassisBuilder
 
     public void setAssetTag( String value )
     {
-        assetTag = new RedHxChassisAssetTag(value);
+        if (!value.isEmpty())
+        {
+            assetTag = new RedHxChassisAssetTag(value);
+        }
+        else
+        {
+            assetTag = null;
+        }
     }
 
     public void setChassisDescription( String value )
     {
-        chassisDescription = new RedHxChassisDescription(value);
+        if (!value.isEmpty())
+        {
+            chassisDescription = new RedHxChassisDescription(value);
+        }
+        else
+        {
+            chassisDescription = null;
+        }
     }
 
     public void setChassisId( String value )
     {
-        chassisId = new RedHxChassisId(value);
+        if (!value.isEmpty())
+        {
+            chassisId = new RedHxChassisId(value);
+        }
+        else
+        {
+            chassisId = null;
+        }
     }
 
     public void setChassisModelName( String value )
     {
-        modelNumber = new RedHxChassisModelNumber(value);
+        if (!value.isEmpty())
+        {
+            modelNumber = new RedHxChassisModelNumber(value);
+        }
+        else
+        {
+            modelNumber = null;
+        }
     }
 
     public void setChassisName( String value )
     {
-        chassisName = new RedHxChassisName(value);
+        if (!value.isEmpty())
+        {
+            chassisName = new RedHxChassisName(value);
+        }
+        else
+        {
+            chassisName = null;
+        }
     }
 
     public void setComputerSystemList( List<String> valueList )
@@ -196,12 +241,26 @@ public class RedHxChassisBuilder
 
     public void setManufacturerName( String value )
     {
-        this.manufacturerName = new RedHxChassisManufacturerName(value);
+        if (!value.isEmpty())
+        {
+            this.manufacturerName = new RedHxChassisManufacturerName(value);
+        }
+        else
+        {
+            manufacturerName = null;
+        }
     }
 
     public void setModelNumber( String value )
     {
-        modelNumber = new RedHxChassisModelNumber(value);
+        if (!value.isEmpty())
+        {
+            modelNumber = new RedHxChassisModelNumber(value);
+        }
+        else
+        {
+            modelNumber = null;
+        }
     }
 
     public void setOperatingState( String value )
@@ -219,7 +278,14 @@ public class RedHxChassisBuilder
 
     public void setPartNumber( String value )
     {
-        partNumber = new RedHxChassisPartNumber(value);
+        if (!value.isEmpty())
+        {
+            partNumber = new RedHxChassisPartNumber(value);
+        }
+        else
+        {
+            partNumber = null;
+        }
     }
 
     public void setPathToLogServices( String value )
@@ -229,12 +295,26 @@ public class RedHxChassisBuilder
 
     public void setPathToPower( String value )
     {
-        powerUriPath = new RedHxUriPath(value);
+        if (!value.isEmpty())
+        {
+            powerUriPath = new RedHxUriPath(value);
+        }
+        else
+        {
+            powerUriPath = null;
+        }
     }
 
     public void setPathToThermal( String value )
     {
-        thermalUriPath = new RedHxUriPath(value);
+        if (!value.isEmpty())
+        {
+            thermalUriPath = new RedHxUriPath(value);
+        }
+        else
+        {
+            thermalUriPath = null;
+        }
     }
 
     public void setPoweredByList( List<String> valueList )
@@ -252,12 +332,26 @@ public class RedHxChassisBuilder
 
     public void setSerialNumber( String value )
     {
-        this.serialNumber = new RedHxChassisSerialNumber(value);
+        if (!value.isEmpty())
+        {
+            this.serialNumber = new RedHxChassisSerialNumber(value);
+        }
+        else
+        {
+            serialNumber = null;
+        }
     }
 
     public void setSku( String value )
     {
-        sku = new RedHxChassisSKU(value);
+        if (!value.isEmpty())
+        {
+            sku = new RedHxChassisSKU(value);
+        }
+        else
+        {
+            sku = null;
+        }
     }
 
     public void setStatusHealth( String value )
