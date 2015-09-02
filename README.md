@@ -33,7 +33,7 @@ As of September 2, 2015 RedHelix will be developed with the DMTF mockup files fo
 RedHelix is designed to run in a single Java Virtual Machine(JVM). The connection to manage servers implementing Redfish is accomplished using
 the Apache Olingo library for version 4 of the OData protocol. The connection to the Web Browsers will use Google's AngularJS, an implemntation of JavaScript.
 As of RedHelix 0.1 this has not been implemented.
-![Image](./doc/redhelix-toplevel-architecture-1.svg?raw=true)
+![RedHelix Architecture](https://rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-1.svg)
 
 ### Java package org.redhelix.core.*
 The classes in the Java package org.redhelix.core.* are immutable thread safe 
