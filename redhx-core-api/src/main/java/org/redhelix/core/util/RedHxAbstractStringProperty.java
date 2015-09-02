@@ -27,12 +27,11 @@ package org.redhelix.core.util;
  *
  */
 public abstract class RedHxAbstractStringProperty
+        implements Comparable<RedHxAbstractStringProperty>
 {
     /**
      * The maximum number of characters allowed in a
      */
-
-    // public final static short MAX_CHAR_COUNT=;//arbitrary
     private final int    maxCharCount;
     private final String propName;
 
@@ -58,6 +57,12 @@ public abstract class RedHxAbstractStringProperty
     {
         this.maxCharCount = 0;
         this.propName     = null;
+    }
+
+    @Override
+    public int compareTo( RedHxAbstractStringProperty other )
+    {
+        return propName.compareTo(other.propName);
     }
 
     /*

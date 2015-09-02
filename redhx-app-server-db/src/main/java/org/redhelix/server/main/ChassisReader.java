@@ -19,17 +19,22 @@
 
 package org.redhelix.server.main;
 
-import java.net.URISyntaxException;
-import java.util.List;
+import org.redhelix.core.action.RedHxActionProperties;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisBuilder;
-import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
-import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
+import org.redhelix.core.chassis.RedHxChassisTypeEnum;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
+import org.redhelix.core.util.RedHxParseException;
+import org.redhelix.core.util.RedHxUriPath;
+
+import java.net.URISyntaxException;
+
+import java.util.List;
+import java.util.Set;
 
 /**
- *
+ * send HTTP get to a Redfish server and parse the JSON response into a RedHxChassis class.
  * <br><br>
  * Git SHA: $Id$
  *
@@ -52,9 +57,8 @@ final class ChassisReader
     private final static String JSON_KEY_LOG_SERVICES         = "LogServices";
     private final static String JSON_KEY_MANUFACTURER         = "Manufacturer";
     private final static String JSON_KEY_MODEL                = "Model";
-    private final static String JSON_KEY_NAME                 = "Name";
+    private final static String JSON_KEY_CHASSIS_NAME         = "Name";
     private final static String JSON_KEY_PART_NUMBER          = "PartNumber";
-    private final static String JSON_KEY_POWER                = "Power";
     private final static String JSON_KEY_SERIAL_NUMBER        = "SerialNumber";
     private final static String JSON_KEY_SKU                  = "SKU";
     private final static String JSON_KEY_STATUS               = "Status";
@@ -68,17 +72,18 @@ final class ChassisReader
     private final static String JSON_SUB_KEY_STATUS_STATE     = "State";
 
     ChassisReader( RedHxServerConnectionContext ctx,
-                   String                       chassisLink )
+                   RedHxUriPath                 pathToChassis )
             throws URISyntaxException,
                    RedHxHttpResponseException
     {
         super(ctx,
               RedHxServiceRootIdEum.CHASSIS,
-              chassisLink);
+              pathToChassis);
     }
 
-
     /**
+     * parse the JSON response into a RedHxChassis class. It create method sent the HTTP request for the chassis message an validated that a
+     * JSON message had been received.
      *
      * @param ctx
      * @param chassisLink
@@ -88,67 +93,208 @@ final class ChassisReader
      */
     RedHxChassis readChassis( )
             throws RedHxHttpResponseException,
+                   RedHxParseException,
                    URISyntaxException
     {
         final RedHxChassis chassis;
+        String             tmpStr;
 
-        System.out.println("HFB5: HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+        tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_TYPE);
 
-        RedHxChassisManufacturerName manufacturerName = null;
-        RedHxChassisSerialNumber     serialNumber     = null;
-        RedHxChassisBuilder          builder          = new RedHxChassisBuilder(manufacturerName,
-                serialNumber);
-        String                       tmpStr;
+        RedHxChassisTypeEnum chassisType = RedHxChassisBuilder.convertChassisType(tmpStr);
+
+        if (chassisType == null)
+        {
+            throw new RedHxParseException(RedHxServiceRootIdEum.CHASSIS,
+                                          "The path to " + super.getUriPath().getPath()
+                                          + " for the chassis does not contain the required field \"" + JSON_KEY_CHASSIS_TYPE
+                                          + "\" in the JSON message.");
+        }
+
+        RedHxChassisBuilder builder = new RedHxChassisBuilder(chassisType);
 
         /*
          * read anotations
          */
         tmpStr = getAnnotation(JSON_ANOTATION_KEY_POWER);
+
+        if (tmpStr != null)
+        {
+            builder.setPathToPower(tmpStr);
+        }
+
         tmpStr = getAnnotation(JSON_ANOTATION_KEY_THERMAL);
+
+        if (tmpStr != null)
+        {
+            builder.setPathToThermal(tmpStr);
+        }
+
         tmpStr = getAnnotation(JSON_ANOTATION_LOG_SERVICES);
+
+        if (tmpStr != null)
+        {
+            builder.setPathToLogServices(tmpStr);
+        }
+
+        /**
+         * read actions
+         */
+        Set<RedHxActionProperties> actionSet = getActions(JSON_KEY_ACTIONS);
+
+        if (tmpStr != null)
+        {
+            builder.setActions(actionSet);
+        }
 
         /*
          * read values with two keys
          */
         tmpStr = getComplexValue(JSON_KEY_STATUS, JSON_SUB_KEY_STATUS_HEALTH);
+
+        if (tmpStr != null)
+        {
+            builder.setStatusHealth(tmpStr);
+        }
+
         tmpStr = getComplexValue(JSON_KEY_STATUS, JSON_SUB_KEY_STATUS_STATE);
+
+        if (tmpStr != null)
+        {
+            builder.setOperatingState(tmpStr);
+        }
 
         /*
          * read properties
          */
-        tmpStr = getOptionalProperty(JSON_KEY_ACTIONS);
         tmpStr = getOptionalProperty(JSON_KEY_ASSET_TAG);
-        tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_TYPE);
+
+        if (tmpStr != null)
+        {
+            builder.setAssetTag(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_DESCRIPTION);
+
+        if (tmpStr != null)
+        {
+            builder.setChassisDescription(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_ID);
+
+        if (tmpStr != null)
+        {
+            builder.setChassisId(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_INDICATOR_LED);
-        tmpStr = getOptionalProperty(JSON_KEY_LOG_SERVICES);
+
+        if (tmpStr != null)
+        {
+            builder.setIndicatorLed(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_MANUFACTURER);
+
+        if (tmpStr != null)
+        {
+            builder.setManufacturerName(tmpStr);
+        }
+
+        tmpStr = getOptionalProperty(JSON_KEY_LOG_SERVICES);
+
+        if (tmpStr != null)
+        {
+            builder.setPathToLogServices(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_MODEL);
-        tmpStr = getOptionalProperty(JSON_KEY_NAME);
+
+        if (tmpStr != null)
+        {
+            builder.setModelNumber(tmpStr);
+        }
+
+        tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_NAME);
+
+        if (tmpStr != null)
+        {
+            builder.setChassisName(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_PART_NUMBER);
-        tmpStr = getOptionalProperty(JSON_KEY_POWER);
+
+        if (tmpStr != null)
+        {
+            builder.setPartNumber(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_SERIAL_NUMBER);
+
+        if (tmpStr != null)
+        {
+            builder.setSerialNumber(tmpStr);
+        }
+
         tmpStr = getOptionalProperty(JSON_KEY_SKU);
+
+        if (tmpStr != null)
+        {
+            builder.setSku(tmpStr);
+        }
 
         /*
          * read single links
          */
         tmpStr = getLinkSingle(JSON_LINK_KEY_CONTAINED_BY);
 
+        if (tmpStr != null)
+        {
+            builder.setContainedByLink(tmpStr);
+        }
+
         /*
          * read lists of links.
          */
         List<String> computerSystemList = getLinkArray(JSON_LINK_KEY_COMPUTER_SYSTEM);
-        List<String> systemManagerList  = getLinkArray(JSON_LINK_KEY_MANAGED_BY);
-        List<String> containsList       = getLinkArray(JSON_LINK_KEY_CONTAINS);
-        List<String> cooledByList       = getLinkArray(JSON_LINK_KEY_COOLED_BY);
-        List<String> poweredByList      = getLinkArray(JSON_LINK_KEY_POWERED_BY);
+
+        if (computerSystemList != null)
+        {
+            builder.setComputerSystemList(computerSystemList);
+        }
+
+        List<String> systemManagerList = getLinkArray(JSON_LINK_KEY_MANAGED_BY);
+
+        if (systemManagerList != null)
+        {
+            builder.setSystemManagerList(systemManagerList);
+        }
+
+        List<String> containsList = getLinkArray(JSON_LINK_KEY_CONTAINS);
+
+        if (containsList != null)
+        {
+            builder.setContainsList(containsList);
+        }
+
+        List<String> cooledByList = getLinkArray(JSON_LINK_KEY_COOLED_BY);
+
+        if (cooledByList != null)
+        {
+            builder.setCooledByList(cooledByList);
+        }
+
+        List<String> poweredByList = getLinkArray(JSON_LINK_KEY_POWERED_BY);
+
+        if (poweredByList != null)
+        {
+            builder.setPoweredByList(poweredByList);
+        }
 
         //
         chassis = builder.getInstance();
 
         return chassis;
     }
-
 }

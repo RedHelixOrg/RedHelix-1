@@ -31,7 +31,7 @@ public class RedHxProcessorModel
     /**
      * The maximum number of characters allowed in a Processor Model Name.
      */
-    public static final byte MAX_CHAR_COUNT = 30;    // arbrartray.
+    public static final byte MAX_CHAR_COUNT_REDH_DEFINED = 30;    // arbrartray.
     private final String     model;
 
     public RedHxProcessorModel( String model )

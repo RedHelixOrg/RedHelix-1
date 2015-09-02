@@ -35,14 +35,14 @@ public class RedHxComputerBootUefiTargetSourceOverride
     /**
      * The maximum number of characters in a UEFI boot path.
      */
-    public static final short MAX_CHAR_COUNT = 200;
+    public static final short MAX_CHAR_COUNT_REDH_DEFINED = 200;
 
     /**
      * @param path
      */
     public RedHxComputerBootUefiTargetSourceOverride( String path )
     {
-        super(MAX_CHAR_COUNT,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               path);
     }
 

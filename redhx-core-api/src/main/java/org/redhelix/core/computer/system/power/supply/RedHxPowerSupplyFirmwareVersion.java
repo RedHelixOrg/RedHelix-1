@@ -34,7 +34,7 @@ public class RedHxPowerSupplyFirmwareVersion
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
-    public final static short MAX_CHAR_COUNT = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 
     /**
      * @param maxCharCount
@@ -45,8 +45,6 @@ public class RedHxPowerSupplyFirmwareVersion
     {
         super(maxCharCount,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
     public String getModel( )

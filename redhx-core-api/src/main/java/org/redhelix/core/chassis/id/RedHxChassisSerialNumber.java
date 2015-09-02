@@ -34,19 +34,16 @@ public class RedHxChassisSerialNumber
     /**
      * The maximum number of characters allowed in a computer serial number.
      */
-    public final static short MAX_CHAR_COUNT = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 
     /**
-     * @param maxCharCount
+     *
      * @param propName
      */
-    public RedHxChassisSerialNumber( int    maxCharCount,
-                                     String propName )
+    public RedHxChassisSerialNumber( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
     public String getSerialNumber( )

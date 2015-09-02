@@ -18,7 +18,6 @@
 
 package org.redhelix.core.chassis.id;
 
-import org.redhelix.core.computer.system.id.*;
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
@@ -35,16 +34,15 @@ public class RedHxChassisSKU
     /**
      * The maximum number of characters allowed in a SKU.
      */
-    public final static short MAX_CHAR_COUNT = 40;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 40;    // arbitrary
 
     /**
      * @param maxCharCount
      * @param propName
      */
-    public RedHxChassisSKU( int    maxCharCount,
-                            String propName )
+    public RedHxChassisSKU( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 

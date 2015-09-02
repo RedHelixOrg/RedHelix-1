@@ -20,7 +20,7 @@ package org.redhelix.core.chassis;
 
 import org.redhelix.core.chassis.id.RedHxChassisAssetTag;
 import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
-import org.redhelix.core.chassis.id.RedHxChassisModelName;
+import org.redhelix.core.chassis.id.RedHxChassisModelNumber;
 import org.redhelix.core.chassis.id.RedHxChassisPartNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSKU;
@@ -43,7 +43,7 @@ public interface RedHxChassis
 
     RedHxChassisManufacturerName getManufacturerName( );
 
-    RedHxChassisModelName getModelName( );
+    RedHxChassisModelNumber getModelName( );
 
     RedHxChassisPartNumber getPartNumber( );
 

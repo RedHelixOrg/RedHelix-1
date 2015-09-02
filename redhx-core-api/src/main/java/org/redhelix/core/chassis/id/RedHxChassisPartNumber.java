@@ -34,19 +34,15 @@ public class RedHxChassisPartNumber
     /**
      * The maximum number of characters allowed in a part number.
      */
-    public final static short MAX_CHAR_COUNT = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxChassisPartNumber( int    maxCharCount,
-                                   String propName )
+    public RedHxChassisPartNumber( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
-
-        // TODO Auto-generated constructor stub
     }
 
     public String getPartNumber( )

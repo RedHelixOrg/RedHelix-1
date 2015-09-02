@@ -34,7 +34,7 @@ public class RedHxComputerSKU
     /**
      * The maximum number of characters allowed in a SKU.
      */
-    public final static short MAX_CHAR_COUNT = 40;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 40;    // arbitrary
 
     /**
      * @param maxCharCount

@@ -21,32 +21,32 @@ package org.redhelix.core.chassis.id;
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- * the chassis Manufacturer name.
+ *
  * <br><br>Git SHA: $Id$
  *
  * @since RedHelix Version HELIX_VERSION_TAG // Do not change this line.
  * @author Hank Bruning
  *
  */
-public class RedHxChassisManufacturerName
+public class RedHxChassisDescription
         extends RedHxAbstractStringProperty
 {
     /**
-     * The maximum number of characters allowed in a manufacturer name.
+     * The maximum number of characters allowed in a chassis description
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 1000;    // arbitrary
 
     /**
-     *
+     * @param maxCharCount
      * @param propName
      */
-    public RedHxChassisManufacturerName( String propName )
+    public RedHxChassisDescription( String propName )
     {
         super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 
-    public String getManufacturerName( )
+    public String getPartNumber( )
     {
         return super.getValue();
     }

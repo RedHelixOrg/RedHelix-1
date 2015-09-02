@@ -29,6 +29,7 @@ import org.apache.olingo.client.api.domain.ClientValue;
 import org.redhelix.core.chassis.RedHxChassisParseException;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
+import org.redhelix.core.util.RedHxUriPath;
 
 import java.net.HttpURLConnection;
 
@@ -66,12 +67,12 @@ final class ChassisLinkCollectionReader
      * @throws RedHxChassisParseException
      * @throws RedHxHttpResponseException
      */
-    static Set<String> readChassisCollection( RedHxServerConnectionContext ctx )
+    static Set<RedHxUriPath> readChassisCollection( RedHxServerConnectionContext ctx )
             throws RedHxChassisParseException,
                    RedHxHttpResponseException
     {
         final ODataRetrieveResponse<ClientEntity> response       = ctx.getChassisEntityRequest().execute();
-        final Set<String>                         chassisLinkSet = new HashSet<>();
+        final Set<RedHxUriPath>                   chassisPathSet = new HashSet<>();
 
         if (response.getStatusCode() == HttpURLConnection.HTTP_OK)
         {
@@ -92,14 +93,16 @@ final class ChassisLinkCollectionReader
 
                     if (anno.getTerm().equals(ODATA_SINGLE_CHASSIS_KEYWORD))
                     {
-                        String chassisUrl = anno.getValue().toString();
+                        String chassisPath = anno.getValue().toString();
 
-                        if (chassisUrl == null)
+                        if (chassisPath == null)
                         {
                             throw new RedHxChassisParseException("The JSON annotation pointing to a specific chassis was null.");
                         }
 
-                        chassisLinkSet.add(chassisUrl);
+                        RedHxUriPath path = new RedHxUriPath(chassisPath);
+
+                        chassisPathSet.add(path);
                     }
                     else
                     {
@@ -120,6 +123,6 @@ final class ChassisLinkCollectionReader
                     "Can not read Chassis Collection.");
         }
 
-        return chassisLinkSet;
+        return chassisPathSet;
     }
 }

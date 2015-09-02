@@ -30,6 +30,7 @@ import org.redhelix.core.service.root.RedHxServiceRootLocator;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
+import org.redhelix.core.util.RedHxUriPath;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -70,10 +71,10 @@ public final class RedHxServerConnectionContext
         return req;
     }
 
-    public ODataEntityRequest<ClientEntity> getEntityRequest( String link )
+    public ODataEntityRequest<ClientEntity> getEntityRequest( RedHxUriPath pathToResource )
             throws URISyntaxException
     {
-        URI                              myUri = serviceRootLocator.getUri(link);
+        URI                              myUri = serviceRootLocator.getUri(pathToResource.getPath());
         ODataEntityRequest<ClientEntity> req   = client.getRetrieveRequestFactory().getEntityRequest(myUri);
 
         return req;

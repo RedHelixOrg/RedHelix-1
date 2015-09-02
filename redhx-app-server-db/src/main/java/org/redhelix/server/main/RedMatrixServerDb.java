@@ -18,12 +18,13 @@
 
 package org.redhelix.server.main;
 
-import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.chassis.RedHxChassisParseException;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxHttpResponseException;
+import org.redhelix.core.util.RedHxParseException;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
+import org.redhelix.core.util.RedHxUriPath;
 
 import java.net.URISyntaxException;
 
@@ -32,7 +33,8 @@ import java.util.logging.Logger;
 import java.util.Set;
 
 /**
- *
+ * A sample way to test reading the Redfish Chassis JSON mockups from the DMTF. This requires the DMTF DSP2043_0.99.0a is running on TCP port
+ * 9080. Also each of the chassis index.html files has to be modified and switch the field names "Name" and "Description".
  * <br><br>
  * Git SHA: $Id$
  *
@@ -59,19 +61,18 @@ public class RedMatrixServerDb
                                9080,
                                "mockup1");
 
-            Set<String> chassisLinkSet;
+            Set<RedHxUriPath> chassisPathSet;
 
             try
             {
-                chassisLinkSet = ChassisLinkCollectionReader.readChassisCollection(ctx);
+                chassisPathSet = ChassisLinkCollectionReader.readChassisCollection(ctx);
 
                 RedHxChassisCollection chassisCollection = ChassisCollectionReader.chassisCollectionReader(ctx,
-                        chassisLinkSet);
+                        chassisPathSet);
 
-                for (RedHxChassis chassis : chassisCollection)
-                {
-                    System.out.println("HFB5:  chassis " + chassis);
-                }
+                /**
+                 * todo: add reading the computer systems from the chassis collection.
+                 */
             }
             catch (RedHxChassisParseException ex)
             {
@@ -80,6 +81,12 @@ public class RedMatrixServerDb
                         ex);
             }
             catch (RedHxHttpResponseException ex)
+            {
+                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
+                        null,
+                        ex);
+            }
+            catch (RedHxParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
                         null,

@@ -20,7 +20,7 @@ package org.redhelix.core.chassis;
 
 import org.redhelix.core.chassis.id.RedHxChassisAssetTag;
 import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
-import org.redhelix.core.chassis.id.RedHxChassisModelName;
+import org.redhelix.core.chassis.id.RedHxChassisModelNumber;
 import org.redhelix.core.chassis.id.RedHxChassisPartNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSKU;
@@ -40,12 +40,12 @@ class ChassisImpl
     private final RedHxChassisTypeEnum         chassisType;
     private final RedHxIndicatorLedStateEnum   ledState;
     private final RedHxChassisManufacturerName manufacturerName;
-    private final RedHxChassisModelName        modelName;
+    private final RedHxChassisModelNumber      modelName;
     private final RedHxChassisPartNumber       partNumber;
     private final RedHxChassisSerialNumber     serialNumber;
     private final RedHxChassisSKU              sku;
 
-    ChassisImpl( RedHxChassisModelName        modelName,
+    ChassisImpl( RedHxChassisModelNumber      modelName,
                  RedHxChassisPartNumber       partNumber,
                  RedHxChassisSKU              sku,
                  RedHxChassisSerialNumber     serialNumber,
@@ -101,7 +101,7 @@ class ChassisImpl
     }
 
     @Override
-    public RedHxChassisModelName getModelName( )
+    public RedHxChassisModelNumber getModelName( )
     {
         return modelName;
     }
