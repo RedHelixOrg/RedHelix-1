@@ -1,0 +1,29 @@
+-------------------------
+Identification
+Chassis ID:             Blade1
+Chassis Description:    Blade example of a blade in an 2-blade enclosure in a rack.  This blade has a manager that is also the enclosure manager and that manager is part of a redundancy pair.
+Chassis Name:           Blade 1
+Chassis Type:           BLADE
+Manufacturer Name:      ContessoCompany
+Model Number:           BladeModelNumber
+PartNumber:             
+Asset Tag:              CustomerWritableThingy
+Serial Number:          USE135ES65
+SKU:                    
+Led State:              
+-------------------------
+Health
+Operating Health:       OK
+Operating State:        ENABLED
+-------------------------
+Paths
+Actions:                
+Computer Systems Paths: /redfish/v1/Systems/2
+Contained By Path:      /redfish/v1/Chassis/Enc1
+Contains Paths:         
+Cooled By Paths:        /redfish/v1/Chassis/Enc1/Thermal#/Fans
+Log Services Path:      
+Powered By Paths:       /redfish/v1/Chassis/Enc1/Power#/PowerSupplies/0
+Power Path:             
+System Manager Paths:   /redfish/v1/Managers/2, /redfish/v1/Managers/3
+Thermal Path:       

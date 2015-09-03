@@ -11,39 +11,33 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+package org.redhelix.server.main.reader.chassis;
 
-
-
-package org.redhelix.server.main;
-
+import java.net.HttpURLConnection;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
 import org.apache.olingo.client.api.domain.ClientAnnotation;
 import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientProperty;
 import org.apache.olingo.client.api.domain.ClientValue;
-
 import org.redhelix.core.chassis.RedHxChassisParseException;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxUriPath;
-
-import java.net.HttpURLConnection;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.redhelix.server.main.RedHxServerConnectionContext;
 
 /**
- * read zero or more links, each one pointing to a unique chassis. This class does not have a constructor.
- *
- *
+ * read zero or more links, each one pointing to a unique chassis. This class does not have a constructor only a static method.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-final class ChassisLinkCollectionReader
+public final class RedHxChassisPathCollectionReader
 {
+
     /**
      * The JSON property that identifies an array of chassis. This is derived from the Redfish file ChassisCollection.json.
      */
@@ -54,22 +48,24 @@ final class ChassisLinkCollectionReader
      */
     private static final String ODATA_SINGLE_CHASSIS_KEYWORD = "odata.id";
 
-    ChassisLinkCollectionReader( RedHxServerConnectionContext ctx ) {}
+    private RedHxChassisPathCollectionReader()
+    {
+    }
 
     /**
-     * get a set Strings used to identify unique chassis. Each String can be used in a URL to identify a chassis.
+     * get a set of Paths used to identify unique chassis. Each Path can be used in a URL to identify a chassis.
      *
      * @param ctx the communication context to single Redfish server.
-     * @return A set of String. No element in the set is null.
+     * @return A set of Paths. No element in the set is null.
      * @throws RedHxChassisParseException
      * @throws RedHxHttpResponseException
      */
-    static Set<RedHxUriPath> readChassisCollection( RedHxServerConnectionContext ctx )
+    public static Set<RedHxUriPath> readChassisCollection(RedHxServerConnectionContext ctx)
             throws RedHxChassisParseException,
                    RedHxHttpResponseException
     {
-        final ODataRetrieveResponse<ClientEntity> response       = ctx.getChassisEntityRequest().execute();
-        final Set<RedHxUriPath>                   chassisPathSet = new HashSet<>();
+        final ODataRetrieveResponse<ClientEntity> response = ctx.getChassisEntityRequest().execute();
+        final Set<RedHxUriPath> chassisPathSet = new HashSet<>();
 
         if (response.getStatusCode() == HttpURLConnection.HTTP_OK)
         {
@@ -116,8 +112,8 @@ final class ChassisLinkCollectionReader
         else
         {
             throw new RedHxHttpResponseException(RedHxServiceRootIdEum.CHASSIS,
-                    response.getStatusCode(),
-                    "Can not read Chassis Collection.");
+                                                 response.getStatusCode(),
+                                                 "Can not read Chassis Collection.");
         }
 
         return chassisPathSet;

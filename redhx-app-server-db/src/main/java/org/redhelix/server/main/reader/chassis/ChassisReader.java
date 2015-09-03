@@ -14,7 +14,7 @@
 
 
 
-package org.redhelix.server.main;
+package org.redhelix.server.main.reader.chassis;
 
 import org.redhelix.core.action.RedHxActionProperties;
 import org.redhelix.core.chassis.RedHxChassis;
@@ -29,6 +29,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Set;
+import org.redhelix.server.main.AbstractRedfishJsonReader;
+import org.redhelix.server.main.RedHxServerConnectionContext;
 
 /**
  * send HTTP get to a Redfish server and parse the JSON response into a RedHxChassis class.
