@@ -16,34 +16,20 @@
 
 package org.redhelix.core.chassis.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- * The chassis name. Git SHA: $Id$
+ * The chassis name.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public class RedHxChassisName
-        extends RedHxAbstractStringProperty
+public interface RedHxChassisName
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a chassis name.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param propName
-     */
-    public RedHxChassisName( String propName )
-    {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
-              propName);
-    }
-
-    public String getChassisName( )
-    {
-        return super.getValue();
-    }
 }

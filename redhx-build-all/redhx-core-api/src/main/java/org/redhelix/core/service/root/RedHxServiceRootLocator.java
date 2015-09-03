@@ -19,162 +19,21 @@ package org.redhelix.core.service.root;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
-
 /**
  * Convert from a Redfish root service ID to the URL of the service. The URL contains the Redfish protocol version number and path to the
  * Redfish service. This allows each server to present a Redfish implemention of different UDP ports with any URL path the service that a
- * vendor may choose. Git SHA: $Id$
+ * vendor may choose.
  *
  * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
  * @author Hank Bruning
  *
  */
-public class RedHxServiceRootLocator
+public interface RedHxServiceRootLocator
 {
-    private final String                          hostName;
-    private final RedHxServiceRootId              serviceRoot;
-    private final Map<RedHxServiceRootIdEum, URI> serviceToUriMap;
-    private final int                             tcpPortNumber;
-    private final String                          tcpProtocol;
+    RedHxServiceRootId getServiceRoot( );
 
-    public RedHxServiceRootLocator( final RedHxServiceRootId              serviceRoot,
-                                    final String                          httpProtocolStr,
-                                    final String                          hostName,
-                                    final int                             tcpPortNumber,
-                                    final Map<RedHxServiceRootIdEum, URI> serviceToUriMap )
-    {
-        this.serviceRoot     = serviceRoot;
-        this.tcpProtocol     = httpProtocolStr;
-        this.hostName        = hostName;
-        this.tcpPortNumber   = tcpPortNumber;
-        this.serviceToUriMap = Collections.unmodifiableMap(serviceToUriMap);
-    }
+    URI getUri( String urlString )
+            throws URISyntaxException;
 
-    private RedHxServiceRootLocator( )
-    {
-        this.serviceRoot     = null;
-        this.tcpProtocol     = null;
-        this.hostName        = null;
-        this.tcpPortNumber   = 0;
-        this.serviceToUriMap = null;
-    }
-
-    @Override
-    public boolean equals( Object obj )
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        if (obj == null)
-        {
-            return false;
-        }
-
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final RedHxServiceRootLocator other = (RedHxServiceRootLocator) obj;
-
-        if (this.tcpPortNumber != other.tcpPortNumber)
-        {
-            return false;
-        }
-
-        if (!Objects.equals(this.hostName, other.hostName))
-        {
-            return false;
-        }
-
-        if (!Objects.equals(this.tcpProtocol, other.tcpProtocol))
-        {
-            return false;
-        }
-
-        if (!Objects.equals(this.serviceRoot, other.serviceRoot))
-        {
-            return false;
-        }
-
-        if (!Objects.equals(this.serviceToUriMap, other.serviceToUriMap))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    public RedHxServiceRootId getServiceRoot( )
-    {
-        return serviceRoot;
-    }
-
-    public URI getUri( String urlString )
-            throws URISyntaxException
-    {
-        final URI uri = new URI(tcpProtocol,
-                                null,
-                                hostName,
-                                tcpPortNumber,
-                                urlString,
-                                null,
-                                null);
-
-        return uri;
-    }
-
-    public URI getUri( RedHxServiceRootIdEum serviceId )
-    {
-        final URI uri = serviceToUriMap.get(serviceId);
-
-        return uri;
-    }
-
-    @Override
-    public int hashCode( )
-    {
-        int hash = 5;
-
-        hash = 97 * hash + Objects.hashCode(this.hostName);
-        hash = 97 * hash + this.tcpPortNumber;
-
-        return hash;
-    }
-
-    @Override
-    public String toString( )
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[ ");
-
-        boolean isCommaInserted = false;
-
-        for (RedHxServiceRootIdEum id : serviceToUriMap.keySet())
-        {
-            if (isCommaInserted)
-            {
-                sb.append(", ");
-            }
-
-            URI uri = serviceToUriMap.get(id);
-
-            sb.append("[");
-            sb.append(id);
-            sb.append(", ");
-            sb.append(uri);
-            sb.append("]");
-            isCommaInserted = true;
-        }
-
-        sb.append(" ]");
-
-        return sb.toString();
-    }
+    URI getUri( RedHxServiceRootIdEum serviceId );
 }

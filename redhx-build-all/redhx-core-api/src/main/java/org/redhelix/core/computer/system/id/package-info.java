@@ -1,6 +1,5 @@
 
 /**
- * Identify the computer manufacturer, model and boot methods. All classes are immutable and are an
- * emum or return a string.
+ * Identify the computer manufacturer, model and boot methods.
  */
 package org.redhelix.core.computer.system.id;

@@ -11,12 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.server.main.reader.chassis;
 
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.chassis.RedHxChassisCollectionImpl;
@@ -24,6 +23,12 @@ import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxParseException;
 import org.redhelix.core.util.RedHxUriPath;
 import org.redhelix.server.main.RedHxServerConnectionContext;
+
+import java.net.URISyntaxException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * read a collection of links to unique chassis on the Redfish server. This class does not have a public constructor.
@@ -33,13 +38,10 @@ import org.redhelix.server.main.RedHxServerConnectionContext;
  */
 public final class RedHxChassisCollectionReader
 {
+    private RedHxChassisCollectionReader( ) {}
 
-    private RedHxChassisCollectionReader()
-    {
-    }
-
-    public static RedHxChassisCollection chassisCollectionReader(RedHxServerConnectionContext ctx,
-                                                                 Set<RedHxUriPath> chassisPathSet)
+    public static RedHxChassisCollection chassisCollectionReader( RedHxServerConnectionContext ctx,
+            Set<RedHxUriPath>                                                                  chassisPathSet )
             throws RedHxHttpResponseException,
                    URISyntaxException,
                    RedHxParseException
@@ -48,9 +50,9 @@ public final class RedHxChassisCollectionReader
 
         for (RedHxUriPath link : chassisPathSet)
         {
-            ChassisReader reader = new ChassisReader(ctx,
-                                                     link);
-            RedHxChassis chassis = reader.readChassis();
+            ChassisReader reader  = new ChassisReader(ctx,
+                    link);
+            RedHxChassis  chassis = reader.readChassis();
 
             if (chassis != null)
             {

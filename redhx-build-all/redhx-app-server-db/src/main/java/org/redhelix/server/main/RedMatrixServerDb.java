@@ -11,12 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.server.main;
 
-import java.net.URISyntaxException;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.chassis.RedHxChassisColumnFormatter;
@@ -29,6 +28,12 @@ import org.redhelix.core.util.RedHxUriPath;
 import org.redhelix.server.main.reader.chassis.RedHxChassisCollectionReader;
 import org.redhelix.server.main.reader.chassis.RedHxChassisPathCollectionReader;
 
+import java.net.URISyntaxException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Set;
+
 /**
  * A simple way to test reading the Redfish Chassis JSON mockups from the DMTF. This requires the DMTF DSP2043_0.99.0a is running on TCP
  * port 9080. Also each of the chassis index.html files has to be modified and switch the field names "Name" and "Description".
@@ -38,11 +43,10 @@ import org.redhelix.server.main.reader.chassis.RedHxChassisPathCollectionReader;
  */
 public class RedMatrixServerDb
 {
-
     /**
      * @param args
      */
-    public static void main(String[] args)
+    public static void main( String[] args )
     {
 
         /**
@@ -87,19 +91,19 @@ public class RedMatrixServerDb
                  * Second, for each path read all the chassis data. That is it, your done.
                  */
                 RedHxChassisCollection chassisCollection = RedHxChassisCollectionReader.chassisCollectionReader(ctx,
-                                                                                                                chassisPathSet);
+                        chassisPathSet);
 
                 /*
                  * All communication with the Redfish server is over now print out the results. These are output format parameters.
                  */
-                final boolean isRowTitlePrinted = true;
-                final String columnDelimiter = ":";
-                final boolean isSectionHeaderPrinted = true;
-                final boolean isPathPrinted = true;
-                final RedHxChassisColumnFormatter formatter = new RedHxChassisColumnFormatter(isRowTitlePrinted,
-                                                                                              columnDelimiter,
-                                                                                              isSectionHeaderPrinted,
-                                                                                              isPathPrinted);
+                final boolean                     isRowTitlePrinted      = true;
+                final String                      columnDelimiter        = ":";
+                final boolean                     isSectionHeaderPrinted = true;
+                final boolean                     isPathPrinted          = true;
+                final RedHxChassisColumnFormatter formatter              = new RedHxChassisColumnFormatter(isRowTitlePrinted,
+                        columnDelimiter,
+                        isSectionHeaderPrinted,
+                        isPathPrinted);
 
                 /**
                  * loop thru the chassis and print out the data in column format.
@@ -113,33 +117,33 @@ public class RedMatrixServerDb
             catch (RedHxChassisParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                        null,
+                        ex);
             }
             catch (RedHxHttpResponseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                        null,
+                        ex);
             }
             catch (RedHxParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                        null,
+                        ex);
             }
         }
         catch (URISyntaxException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+                    null,
+                    ex);
         }
         catch (RedHxHttpResponseException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+                    null,
+                    ex);
         }
     }
 }

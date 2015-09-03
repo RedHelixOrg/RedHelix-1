@@ -19,7 +19,7 @@ package org.redhelix.core.computer.system.power;
 import org.redhelix.core.sensor.RedHxGenericSensor;
 
 /**
- * A voltage sensor with an identification and a voltage readiing. Git SHA: $Id$
+ * A voltage sensor with an identification and a voltage readiing.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning

@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.supply;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,27 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerSupplyFirmwareVersion
-        extends RedHxAbstractStringProperty
+public interface RedHxPowerSupplyFirmwareVersion
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxPowerSupplyFirmwareVersion( int maxCharCount,
-            String                              propName )
-    {
-        super(maxCharCount,
-              propName);
-    }
-
-    public String getModel( )
-    {
-        return super.getValue();
-    }
 }

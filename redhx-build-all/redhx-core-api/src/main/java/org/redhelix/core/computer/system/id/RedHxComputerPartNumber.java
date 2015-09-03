@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,27 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxComputerPartNumber
-        extends RedHxAbstractStringProperty
+public interface RedHxComputerPartNumber
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a part number.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxComputerPartNumber( int    maxCharCount,
-                                    String propName )
-    {
-        super(maxCharCount,
-              propName);
-    }
-
-    public String getPartNumber( )
-    {
-        return super.getValue();
-    }
 }

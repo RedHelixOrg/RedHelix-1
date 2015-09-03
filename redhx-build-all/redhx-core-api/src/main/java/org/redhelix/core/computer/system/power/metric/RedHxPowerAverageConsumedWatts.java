@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.metric;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
+import org.redhelix.core.computer.system.power.RedHxPowerWatts;
 
 /**
  *
@@ -26,13 +26,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerAverageConsumedWatts
-        extends RedHxAbstractPowerWatts
+public interface RedHxPowerAverageConsumedWatts
+        extends RedHxPowerWatts
 {
-    public RedHxPowerAverageConsumedWatts( final short wattsMajor,
-            final byte                                 wattsMinor )
-    {
-        super(wattsMajor,
-              wattsMinor);
-    }
 }

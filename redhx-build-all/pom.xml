@@ -9,6 +9,7 @@
     <modules>
         <module>redhx-core-api</module>
         <module>redhx-app-server-db</module>
+        <module>redhx-core-impl</module>
     </modules>
 
     <properties>

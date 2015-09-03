@@ -24,13 +24,13 @@ import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxParseException;
 import org.redhelix.core.util.RedHxUriPath;
+import org.redhelix.server.main.AbstractRedfishJsonReader;
+import org.redhelix.server.main.RedHxServerConnectionContext;
 
 import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Set;
-import org.redhelix.server.main.AbstractRedfishJsonReader;
-import org.redhelix.server.main.RedHxServerConnectionContext;
 
 /**
  * send HTTP get to a Redfish server and parse the JSON response into a RedHxChassis class.
@@ -103,7 +103,7 @@ final class ChassisReader
         if (chassisType == null)
         {
             throw new RedHxParseException(RedHxServiceRootIdEum.CHASSIS,
-                                          "The path to " + super.getUriPath().getPath()
+                                          "The path to " + super.getUriPath().getValue()
                                           + " for the chassis does not contain the required field \"" + JSON_KEY_CHASSIS_TYPE
                                           + "\" in the JSON message.");
         }

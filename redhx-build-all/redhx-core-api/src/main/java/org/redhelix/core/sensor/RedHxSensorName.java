@@ -16,7 +16,7 @@
 
 package org.redhelix.core.sensor;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,18 +26,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxSensorName
-        extends RedHxAbstractStringProperty
+public interface RedHxSensorName
+        extends RedHxStringProperty
 {
     public static final byte MAX_CHARACTER_COUNT = 30;
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxSensorName( String propName )
-    {
-        super(MAX_CHARACTER_COUNT,
-              propName);
-    }
 }

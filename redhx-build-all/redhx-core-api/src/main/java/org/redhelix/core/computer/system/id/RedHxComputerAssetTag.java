@@ -16,37 +16,19 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- *
- *
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public class RedHxComputerAssetTag
-        extends RedHxAbstractStringProperty
+public interface RedHxComputerAssetTag
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in an Asset Tag
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxComputerAssetTag( int    maxCharCount,
-                                  String propName )
-    {
-        super(maxCharCount,
-              propName);
-    }
-
-    public String getAssetTag( )
-    {
-        return super.getValue();
-    }
 }

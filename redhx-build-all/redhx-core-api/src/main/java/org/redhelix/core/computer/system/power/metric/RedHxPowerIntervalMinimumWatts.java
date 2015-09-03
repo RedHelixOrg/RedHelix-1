@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.metric;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
+import org.redhelix.core.computer.system.power.RedHxPowerWatts;
 
 /**
  *
@@ -26,17 +26,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerIntervalMinimumWatts
-        extends RedHxAbstractPowerWatts
+public interface RedHxPowerIntervalMinimumWatts
+        extends RedHxPowerWatts
 {
-    /**
-     * @param wattsMajor
-     * @param wattsMinor
-     */
-    RedHxPowerIntervalMinimumWatts( final short wattsMajor,
-                                    final byte  wattsMinor )
-    {
-        super(wattsMajor,
-              wattsMinor);
-    }
 }

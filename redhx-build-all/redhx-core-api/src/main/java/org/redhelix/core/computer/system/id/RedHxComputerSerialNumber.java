@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,27 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxComputerSerialNumber
-        extends RedHxAbstractStringProperty
+public interface RedHxComputerSerialNumber
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a computer serial number.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxComputerSerialNumber( int    maxCharCount,
-                                      String propName )
-    {
-        super(maxCharCount,
-              propName);
-    }
-
-    public String getSerialNumber( )
-    {
-        return super.getValue();
-    }
 }

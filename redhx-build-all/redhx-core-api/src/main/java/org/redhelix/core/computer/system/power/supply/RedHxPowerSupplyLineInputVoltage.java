@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.supply;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerVoltageReading;
+import org.redhelix.core.computer.system.power.RedHxPowerVoltageReading;
 
 /**
  * A voltage reading for the line supplying the power supply.
@@ -29,24 +29,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerVoltageReading;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerSupplyLineInputVoltage
-        extends RedHxAbstractPowerVoltageReading
+public interface RedHxPowerSupplyLineInputVoltage
+        extends RedHxPowerVoltageReading
 {
-    /**
-     * A voltage reading for the line supplying the power supply.
-     *
-     * @param voltageMajor the voltage as a whole number. The range is between
-     * {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MIN_VOLTAGE_MAJOR_READING} and
-     * {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MAX_VOLTAGE_MAJOR_READING} .
-     *
-     * @param voltageMinor the voltage in 1/10 of a volts. The range is between
-     * {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MIN_VOLTAGE_MINOR_READING} and
-     * {@link org.redhelix.core.computer.system.power.RedHxPowerVoltageReading#MAX_VOLTAGE_MINOR_READING}
-     */
-    public RedHxPowerSupplyLineInputVoltage( short voltageMajor,
-            byte                                   voltageMinor )
-    {
-        super(voltageMajor,
-              voltageMinor);
-    }
 }

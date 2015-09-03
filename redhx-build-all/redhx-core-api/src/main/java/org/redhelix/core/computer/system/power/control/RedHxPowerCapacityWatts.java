@@ -11,9 +11,12 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.core.computer.system.power.control;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
+import org.redhelix.core.computer.system.power.RedHxPowerWatts;
 
 /**
  *
@@ -23,14 +26,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerCapacityWatts
-        extends RedHxAbstractPowerWatts
+public interface RedHxPowerCapacityWatts
+        extends RedHxPowerWatts
 {
-
-    public RedHxPowerCapacityWatts(final short wattsMajor,
-                                   final byte wattsMinor)
-    {
-        super(wattsMajor,
-              wattsMinor);
-    }
 }

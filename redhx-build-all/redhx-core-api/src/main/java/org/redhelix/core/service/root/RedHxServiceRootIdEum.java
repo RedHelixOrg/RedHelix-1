@@ -17,7 +17,7 @@
 package org.redhelix.core.service.root;
 
 /**
- * The types of service that could be in the top level OData service root description. Git SHA: $Id$
+ * The types of service that could be in the top level OData service root description.
  *
  * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
  * @author Hank Bruning

@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.supply;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
+import org.redhelix.core.computer.system.power.RedHxPowerWatts;
 
 /**
  *
@@ -26,13 +26,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerSupplyCapacityWatts
-        extends RedHxAbstractPowerWatts
+public interface RedHxPowerSupplyCapacityWatts
+        extends RedHxPowerWatts
 {
-    public RedHxPowerSupplyCapacityWatts( final short wattsMajor,
-            final byte                                wattsMinor )
-    {
-        super(wattsMajor,
-              wattsMinor);
-    }
 }

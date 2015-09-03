@@ -16,6 +16,8 @@
 
 package org.redhelix.core.computer.system.processor;
 
+import org.redhelix.core.util.RedHxStringProperty;
+
 /**
  *
  *
@@ -24,85 +26,11 @@ package org.redhelix.core.computer.system.processor;
  * @author Hank Bruning
  *
  */
-public class RedHxProcessorModel
+public interface RedHxProcessorModel
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a Processor Model Name.
      */
     public static final byte MAX_CHAR_COUNT_REDH_DEFINED = 30;    // arbrartray.
-    private final String     model;
-
-    public RedHxProcessorModel( String model )
-    {
-        this.model = model;
-    }
-
-    private RedHxProcessorModel( )
-    {
-        this.model = null;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals( Object obj )
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        if (obj == null)
-        {
-            return false;
-        }
-
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final RedHxProcessorModel other = (RedHxProcessorModel) obj;
-
-        if (model == null)
-        {
-            if (other.model != null)
-            {
-                return false;
-            }
-        }
-        else if (!model.equals(other.model))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode( )
-    {
-        final int prime  = 31;
-        int       result = 1;
-
-        result = prime * result + ((model == null)
-                                   ? 0
-                                   : model.hashCode());
-
-        return result;
-    }
-
-    @Override
-    public String toString( )
-    {
-        return model;
-    }
 }

@@ -11,9 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.core.chassis;
 
-import java.util.List;
 import org.redhelix.core.action.RedHxActionGroup;
 import org.redhelix.core.chassis.id.RedHxChassisAssetTag;
 import org.redhelix.core.chassis.id.RedHxChassisDescription;
@@ -22,78 +24,77 @@ import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
 import org.redhelix.core.chassis.id.RedHxChassisModelNumber;
 import org.redhelix.core.chassis.id.RedHxChassisName;
 import org.redhelix.core.chassis.id.RedHxChassisPartNumber;
-import org.redhelix.core.chassis.id.RedHxChassisSKU;
 import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
+import org.redhelix.core.chassis.id.RedHxChassisSKU;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 import org.redhelix.core.util.RedHxOperatingHealthEnum;
 import org.redhelix.core.util.RedHxOperatingState;
 import org.redhelix.core.util.RedHxUriPath;
 
+import java.util.List;
+
 /**
  *
  * A chassis that may contain other chassis or computer systems.
- * <br>
- * To create this class use {@link RedHxChassisBuilder}.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  */
 public interface RedHxChassis
 {
-
     /**
      * get all actions that can be preformed on the shelf.
      *
      * @return a null if no actions can be preformed otherwise the actions.
      */
-    RedHxActionGroup getActionGroup();
+    RedHxActionGroup getActionGroup( );
 
     /**
      * get the asset tag assigned to the shelf.
      *
      * @return a null if no asset tag has been assigned otherwise the asset tag.
      */
-    RedHxChassisAssetTag getAssetTag();
+    RedHxChassisAssetTag getAssetTag( );
 
-    RedHxChassisDescription getChassisDescription();
+    RedHxChassisDescription getChassisDescription( );
 
-    RedHxChassisId getChassisId();
+    RedHxChassisId getChassisId( );
 
-    RedHxChassisName getChassisName();
+    RedHxChassisName getChassisName( );
 
-    RedHxChassisTypeEnum getChassisType();
+    RedHxChassisTypeEnum getChassisType( );
 
-    List<RedHxUriPath> getComputerSystemUriPathList();
+    List<RedHxUriPath> getComputerSystemUriPathList( );
 
-    RedHxUriPath getContainedByUriPath();
+    RedHxUriPath getContainedByUriPath( );
 
-    List<RedHxUriPath> getContainsList();
+    List<RedHxUriPath> getContainsList( );
 
-    List<RedHxUriPath> getCooledByUriPathList();
+    List<RedHxUriPath> getCooledByUriPathList( );
 
-    RedHxIndicatorLedStateEnum getLedState();
+    RedHxIndicatorLedStateEnum getLedState( );
 
-    RedHxUriPath getLogServicesUriPath();
+    RedHxUriPath getLogServicesUriPath( );
 
-    RedHxChassisManufacturerName getManufacturerName();
+    RedHxChassisManufacturerName getManufacturerName( );
 
-    RedHxChassisModelNumber getModelNumber();
+    RedHxChassisModelNumber getModelNumber( );
 
-    RedHxOperatingHealthEnum getOperatingHealth();
+    RedHxOperatingHealthEnum getOperatingHealth( );
 
-    RedHxOperatingState getOperatingState();
+    RedHxOperatingState getOperatingState( );
 
-    RedHxChassisPartNumber getPartNumber();
+    RedHxChassisPartNumber getPartNumber( );
 
-    List<RedHxUriPath> getPoweredByList();
+    List<RedHxUriPath> getPoweredByList( );
 
-    RedHxUriPath getPowerUriPath();
+    RedHxUriPath getPowerUriPath( );
 
-    RedHxChassisSerialNumber getSerialNumber();
+    RedHxChassisSerialNumber getSerialNumber( );
 
-    RedHxChassisSKU getSku();
+    RedHxChassisSKU getSku( );
 
-    List<RedHxUriPath> getSystemManagerUriPathList();
+    List<RedHxUriPath> getSystemManagerUriPathList( );
 
-    RedHxUriPath getThermalUriPath();
+    RedHxUriPath getThermalUriPath( );
 }

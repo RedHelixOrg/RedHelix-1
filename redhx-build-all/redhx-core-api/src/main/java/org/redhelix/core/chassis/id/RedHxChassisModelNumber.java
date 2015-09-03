@@ -16,7 +16,7 @@
 
 package org.redhelix.core.chassis.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  * The chassis model name. This is sometimes known as the model number but Redfish allows a string containing non-numeric characters. Git
@@ -26,25 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxChassisModelNumber
-        extends RedHxAbstractStringProperty
+public interface RedHxChassisModelNumber
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
-
-    /**
-     * @param propName
-     */
-    public RedHxChassisModelNumber( String propName )
-    {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
-              propName);
-    }
-
-    public String getModelNumber( )
-    {
-        return super.getValue();
-    }
 }

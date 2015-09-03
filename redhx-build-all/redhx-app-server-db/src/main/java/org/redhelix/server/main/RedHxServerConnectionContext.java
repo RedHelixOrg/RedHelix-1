@@ -71,7 +71,7 @@ public final class RedHxServerConnectionContext
     public ODataEntityRequest<ClientEntity> getEntityRequest( RedHxUriPath pathToResource )
             throws URISyntaxException
     {
-        URI                              myUri = serviceRootLocator.getUri(pathToResource.getPath());
+        URI                              myUri = serviceRootLocator.getUri(pathToResource.getValue());
         ODataEntityRequest<ClientEntity> req   = client.getRetrieveRequestFactory().getEntityRequest(myUri);
 
         return req;

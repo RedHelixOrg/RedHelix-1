@@ -17,28 +17,17 @@
 package org.redhelix.core.util;
 
 /**
- * The DNS Host Name, without any domain information. Git SHA: $Id$
+ * The DNS Host Name, without any domain information.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public class RedHxDnsHostName
-        extends RedHxAbstractStringProperty
+public interface RedHxDnsHostName
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 40;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxDnsHostName( int    maxCharCount,
-                             String propName )
-    {
-        super(maxCharCount,
-              propName);
-    }
 }

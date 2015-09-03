@@ -16,7 +16,7 @@
 
 package org.redhelix.core.chassis.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,26 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public class RedHxChassisDescription
-        extends RedHxAbstractStringProperty
+public interface RedHxChassisDescription
+        extends RedHxStringProperty
 {
     /**
      * The maximum number of characters allowed in a chassis description
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 1000;    // arbitrary
-
-    /**
-     * @param maxCharCount
-     * @param propName
-     */
-    public RedHxChassisDescription( String propName )
-    {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
-              propName);
-    }
-
-    public String getDescription( )
-    {
-        return super.getValue();
-    }
 }

@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.power.limit;
 
-import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
+import org.redhelix.core.computer.system.power.RedHxPowerWatts;
 
 /**
  *
@@ -26,13 +26,7 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public class RedHxPowerLimitWatts
-        extends RedHxAbstractPowerWatts
+public interface RedHxPowerLimitWatts
+        extends RedHxPowerWatts
 {
-    public RedHxPowerLimitWatts( final short wattsMajor,
-                                 final byte  wattsMinor )
-    {
-        super(wattsMajor,
-              wattsMinor);
-    }
 }

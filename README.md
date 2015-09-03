@@ -9,7 +9,7 @@ and status of the devices and provides a Restfull API to query the history of th
 All RedHelix software is under the Apache 2.0 license.
 
 ## Redfish vs. RedHelix 
-Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix does not. RedHelix provides a databasecontaning 
+Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix does not. RedHelix provides a database contaning 
 multiple servers that implement Redfish and the history for
 each server. At present the database is only in limited to what is in memory and when the Java Virtual Machine shuts down all history is destroyed.
 From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
@@ -46,7 +46,7 @@ the in memory database and the AngularJS web clients. For this version 0.1 there
 and then it exits. Take a look at the source code and the output of reading the chassis using [RedMatrixServerDb](./doc/dmtf-mockup/mockup.md).
 
 ## Architecture Risk
-While desirable to scale the single JVM to handle more than 40,000 servers as comparable IPMI Java implementation due it is not clear if 
+While desirable to scale the single JVM to handle more than 40,000 servers as comparable IPMI Java implementation it is not clear if 
 HTTP and Olingo can scale. The issue that needs to be addressed is once a HTTP Get is sent by RedHelix does a Java Thread then block waiting on the TCP 
 socket for a response. If so, the JVM will run out of Threads. Under IPMI this was not an issue due to the connectionless nature of UDP
 10 threads could handle in all incomming traffic from the 40,000+ servers.

@@ -16,8 +16,6 @@
 
 package org.redhelix.core.service.root;
 
-import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
-
 /**
  *
  *
@@ -27,54 +25,7 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
  * @author Hank Bruning
  *
  */
-public final class RedHxServiceRootId
+public interface RedHxServiceRootId
 {
-    private String serviceRootStr;
-
-    public RedHxServiceRootId( final RedHxTcpProtocolTypeEnum        httpProtocol,
-                               final String                          hostName,
-                               final int                             tcpPortNumber,
-                               final String                          servicePrefix,
-                               final RedHxRedfishProtocolVersionEnum redfishProtocolVersion )
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("http://");    // Redfish spec mandates the Service Root is always reachable by the http
-
-        // protocol.
-        sb.append(hostName);
-        sb.append(":");
-        sb.append(tcpPortNumber);
-
-        if (servicePrefix != null)
-        {
-            sb.append("/");
-            sb.append(servicePrefix);
-        }
-
-        sb.append("/redfish/");
-
-        if (redfishProtocolVersion == RedHxRedfishProtocolVersionEnum.VERSION_1)
-        {
-            sb.append("v1");
-        }
-        else
-        {
-            throw new IllegalArgumentException("Invalid argument protocolVersion. The value " + redfishProtocolVersion
-                                               + " is recoganized.");
-        }
-
-        sb.append("/");
-        serviceRootStr = sb.toString();
-    }
-
-    private RedHxServiceRootId( )
-    {
-        serviceRootStr = null;
-    }
-
-    public String getServiceRootString( )
-    {
-        return serviceRootStr;
-    }
+    String getServiceRootString( );
 }
