@@ -1,4 +1,4 @@
-# RedHelix GitHub Repository
+#RedHelix GitHub Repository
 Date September 2, 2015, Version 0.1
 ##Overview
 RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
@@ -21,7 +21,7 @@ is tested with the DMTF Redfish mockup files. This prevents any development of R
 to reboot it.  The software is undergoing massive changes. It's pre-alpa and not ready to use but you can see the direction it is going.
 
 ##Roadmap
-As of September 2, 2015 RedHelix will be developed with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
+As of September 2, 2015 RedHelix is developing with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
 
 1. HTTP reading of the Chassis messages and saving them in Java classes. Done.
 2. Implement the Java threads used to monitor a single Redfish server and store the chassis information in the RedHelixDb database.
@@ -43,7 +43,7 @@ the most interesting interface is org.redhelix.core.chassis.RedHxChassis. No cla
 ### Java package org.redhelix.server.*
 The classes in the Java package org.redhelix.server.* are responsible for the Java Threads that interface with the Redfish enabled servers,
 the in memory database and the AngularJS web clients. For this version 0.1 there is nothing exciting in this package. The Java Main method is called
-and then it exits.
+and then it exits. Take a look at the source code and the output of reading the chassis using [RedMatrixServerDb](./doc/dmtf-mockup/mockup.md).
 
 ## Architecture Risk
 While desirable to scale the single JVM to handle more than 40,000 servers as comparable IPMI Java implementation due it is not clear if 
