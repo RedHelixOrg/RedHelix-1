@@ -1,4 +1,5 @@
 #RedHelix GitHub Repository
+#RedHelix ![DMTF Redfish](https://rawgit.com/RedHelixOrg/RedHelix-1/version-0.1/doc/red-helix.png)
 Date September 2, 2015, Version 0.1
 ##Overview
 RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
