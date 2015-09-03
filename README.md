@@ -1,4 +1,3 @@
-![RedHelixLogo](https://cdn.rawgit.com/RedHelixOrg/RedHelix-1/master/doc/helix.svg)
 #RedHelix GitHub Repository
 Date September 2, 2015, Version 0.1
 ##Overview
