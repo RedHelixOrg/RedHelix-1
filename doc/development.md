@@ -6,3 +6,4 @@ The RedHelix software is developed under these guidelines.
 3. The logging system is Apache [commons-logging](http://commons.apache.org/proper/commons-logging)
 4. Redfish uses the OData protocol specification which is implemented by the Apache Olingo Java library. This is used in the RedHelix database server.
 5. Maven is the build system
+6. All classes are marked final except classes with the name "Abstract" in them.
