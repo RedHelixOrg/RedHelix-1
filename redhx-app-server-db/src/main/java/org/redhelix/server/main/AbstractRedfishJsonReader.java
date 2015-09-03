@@ -11,11 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.server.main;
 
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
 import org.apache.olingo.client.api.domain.ClientAnnotation;
@@ -24,19 +27,10 @@ import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientProperty;
 import org.apache.olingo.client.api.domain.ClientValue;
-
 import org.redhelix.core.action.RedHxActionProperties;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxUriPath;
-
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * execute olingo commands to read the Redfish resources and links. This class executes the HTTP request to read data from the server and
@@ -48,12 +42,13 @@ import java.util.TreeSet;
  * @author Hank Bruning
  *
  */
-abstract class AbstractRedfishJsonReader
+public abstract class AbstractRedfishJsonReader
 {
+
     private static final String ODATA_ID_FLAG = "odata.id";
-    private final ClientEntity  entity;
-    private final boolean       isResponseValid;
-    private final RedHxUriPath  uriPath;
+    private final ClientEntity entity;
+    private final boolean isResponseValid;
+    private final RedHxUriPath uriPath;
 
     /**
      * create a reader and exeucte an HTTP get for the data in Redfish link. If the response has an HTTP error an exception is throw an no
@@ -66,15 +61,15 @@ abstract class AbstractRedfishJsonReader
      * @throws URISyntaxException
      * @throws RedHxHttpResponseException
      */
-    protected AbstractRedfishJsonReader( final RedHxServerConnectionContext ctx,
-            final RedHxServiceRootIdEum                                     serviceRootId,
-            final RedHxUriPath                                              pathToResource )
+    protected AbstractRedfishJsonReader(final RedHxServerConnectionContext ctx,
+                                        final RedHxServiceRootIdEum serviceRootId,
+                                        final RedHxUriPath pathToResource)
             throws URISyntaxException,
                    RedHxHttpResponseException
     {
         this.uriPath = pathToResource;
 
-        final ODataEntityRequest<ClientEntity>    req      = ctx.getEntityRequest(pathToResource);
+        final ODataEntityRequest<ClientEntity> req = ctx.getEntityRequest(pathToResource);
         final ODataRetrieveResponse<ClientEntity> response = req.execute();
 
         this.isResponseValid = response.getStatusCode() == HttpURLConnection.HTTP_OK;
@@ -86,29 +81,29 @@ abstract class AbstractRedfishJsonReader
         else
         {
             throw new RedHxHttpResponseException(serviceRootId,
-                    response.getStatusCode(),
-                    "Can not read " + serviceRootId + " " + pathToResource);
+                                                 response.getStatusCode(),
+                                                 "Can not read " + serviceRootId + " " + pathToResource);
         }
     }
 
-    private AbstractRedfishJsonReader( )
+    private AbstractRedfishJsonReader()
     {
-        this.entity          = null;
+        this.entity = null;
         this.isResponseValid = false;
-        this.uriPath         = null;
+        this.uriPath = null;
     }
 
-    public RedHxUriPath getUriPath( )
+    public RedHxUriPath getUriPath()
     {
         return uriPath;
     }
 
-    protected Set<RedHxActionProperties> getActions( String propName )
+    protected Set<RedHxActionProperties> getActions(String propName)
     {
 
         // use a tree set so the actions are in alpa order with the key being the action name.
-        Set<RedHxActionProperties> set        = new TreeSet<>();
-        final ClientProperty       clientProp = entity.getProperty(propName);
+        Set<RedHxActionProperties> set = new TreeSet<>();
+        final ClientProperty clientProp = entity.getProperty(propName);
 
         if (clientProp != null)
         {
@@ -124,10 +119,10 @@ abstract class AbstractRedfishJsonReader
      * @param propName
      * @return
      */
-    protected String getAnnotation( String propName )
+    protected String getAnnotation(String propName)
     {
         final ClientProperty clientProp = entity.getProperty(propName);
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
@@ -162,11 +157,11 @@ abstract class AbstractRedfishJsonReader
      * @param subKeyName
      * @return
      */
-    protected String getComplexValue( String primaryKeyName,
-                                      String subKeyName )
+    protected String getComplexValue(String primaryKeyName,
+                                     String subKeyName)
     {
         final ClientProperty clientProp = entity.getProperty(primaryKeyName);
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
@@ -193,15 +188,15 @@ abstract class AbstractRedfishJsonReader
      * @param propName the top level JSON property name.
      * @return
      */
-    protected List<String> getLinkArray( String propName )
+    protected List<String> getLinkArray(String propName)
     {
         final ClientProperty clientProp = entity.getProperty("Links");
-        List<String>         list       = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
         if (clientProp != null)
         {
-            ClientComplexValue cplx  = clientProp.getComplexValue();
-            ClientProperty     prop2 = cplx.get(propName);
+            ClientComplexValue cplx = clientProp.getComplexValue();
+            ClientProperty prop2 = cplx.get(propName);
 
             if ((prop2 != null) && prop2.hasCollectionValue())
             {
@@ -238,19 +233,19 @@ abstract class AbstractRedfishJsonReader
      * @param propName
      * @return
      */
-    protected String getLinkSingle( String propName )
+    protected String getLinkSingle(String propName)
     {
         final ClientProperty clientProp = entity.getProperty("Links");
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
             retVal = null;
 
-            ClientComplexValue cplx  = clientProp.getComplexValue();
-            ClientProperty     prop2 = cplx.get(propName);
+            ClientComplexValue cplx = clientProp.getComplexValue();
+            ClientProperty prop2 = cplx.get(propName);
 
-            if ((prop2 != null) &&!prop2.hasCollectionValue())
+            if ((prop2 != null) && !prop2.hasCollectionValue())
             {
                 List<ClientAnnotation> annotationList = prop2.getComplexValue().asComplex().getAnnotations();
 
@@ -279,10 +274,10 @@ abstract class AbstractRedfishJsonReader
      * @param propName
      * @return
      */
-    protected String getOptionalProperty( String propName )
+    protected String getOptionalProperty(String propName)
     {
         final ClientProperty clientProp = entity.getProperty(propName);
-        final String         retVal;
+        final String retVal;
 
         if (clientProp != null)
         {

@@ -11,10 +11,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.util;
+
+import java.util.List;
 
 /**
  * The path to a Redfish resource. This class is added to a URI and the optional query options.
@@ -28,6 +27,7 @@ package org.redhelix.core.util;
 public final class RedHxUriPath
         extends RedHxAbstractStringProperty
 {
+
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
@@ -37,14 +37,37 @@ public final class RedHxUriPath
      * @param maxCharCount
      * @param propName
      */
-    public RedHxUriPath( String propName )
+    public RedHxUriPath(String propName)
     {
         super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 
-    public String getPath( )
+    public String getPath()
     {
         return super.getValue();
+    }
+
+    /**
+     * get a path list as string containing the paths seperated by a comma.
+     *
+     * @param list the list to print
+     * @return the String containing a path list. If the list contains zero elements then length of the string is zero.
+     */
+    public static String getPathListAsString(List<RedHxUriPath> list)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (RedHxUriPath path : list)
+        {
+            if (sb.length() > 0)
+            {
+                sb.append(", ");
+            }
+
+            sb.append(path.getPath());
+        }
+
+        return sb.toString();
     }
 }

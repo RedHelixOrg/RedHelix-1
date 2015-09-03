@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgr="http://granite.sru.edu/svgr" onload="init(evt)">
+<script type="text/javascript" xlink:href="rep.js" />
+<g transform="translate(0,0)">
+<line x1="100" x2="200" y1="100" y2="100" stroke="rgb(0,0,255)" stroke-width="1">
+<svgr:replicate repeatCount="500">
+<svgr:replicateAttribute attributeName="x1" values="100;200;300" keySplines=".9,.3 .1,.7"/>
+<svgr:replicateAttribute attributeName="x2" values="200;300;400" keySplines=".9,.3 .1,.7"/>
+<svgr:replicateAttribute attributeName="y1" values="100;200;100" />
+<svgr:replicateAttribute attributeName="y2" values="100;200;100" />
+<svgr:replicateAttribute attributeName="stroke" values="rgb(0,0,255);rgb(0,255,255)" keySplines=".9,.3 .1,.7" />
+</svgr:replicate>
+</line>
+<svgr:replicate repeatCount="4">
+<svgr:replicateAttribute attributeName="transform" values="translate(0,0) scale(1,1);translate(700,200) scale(-1,-1);translate(400,0) scale(1,1);translate(1100,200) scale(-1,-1);translate(800,0) scale(1,1)" />
+</svgr:replicate>
+</g>
+</svg> 
+ 
+
