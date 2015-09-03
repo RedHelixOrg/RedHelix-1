@@ -6,23 +6,11 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.redhelix.core</groupId>
-            <artifactId>redhx-core-api</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>redhx-app-server-db</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.redhelix.core.impl</groupId>
-            <artifactId>redhx-core-impl</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>redhx-core-api</module>
+        <module>redhx-app-server-db</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
