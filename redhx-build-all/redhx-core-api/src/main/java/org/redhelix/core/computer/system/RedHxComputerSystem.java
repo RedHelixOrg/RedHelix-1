@@ -16,9 +16,9 @@
 
 package org.redhelix.core.computer.system;
 
-import org.redhelix.core.computer.system.id.RedHxBootSourceOverrideEnabledEnum;
-import org.redhelix.core.computer.system.id.RedHxComputerBootSourceEnum;
-import org.redhelix.core.computer.system.id.RedHxComputerBootUefiTargetSourceOverride;
+import org.redhelix.core.computer.system.boot.RedHxComputerSystemBootSourceOverrideEnabledEnum;
+import org.redhelix.core.computer.system.boot.RedHxComputerBootSourceEnum;
+import org.redhelix.core.computer.system.boot.RedHxComputerBootUefiTargetSourceOverride;
 import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostName;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
@@ -53,7 +53,7 @@ public interface RedHxComputerSystem
     /**
      * @return the overrideEnabled
      */
-    RedHxBootSourceOverrideEnabledEnum getOverrideEnabled( );
+    RedHxComputerSystemBootSourceOverrideEnabledEnum getOverrideEnabled( );
 
     /**
      * @return the systemType

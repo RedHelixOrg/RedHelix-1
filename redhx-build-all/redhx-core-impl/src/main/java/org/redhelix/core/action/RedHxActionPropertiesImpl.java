@@ -92,7 +92,7 @@ public final class RedHxActionPropertiesImpl
         return actionName;
     }
 
-    public RedHxUriPath getActionsPath( )
+    public RedHxUriPath getActionPath( )
     {
         return actionsPath;
     }

@@ -14,12 +14,12 @@
 package org.redhelix.core.util;
 
 /**
- * the health state of this resource in the absence of its dependent resource.
+ * the Health State of the resource and its dependent resources();
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  */
-public enum RedHxOperatingHealthEnum
+public enum RedHxOperatingHealthRollupEnum
 {
     OK("OK", "Normal."),
     WARNING("Warning", "A condition exists that requires attention."),
@@ -28,8 +28,8 @@ public enum RedHxOperatingHealthEnum
     private final String desc;
     private final String jsonKeyword;
 
-    private RedHxOperatingHealthEnum(String jsonKeyword,
-                                     String desc)
+    private RedHxOperatingHealthRollupEnum(String jsonKeyword,
+                                           String desc)
     {
         this.jsonKeyword = jsonKeyword;
         this.desc = desc;
@@ -46,11 +46,11 @@ public enum RedHxOperatingHealthEnum
      * @param jsonKeyword the keyword to lookup.
      * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
      */
-    public static RedHxOperatingHealthEnum getInstance(String jsonKeyword)
+    public static RedHxOperatingHealthRollupEnum getInstance(String jsonKeyword)
     {
-        RedHxOperatingHealthEnum retVal = null;
+        RedHxOperatingHealthRollupEnum retVal = null;
 
-        for (RedHxOperatingHealthEnum tmp : values())
+        for (RedHxOperatingHealthRollupEnum tmp : values())
         {
             if (tmp.jsonKeyword.equals(jsonKeyword))
             {

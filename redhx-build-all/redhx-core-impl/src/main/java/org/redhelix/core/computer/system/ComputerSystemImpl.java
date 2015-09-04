@@ -16,9 +16,9 @@
 
 package org.redhelix.core.computer.system;
 
-import org.redhelix.core.computer.system.id.RedHxBootSourceOverrideEnabledEnum;
-import org.redhelix.core.computer.system.id.RedHxComputerBootSourceEnum;
-import org.redhelix.core.computer.system.id.RedHxComputerBootUefiTargetSourceOverrideImpl;
+import org.redhelix.core.computer.system.boot.RedHxComputerSystemBootSourceOverrideEnabledEnum;
+import org.redhelix.core.computer.system.boot.RedHxComputerBootSourceEnum;
+import org.redhelix.core.computer.system.boot.RedHxComputerBootUefiTargetSourceOverrideImpl;
 import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostNameImpl;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
@@ -42,7 +42,7 @@ final class ComputerSystemImpl
 private final RedHxComputerBootSourceEnum                       bootSource;
     private final RedHxDnsHostNameImpl                          hostname;
     private final RedHxIndicatorLedStateEnum                    indicatorLed;
-    private final RedHxBootSourceOverrideEnabledEnum            overrideEnabled;
+    private final RedHxComputerSystemBootSourceOverrideEnabledEnum            overrideEnabled;
     private final RedHxComputerSystemTypeEnum                   systemType;
     private final RedHxComputerBootUefiTargetSourceOverrideImpl uefiTargetSourcePath;
     private final UUID                                          uuid;
@@ -59,7 +59,7 @@ private final RedHxComputerBootSourceEnum                       bootSource;
     ComputerSystemImpl( RedHxComputerBootSourceEnum                   bootSource,
                         RedHxDnsHostNameImpl                          hostname,
                         RedHxIndicatorLedStateEnum                    indicatorLed,
-                        RedHxBootSourceOverrideEnabledEnum            overrideEnabled,
+                        RedHxComputerSystemBootSourceOverrideEnabledEnum            overrideEnabled,
                         RedHxComputerSystemTypeEnum                   systemType,
                         RedHxComputerBootUefiTargetSourceOverrideImpl uefiTargetSourcePath,
                         UUID                                          uuid )
@@ -171,7 +171,7 @@ private final RedHxComputerBootSourceEnum                       bootSource;
      * @see org.redhelix.core.computer.system.TT#getOverrideEnabled()
      */
     @Override
-    public RedHxBootSourceOverrideEnabledEnum getOverrideEnabled( )
+    public RedHxComputerSystemBootSourceOverrideEnabledEnum getOverrideEnabled( )
     {
         return overrideEnabled;
     }

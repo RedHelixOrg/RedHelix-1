@@ -11,29 +11,31 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-package org.redhelix.core.action;
 
-import org.redhelix.core.util.RedHxUriPath;
+
+
+package org.redhelix.core.computer.system.boot;
+
+import org.redhelix.core.computer.system.boot.RedHxComputerBootUefiTargetSourceOverride;
+import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- *
- *
- *
+ * The Uefi Device Path of the device to boot from when BootSourceOverrideSupported is UefiTarget.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public interface RedHxActionProperties
-        extends Comparable<RedHxActionProperties>
+public final class RedHxComputerBootUefiTargetSourceOverrideImpl
+        extends RedHxAbstractStringProperty
+        implements RedHxComputerBootUefiTargetSourceOverride
 {
-
-    RedHxActionName getActionName();
-
     /**
-     * get the path to invoke the action.
-     *
-     * @return
+     * @param path
      */
-    RedHxUriPath getActionPath();
+    public RedHxComputerBootUefiTargetSourceOverrideImpl( String path )
+    {
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
+              path);
+    }
 }

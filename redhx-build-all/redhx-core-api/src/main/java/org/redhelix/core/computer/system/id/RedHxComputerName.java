@@ -16,25 +16,21 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.chassis.id.*;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- * The Uefi Device Path of the device to boot from when BootSourceOverrideSupported is UefiTarget.
+ * The chassis name.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerBootUefiTargetSourceOverrideImpl
-        extends RedHxAbstractStringProperty
-        implements RedHxComputerBootUefiTargetSourceOverride
+public interface RedHxComputerName
+        extends RedHxStringProperty
 {
     /**
-     * @param path
+     * The maximum number of characters allowed in a chassis name.
      */
-    public RedHxComputerBootUefiTargetSourceOverrideImpl( String path )
-    {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
-              path);
-    }
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 }

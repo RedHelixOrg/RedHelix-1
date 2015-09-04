@@ -51,6 +51,10 @@ HTTP and Olingo can scale. The issue that needs to be addressed is once a HTTP G
 socket for a response. If so, the JVM will run out of Threads. Under IPMI this was not an issue due to the connectionless nature of UDP
 10 threads could handle in all incomming traffic from the 40,000+ servers.
 
+## OEM Extensions
+Redfish allows OEM extensions to the Chassis, Computer System, etc. It's not clear how these will be implemented. If you are implementing an
+OEM extension, even if it is not yet working, please contact me. I'll try and build a framework to allow it. 
+
 ## Building
 At the moment Version 0.1 does not have a build process but the Maven dependency files are present in pom.xml
 

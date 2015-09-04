@@ -11,12 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-package org.redhelix.core.action;
+package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxUriPath;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- *
  *
  *
  *
@@ -24,16 +23,12 @@ import org.redhelix.core.util.RedHxUriPath;
  * @author Hank Bruning
  *
  */
-public interface RedHxActionProperties
-        extends Comparable<RedHxActionProperties>
+public interface RedHxComputerDescription
+        extends RedHxStringProperty
 {
 
-    RedHxActionName getActionName();
-
     /**
-     * get the path to invoke the action.
-     *
-     * @return
+     * The maximum number of characters allowed in a chassis description
      */
-    RedHxUriPath getActionPath();
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 1000;    // arbitrary
 }

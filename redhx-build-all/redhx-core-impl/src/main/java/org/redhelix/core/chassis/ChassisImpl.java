@@ -28,7 +28,7 @@ import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSKU;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 import org.redhelix.core.util.RedHxOperatingHealthEnum;
-import org.redhelix.core.util.RedHxOperatingState;
+import org.redhelix.core.util.RedHxOperatingStateEnum;
 import org.redhelix.core.util.RedHxUriPath;
 
 import java.util.List;
@@ -59,7 +59,7 @@ final class ChassisImpl
     private RedHxChassisManufacturerName manufacturerName;
     private RedHxChassisModelNumber      modelNumber;
     private RedHxOperatingHealthEnum     operatingHealth;
-    private RedHxOperatingState          operatingState;
+    private RedHxOperatingStateEnum          operatingState;
     private RedHxChassisPartNumber       partNumber;
     private List<RedHxUriPath>           poweredByList;
     private RedHxUriPath                 powerUriPath;
@@ -110,7 +110,7 @@ final class ChassisImpl
                  RedHxChassisManufacturerName manufacturerName,
                  RedHxChassisModelNumber      modelNumber,
                  RedHxOperatingHealthEnum     operatingHealth,
-                 RedHxOperatingState          operatingState,
+                 RedHxOperatingStateEnum          operatingState,
                  RedHxChassisPartNumber       partNumber,
                  List<RedHxUriPath>           poweredByList,
                  RedHxUriPath                 powerUriPath,
@@ -399,7 +399,7 @@ final class ChassisImpl
     }
 
     @Override
-    public RedHxOperatingState getOperatingState( )
+    public RedHxOperatingStateEnum getOperatingState( )
     {
         return operatingState;
     }
