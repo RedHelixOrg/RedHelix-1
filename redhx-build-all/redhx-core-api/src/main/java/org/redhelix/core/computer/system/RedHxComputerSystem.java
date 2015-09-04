@@ -16,9 +16,18 @@
 
 package org.redhelix.core.computer.system;
 
-import org.redhelix.core.computer.system.boot.RedHxComputerSystemBootSourceOverrideEnabledEnum;
-import org.redhelix.core.computer.system.boot.RedHxComputerBootSourceEnum;
-import org.redhelix.core.computer.system.boot.RedHxComputerBootUefiTargetSourceOverride;
+import org.redhelix.core.computer.system.boot.RedHxComputerBootProperties;
+import org.redhelix.core.computer.system.id.RedHxComputerAssetTag;
+import org.redhelix.core.computer.system.id.RedHxComputerBiosVersion;
+import org.redhelix.core.computer.system.id.RedHxComputerDescription;
+import org.redhelix.core.computer.system.id.RedHxComputerId;
+import org.redhelix.core.computer.system.id.RedHxComputerManufacturerName;
+import org.redhelix.core.computer.system.id.RedHxComputerModelNumber;
+import org.redhelix.core.computer.system.id.RedHxComputerName;
+import org.redhelix.core.computer.system.id.RedHxComputerPartNumber;
+import org.redhelix.core.computer.system.id.RedHxComputerPowerStateEnum;
+import org.redhelix.core.computer.system.id.RedHxComputerSerialNumber;
+import org.redhelix.core.computer.system.id.RedHxComputerSKU;
 import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostName;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
@@ -34,36 +43,46 @@ import java.util.UUID;
  *
  */
 public interface RedHxComputerSystem
+        extends RedHxComputerProcessorSummary,
+                RedHxComputerMemorySummary,
+                RedHxComputerBootProperties
 {
-    /**
-     * @return the bootSource
-     */
-    RedHxComputerBootSourceEnum getBootSource( );
+    RedHxComputerAssetTag getAssetTag( );
+
+    RedHxComputerBiosVersion getBiosVersion( );
+
+    RedHxComputerDescription getDescription( );
 
     /**
      * @return the hostname
      */
     RedHxDnsHostName getHostname( );
 
+    RedHxComputerId getId( );
+
     /**
      * @return the indicatorLed
      */
     RedHxIndicatorLedStateEnum getIndicatorLed( );
 
-    /**
-     * @return the overrideEnabled
-     */
-    RedHxComputerSystemBootSourceOverrideEnabledEnum getOverrideEnabled( );
+    RedHxComputerManufacturerName getManufacturerName( );
+
+    RedHxComputerModelNumber getModelNumber( );
+
+    RedHxComputerName getName( );
+
+    RedHxComputerPartNumber getPartNumber( );
+
+    RedHxComputerPowerStateEnum getPowerState( );
+
+    RedHxComputerSerialNumber getSerialNumber( );
+
+    RedHxComputerSKU getSku( );
 
     /**
      * @return the systemType
      */
     RedHxComputerSystemTypeEnum getSystemType( );
-
-    /**
-     * @return the uefiTargetSourcePath
-     */
-    RedHxComputerBootUefiTargetSourceOverride getUefiTargetSourcePath( );
 
     /**
      * @return the uuid

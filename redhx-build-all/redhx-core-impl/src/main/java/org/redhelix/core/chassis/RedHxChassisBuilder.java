@@ -76,7 +76,7 @@ public final class RedHxChassisBuilder
     private RedHxChassisManufacturerName                         manufacturerName;
     private RedHxChassisModelNumber                              modelNumber;
     private RedHxOperatingHealthEnum                             operatingHealth;
-    private RedHxOperatingStateEnum                                  operatingState;
+    private RedHxOperatingStateEnum                              operatingState;
     private RedHxChassisPartNumber                               partNumber;
     private List<RedHxUriPath>                                   poweredByList;
     private RedHxUriPath                                         powerUriPath;

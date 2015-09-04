@@ -31,13 +31,11 @@ public final class RedHxComputerPartNumberImpl
         implements RedHxComputerPartNumber
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerPartNumberImpl( int maxCharCount,
-            String                          propName )
+    public RedHxComputerPartNumberImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

@@ -59,7 +59,7 @@ final class ChassisImpl
     private RedHxChassisManufacturerName manufacturerName;
     private RedHxChassisModelNumber      modelNumber;
     private RedHxOperatingHealthEnum     operatingHealth;
-    private RedHxOperatingStateEnum          operatingState;
+    private RedHxOperatingStateEnum      operatingState;
     private RedHxChassisPartNumber       partNumber;
     private List<RedHxUriPath>           poweredByList;
     private RedHxUriPath                 powerUriPath;
@@ -110,7 +110,7 @@ final class ChassisImpl
                  RedHxChassisManufacturerName manufacturerName,
                  RedHxChassisModelNumber      modelNumber,
                  RedHxOperatingHealthEnum     operatingHealth,
-                 RedHxOperatingStateEnum          operatingState,
+                 RedHxOperatingStateEnum      operatingState,
                  RedHxChassisPartNumber       partNumber,
                  List<RedHxUriPath>           poweredByList,
                  RedHxUriPath                 powerUriPath,

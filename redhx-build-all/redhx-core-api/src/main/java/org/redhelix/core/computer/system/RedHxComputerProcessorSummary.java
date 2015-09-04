@@ -14,8 +14,12 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.core.computer.system;
 
+import org.redhelix.core.computer.system.id.RedHxComputerProcessorModelName;
 import org.redhelix.core.util.RedHxOperatingStatus;
 
 /**
@@ -27,13 +31,14 @@ import org.redhelix.core.util.RedHxOperatingStatus;
  */
 public interface RedHxComputerProcessorSummary
 {
+    RedHxComputerProcessorModelName getModelName( );
 
     /**
      * get number of processors in the system.
      *
      * @return a value zero or greater.
      */
-    int getProcessorCount();
+    int getProcessorCount( );
 
-    RedHxOperatingStatus getProcessorStatus();
+    RedHxOperatingStatus getProcessorOperatingStatus( );
 }

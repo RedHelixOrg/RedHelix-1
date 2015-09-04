@@ -31,13 +31,11 @@ public final class RedHxComputerManufacturerNameImpl
         implements RedHxComputerManufacturerName
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerManufacturerNameImpl( int maxCharCount,
-            String                                propName )
+    public RedHxComputerManufacturerNameImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

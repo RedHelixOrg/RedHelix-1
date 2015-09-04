@@ -14,6 +14,9 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.core.util;
 
 import java.util.Objects;
@@ -28,29 +31,28 @@ import java.util.Objects;
 public final class RedHxOperatingStatusImpl
         implements RedHxOperatingStatus
 {
-
-    private final RedHxOperatingHealthEnum operatingHealth;
+    private final RedHxOperatingHealthEnum       operatingHealth;
     private final RedHxOperatingHealthRollupEnum operatingHealthRollUp;
-    private final RedHxOperatingStateEnum operatingState;
+    private final RedHxOperatingStateEnum        operatingState;
 
-    public RedHxOperatingStatusImpl(RedHxOperatingHealthEnum operatingHealth,
-                                    RedHxOperatingHealthRollupEnum operatingHealthRollUp,
-                                    RedHxOperatingStateEnum operatingState)
+    public RedHxOperatingStatusImpl( RedHxOperatingHealthEnum       operatingHealth,
+                                     RedHxOperatingHealthRollupEnum operatingHealthRollUp,
+                                     RedHxOperatingStateEnum        operatingState )
     {
-        this.operatingHealth = operatingHealth;
+        this.operatingHealth       = operatingHealth;
         this.operatingHealthRollUp = operatingHealthRollUp;
-        this.operatingState = operatingState;
+        this.operatingState        = operatingState;
     }
 
-    private RedHxOperatingStatusImpl()
+    private RedHxOperatingStatusImpl( )
     {
-        this.operatingHealth = null;
+        this.operatingHealth       = null;
         this.operatingHealthRollUp = null;
-        this.operatingState = null;
+        this.operatingState        = null;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
@@ -88,25 +90,25 @@ public final class RedHxOperatingStatusImpl
     }
 
     @Override
-    public RedHxOperatingHealthEnum getOperatingHealth()
+    public RedHxOperatingHealthEnum getOperatingHealth( )
     {
         return operatingHealth;
     }
 
     @Override
-    public RedHxOperatingHealthRollupEnum getOperatingHealthRollUp()
+    public RedHxOperatingHealthRollupEnum getOperatingHealthRollUp( )
     {
         return operatingHealthRollUp;
     }
 
     @Override
-    public RedHxOperatingStateEnum getOperatingState()
+    public RedHxOperatingStateEnum getOperatingState( )
     {
         return operatingState;
     }
 
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
         int hash = 3;
 
@@ -118,7 +120,7 @@ public final class RedHxOperatingStatusImpl
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         StringBuilder sb = new StringBuilder();
 

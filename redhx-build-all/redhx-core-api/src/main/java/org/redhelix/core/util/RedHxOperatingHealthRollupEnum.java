@@ -11,6 +11,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.core.util;
 
 /**
@@ -28,14 +31,14 @@ public enum RedHxOperatingHealthRollupEnum
     private final String desc;
     private final String jsonKeyword;
 
-    private RedHxOperatingHealthRollupEnum(String jsonKeyword,
-                                           String desc)
+    private RedHxOperatingHealthRollupEnum( String jsonKeyword,
+            String                                 desc )
     {
         this.jsonKeyword = jsonKeyword;
-        this.desc = desc;
+        this.desc        = desc;
     }
 
-    public String getDescription()
+    public String getDescription( )
     {
         return desc;
     }
@@ -46,7 +49,7 @@ public enum RedHxOperatingHealthRollupEnum
      * @param jsonKeyword the keyword to lookup.
      * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
      */
-    public static RedHxOperatingHealthRollupEnum getInstance(String jsonKeyword)
+    public static RedHxOperatingHealthRollupEnum getInstance( String jsonKeyword )
     {
         RedHxOperatingHealthRollupEnum retVal = null;
 

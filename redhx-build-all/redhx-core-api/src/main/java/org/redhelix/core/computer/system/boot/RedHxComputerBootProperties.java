@@ -14,6 +14,9 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.core.computer.system.boot;
 
 /**
@@ -25,8 +28,9 @@ package org.redhelix.core.computer.system.boot;
  */
 public interface RedHxComputerBootProperties
 {
+    RedHxComputerBootSourceEnum getBootSource( );
 
-    RedHxComputerBootSourceEnum getBootSource();
+    RedHxComputerSystemBootSourceOverrideEnabledEnum getBootSourceOverride( );
 
-    RedHxComputerBootUefiTargetSourceOverride getBootUefiTarget();
+    RedHxComputerBootUefiTargetSourceOverride getBootUefiTarget( );
 }

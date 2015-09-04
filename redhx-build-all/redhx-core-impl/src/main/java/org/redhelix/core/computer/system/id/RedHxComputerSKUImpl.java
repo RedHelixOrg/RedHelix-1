@@ -31,13 +31,11 @@ public final class RedHxComputerSKUImpl
         implements RedHxComputerSKU
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerSKUImpl( int    maxCharCount,
-                                 String propName )
+    public RedHxComputerSKUImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

@@ -26,7 +26,7 @@ import org.redhelix.core.util.RedHxStringProperty;
  * @author Hank Bruning
  *
  */
-public interface RedHxComputerModelName
+public interface RedHxComputerModelNumber
         extends RedHxStringProperty
 {
     /**

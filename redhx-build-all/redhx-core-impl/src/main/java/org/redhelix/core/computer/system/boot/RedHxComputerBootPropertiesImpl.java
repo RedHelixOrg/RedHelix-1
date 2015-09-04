@@ -14,6 +14,9 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.core.computer.system.boot;
 
 import java.util.Objects;
@@ -28,25 +31,28 @@ import java.util.Objects;
 public final class RedHxComputerBootPropertiesImpl
         implements RedHxComputerBootProperties
 {
+    private final RedHxComputerSystemBootSourceOverrideEnabledEnum bootOverride;
+    private final RedHxComputerBootSourceEnum                      bootSource;
+    private final RedHxComputerBootUefiTargetSourceOverride        bootUefiTarget;
 
-    private final RedHxComputerBootSourceEnum bootSource;
-    private final RedHxComputerBootUefiTargetSourceOverride bootUefiTarget;
-
-    public RedHxComputerBootPropertiesImpl(RedHxComputerBootSourceEnum bootSource,
-                                           RedHxComputerBootUefiTargetSourceOverride bootUefiTarget)
+    public RedHxComputerBootPropertiesImpl( RedHxComputerBootSourceEnum bootSource,
+            RedHxComputerBootUefiTargetSourceOverride                   bootUefiTarget,
+            final RedHxComputerSystemBootSourceOverrideEnabledEnum      bootOverride )
     {
-        this.bootSource = bootSource;
+        this.bootSource     = bootSource;
         this.bootUefiTarget = bootUefiTarget;
+        this.bootOverride   = bootOverride;
     }
 
-    private RedHxComputerBootPropertiesImpl()
+    private RedHxComputerBootPropertiesImpl( )
     {
-        this.bootSource = null;
+        this.bootSource     = null;
         this.bootUefiTarget = null;
+        this.bootOverride   = null;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
@@ -75,34 +81,46 @@ public final class RedHxComputerBootPropertiesImpl
             return false;
         }
 
+        if (this.bootOverride != other.bootOverride)
+        {
+            return false;
+        }
+
         return true;
     }
 
     @Override
-    public RedHxComputerBootSourceEnum getBootSource()
+    public RedHxComputerBootSourceEnum getBootSource( )
     {
         return bootSource;
     }
 
     @Override
-    public RedHxComputerBootUefiTargetSourceOverride getBootUefiTarget()
+    public RedHxComputerSystemBootSourceOverrideEnabledEnum getBootSourceOverride( )
+    {
+        return bootOverride;
+    }
+
+    @Override
+    public RedHxComputerBootUefiTargetSourceOverride getBootUefiTarget( )
     {
         return bootUefiTarget;
     }
 
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
         int hash = 7;
 
-        hash = 37 * hash + Objects.hashCode(this.bootSource);
-        hash = 37 * hash + Objects.hashCode(this.bootUefiTarget);
+        hash = 97 * hash + Objects.hashCode(this.bootSource);
+        hash = 97 * hash + Objects.hashCode(this.bootUefiTarget);
+        hash = 97 * hash + Objects.hashCode(this.bootOverride);
 
         return hash;
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         StringBuilder sb = new StringBuilder();
 
@@ -111,6 +129,8 @@ public final class RedHxComputerBootPropertiesImpl
         sb.append(bootSource);
         sb.append(", bootUefiTarget=");
         sb.append(bootUefiTarget);
+        sb.append(", bootOverride=");
+        sb.append(bootOverride);
         sb.append(" ]");
 
         return sb.toString();

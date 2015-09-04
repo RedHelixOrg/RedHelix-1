@@ -11,6 +11,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.core.action;
 
 import org.redhelix.core.util.RedHxUriPath;
@@ -27,13 +30,12 @@ import org.redhelix.core.util.RedHxUriPath;
 public interface RedHxActionProperties
         extends Comparable<RedHxActionProperties>
 {
-
-    RedHxActionName getActionName();
+    RedHxActionName getActionName( );
 
     /**
      * get the path to invoke the action.
      *
      * @return
      */
-    RedHxUriPath getActionPath();
+    RedHxUriPath getActionPath( );
 }

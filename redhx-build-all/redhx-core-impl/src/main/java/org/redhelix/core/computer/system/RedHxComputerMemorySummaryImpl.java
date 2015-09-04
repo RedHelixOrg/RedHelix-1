@@ -14,10 +14,14 @@
  *  limitations under the License
  *
  */
+
+
+
 package org.redhelix.core.computer.system;
 
-import java.util.Objects;
 import org.redhelix.core.util.RedHxOperatingStatus;
+
+import java.util.Objects;
 
 /**
  *
@@ -29,25 +33,24 @@ import org.redhelix.core.util.RedHxOperatingStatus;
 public final class RedHxComputerMemorySummaryImpl
         implements RedHxComputerMemorySummary
 {
-
     private final RedHxOperatingStatus operatingStatus;
-    private final int totalSystemMemoryGiB;
+    private final int                  totalSystemMemoryGiB;
 
-    public RedHxComputerMemorySummaryImpl(RedHxOperatingStatus operatingStatus,
-                                          int totalSystemMemoryGiB)
+    public RedHxComputerMemorySummaryImpl( RedHxOperatingStatus operatingStatus,
+            int                                                 totalSystemMemoryGiB )
     {
-        this.operatingStatus = operatingStatus;
+        this.operatingStatus      = operatingStatus;
         this.totalSystemMemoryGiB = totalSystemMemoryGiB;
     }
 
-    private RedHxComputerMemorySummaryImpl()
+    private RedHxComputerMemorySummaryImpl( )
     {
-        this.operatingStatus = null;
+        this.operatingStatus      = null;
         this.totalSystemMemoryGiB = 0;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals( Object obj )
     {
         if (this == obj)
         {
@@ -80,19 +83,19 @@ public final class RedHxComputerMemorySummaryImpl
     }
 
     @Override
-    public RedHxOperatingStatus getOperatingStatus()
+    public RedHxOperatingStatus getMemoryOperatingStatus( )
     {
         return operatingStatus;
     }
 
     @Override
-    public int getTotalSystemMemoryGiB()
+    public int getTotalSystemMemoryGiB( )
     {
         return totalSystemMemoryGiB;
     }
 
     @Override
-    public int hashCode()
+    public int hashCode( )
     {
         int hash = 5;
 
@@ -103,7 +106,7 @@ public final class RedHxComputerMemorySummaryImpl
     }
 
     @Override
-    public String toString()
+    public String toString( )
     {
         StringBuilder sb = new StringBuilder();
 

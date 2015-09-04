@@ -11,6 +11,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
+
+
+
 package org.redhelix.core.computer.system.id;
 
 import org.redhelix.core.util.RedHxStringProperty;
@@ -26,7 +29,6 @@ import org.redhelix.core.util.RedHxStringProperty;
 public interface RedHxComputerDescription
         extends RedHxStringProperty
 {
-
     /**
      * The maximum number of characters allowed in a chassis description
      */

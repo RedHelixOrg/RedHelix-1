@@ -16,7 +16,6 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.chassis.id.*;
 import org.redhelix.core.util.RedHxStringProperty;
 
 /**
