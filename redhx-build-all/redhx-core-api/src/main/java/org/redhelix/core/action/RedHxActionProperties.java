@@ -32,5 +32,10 @@ public interface RedHxActionProperties
 {
     RedHxActionName getActionName( );
 
-    RedHxUriPath getActionsPath( );
+    /**
+     * get the path to invoke the action.
+     *
+     * @return
+     */
+    RedHxUriPath getActionPath( );
 }

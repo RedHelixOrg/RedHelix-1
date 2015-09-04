@@ -19,18 +19,17 @@ package org.redhelix.core.computer.system.id;
 import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- *
- *
+ * The chassis name.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public interface RedHxComputerModelName
+public interface RedHxComputerName
         extends RedHxStringProperty
 {
     /**
-     * The maximum number of characters allowed in a manufacturer name.
+     * The maximum number of characters allowed in a chassis name.
      */
     public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 }

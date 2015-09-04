@@ -39,7 +39,7 @@ import org.redhelix.core.chassis.id.RedHxChassisSKU;
 import org.redhelix.core.chassis.id.RedHxChassisSKUImpl;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 import org.redhelix.core.util.RedHxOperatingHealthEnum;
-import org.redhelix.core.util.RedHxOperatingState;
+import org.redhelix.core.util.RedHxOperatingStateEnum;
 import org.redhelix.core.util.RedHxUriPath;
 import org.redhelix.core.util.RedHxUriPathImpl;
 
@@ -76,7 +76,7 @@ public final class RedHxChassisBuilder
     private RedHxChassisManufacturerName                         manufacturerName;
     private RedHxChassisModelNumber                              modelNumber;
     private RedHxOperatingHealthEnum                             operatingHealth;
-    private RedHxOperatingState                                  operatingState;
+    private RedHxOperatingStateEnum                              operatingState;
     private RedHxChassisPartNumber                               partNumber;
     private List<RedHxUriPath>                                   poweredByList;
     private RedHxUriPath                                         powerUriPath;
@@ -276,7 +276,7 @@ public final class RedHxChassisBuilder
 
     public void setOperatingState( String value )
     {
-        RedHxOperatingState tmpState = RedHxOperatingState.getInstance(value);
+        RedHxOperatingStateEnum tmpState = RedHxOperatingStateEnum.getInstance(value);
 
         if (tmpState == null)
         {

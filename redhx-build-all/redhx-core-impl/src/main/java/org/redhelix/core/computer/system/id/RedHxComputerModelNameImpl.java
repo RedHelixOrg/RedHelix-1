@@ -28,16 +28,15 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  */
 public final class RedHxComputerModelNameImpl
         extends RedHxAbstractStringProperty
-        implements RedHxComputerModelName
+        implements RedHxComputerModelNumber
 {
     /**
      * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerModelNameImpl( int    maxCharCount,
-                                       String propName )
+    public RedHxComputerModelNameImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

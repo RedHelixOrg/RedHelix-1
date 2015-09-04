@@ -19,9 +19,6 @@ package org.redhelix.core.computer.system.id;
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- *
- *
- *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
@@ -31,13 +28,11 @@ public final class RedHxComputerSerialNumberImpl
         implements RedHxComputerSerialNumber
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerSerialNumberImpl( int maxCharCount,
-            String                            propName )
+    public RedHxComputerSerialNumberImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

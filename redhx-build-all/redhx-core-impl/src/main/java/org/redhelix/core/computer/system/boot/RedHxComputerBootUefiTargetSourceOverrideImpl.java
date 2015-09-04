@@ -14,28 +14,28 @@
 
 
 
-package org.redhelix.core.computer.system.id;
+package org.redhelix.core.computer.system.boot;
 
+import org.redhelix.core.computer.system.boot.RedHxComputerBootUefiTargetSourceOverride;
 import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- *
- *
+ * The Uefi Device Path of the device to boot from when BootSourceOverrideSupported is UefiTarget.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerManufacturerNameImpl
+public final class RedHxComputerBootUefiTargetSourceOverrideImpl
         extends RedHxAbstractStringProperty
-        implements RedHxComputerManufacturerName
+        implements RedHxComputerBootUefiTargetSourceOverride
 {
     /**
-     * @param propName
+     * @param path
      */
-    public RedHxComputerManufacturerNameImpl( String propName )
+    public RedHxComputerBootUefiTargetSourceOverrideImpl( String path )
     {
         super(MAX_CHAR_COUNT_REDH_DEFINED,
-              propName);
+              path);
     }
 }

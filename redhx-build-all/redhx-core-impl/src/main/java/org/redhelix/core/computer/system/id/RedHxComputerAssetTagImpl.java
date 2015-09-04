@@ -31,13 +31,11 @@ public final class RedHxComputerAssetTagImpl
         implements RedHxComputerAssetTag
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxComputerAssetTagImpl( int    maxCharCount,
-                                      String propName )
+    public RedHxComputerAssetTagImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

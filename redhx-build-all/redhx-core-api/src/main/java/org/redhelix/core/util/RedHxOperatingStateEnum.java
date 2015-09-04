@@ -17,22 +17,28 @@
 package org.redhelix.core.util;
 
 /**
- * the health state of this resource in the absence of its dependent resource.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
+ *
  */
-public enum RedHxOperatingHealthEnum
+public enum RedHxOperatingStateEnum
 {
-    OK("OK", "Normal."),
-    WARNING("Warning", "A condition exists that requires attention."),
-    CRITICAL("Critical", "A critical condition exists that requires immediate attention.");
+    ABSENT("Absent", "This function or resource is not present or not detected"),
+    DISABLED("Disabled", "This function or resource has been disabled"),
+    ENABLED("Enabled", "This function or resource has been enabled"),
+    INTEST("InTest", "This function or resource is undergoing testing"),
+    STANDBY_OFFLINE("StandbyOffline", "This function or resource is enabled, but awaiting an external action to activate it"),
+    STANDBY_SPARE(
+        "StandbySpare",
+        "This function or resource is part of a redundancy set and is awaiting a failover or other external action to activate it."),
+    STARTING("Starting", "This function or resource is starting");
 
     private final String desc;
     private final String jsonKeyword;
 
-    private RedHxOperatingHealthEnum( String jsonKeyword,
-                                      String desc )
+    private RedHxOperatingStateEnum( String jsonKeyword,
+                                     String desc )
     {
         this.jsonKeyword = jsonKeyword;
         this.desc        = desc;
@@ -49,11 +55,11 @@ public enum RedHxOperatingHealthEnum
      * @param jsonKeyword the keyword to lookup.
      * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
      */
-    public static RedHxOperatingHealthEnum getInstance( String jsonKeyword )
+    public static RedHxOperatingStateEnum getInstance( String jsonKeyword )
     {
-        RedHxOperatingHealthEnum retVal = null;
+        RedHxOperatingStateEnum retVal = null;
 
-        for (RedHxOperatingHealthEnum tmp : values())
+        for (RedHxOperatingStateEnum tmp : values())
         {
             if (tmp.jsonKeyword.equals(jsonKeyword))
             {

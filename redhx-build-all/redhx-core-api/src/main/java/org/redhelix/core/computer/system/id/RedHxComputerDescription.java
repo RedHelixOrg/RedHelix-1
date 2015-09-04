@@ -16,29 +16,21 @@
 
 package org.redhelix.core.computer.system.id;
 
+import org.redhelix.core.util.RedHxStringProperty;
+
 /**
  *
  *
  *
- * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public enum RedHxBootSourceOverrideEnabledEnum
+public interface RedHxComputerDescription
+        extends RedHxStringProperty
 {
-    CONTINUOUS("The system will boot to the target specified in the BootSourceOverrideTarget until this property is set to Disabled."),
-    DISABLED("The system will boot as normal"),
-    ONCE("ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
-
-    private final String desc;
-
-    private RedHxBootSourceOverrideEnabledEnum( String desc )
-    {
-        this.desc = desc;
-    }
-
-    public String getDescription( )
-    {
-        return desc;
-    }
+    /**
+     * The maximum number of characters allowed in a chassis description
+     */
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 1000;    // arbitrary
 }

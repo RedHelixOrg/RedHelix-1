@@ -28,7 +28,7 @@ import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSKU;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 import org.redhelix.core.util.RedHxOperatingHealthEnum;
-import org.redhelix.core.util.RedHxOperatingState;
+import org.redhelix.core.util.RedHxOperatingStateEnum;
 import org.redhelix.core.util.RedHxUriPath;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public interface RedHxChassis
 
     RedHxOperatingHealthEnum getOperatingHealth( );
 
-    RedHxOperatingState getOperatingState( );
+    RedHxOperatingStateEnum getOperatingState( );
 
     RedHxChassisPartNumber getPartNumber( );
 

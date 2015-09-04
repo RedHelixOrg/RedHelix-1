@@ -16,7 +16,7 @@
 
 package org.redhelix.core.computer.system.id;
 
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.core.util.RedHxStringProperty;
 
 /**
  *
@@ -26,16 +26,11 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerManufacturerNameImpl
-        extends RedHxAbstractStringProperty
-        implements RedHxComputerManufacturerName
+public interface RedHxComputerModelNumber
+        extends RedHxStringProperty
 {
     /**
-     * @param propName
+     * The maximum number of characters allowed in a manufacturer name.
      */
-    public RedHxComputerManufacturerNameImpl( String propName )
-    {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
-              propName);
-    }
+    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
 }
