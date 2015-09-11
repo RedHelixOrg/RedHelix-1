@@ -53,7 +53,7 @@ import java.util.TreeMap;
  */
 class ServiceRootReader
 {
-    private static final String ENTITY_SET_NAME = "odata";    // from the Redfish specification.
+    private static final String ENTITY_SET_NAME = "odata/";    // from the Redfish specification.
 
     /**
      * each KEY coresponds to a Redfish schema and each schema has a JSON file provided by Redfish
@@ -105,11 +105,13 @@ class ServiceRootReader
                 redfishProtocolVersion);
         final String serviceRootStr      = serviceRoot.getServiceRootString();
         final URI    redfishEntitySetURI = client.newURIBuilder(serviceRootStr).appendEntitySetSegment(ENTITY_SET_NAME).build();
-
+        
+        client.getConfiguration().setGzipCompression(true);
         client.getRetrieveRequestFactory();
 
         final ODataRetrieveResponse<ClientEntitySet> serviceRootResponse =
             client.getRetrieveRequestFactory().getEntitySetRequest(redfishEntitySetURI).execute();
+            
         final List<ClientEntity> list;
         final String             tcpProtocolStr;
 
