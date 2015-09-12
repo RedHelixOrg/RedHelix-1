@@ -42,24 +42,30 @@ public final class RedHxServiceRootIdImpl
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("http://");    // Redfish spec mandates the Service Root is always reachable by the http
+        if(httpProtocol == RedHxTcpProtocolTypeEnum.HTTPS)
+            sb.append("https://");
+        else
+            sb.append("http://");    // Redfish spec mandates the Service Root is always reachable by the http
 
         // protocol.
         sb.append(hostName);
-        sb.append(":");
-        sb.append(tcpPortNumber);
+        if(tcpPortNumber != 0)
+        {
+            sb.append(":");
+            sb.append(tcpPortNumber);
+        }
+        sb.append("/");
 
         if (servicePrefix != null)
         {
-            sb.append("/");
             sb.append(servicePrefix);
         }
 
-        sb.append("/redfish/");
+        sb.append("redfish/");
 
         if (redfishProtocolVersion == RedHxRedfishProtocolVersionEnum.VERSION_1)
         {
-            sb.append("v1");
+            sb.append("v1/");
         }
         else
         {
@@ -67,7 +73,6 @@ public final class RedHxServiceRootIdImpl
                                                + " is recoganized.");
         }
 
-        sb.append("/");
         serviceRootStr = sb.toString();
     }
 
