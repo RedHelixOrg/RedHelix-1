@@ -82,6 +82,7 @@ public class RedMatrixServerDb
             /**
              * open a HTTP connection to the Redfish server provided by the DMTF mockup. The mockup server is started with the command "node
              * server.js"
+             *
              */
             ctx.openConnection((protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP,
                                hostname,
