@@ -14,19 +14,28 @@
 
 
 
-package org.redhelix.core.chassis;
+package org.redhelix.core.computer.system.id;
+
+import org.redhelix.core.util.RedHxAbstractStringProperty;
 
 /**
- * a collection of zero or more chassis.
+ *
+ *
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public interface RedHxChassisCollection
-        extends Iterable<RedHxChassis>
+public final class RedHxComputerModelNumberImpl
+        extends RedHxAbstractStringProperty
+        implements RedHxComputerModelNumber
 {
-    boolean isEmpty( );
-
-    int size( );
+    /**
+     * @param propName
+     */
+    public RedHxComputerModelNumberImpl( String propName )
+    {
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
+              propName);
+    }
 }

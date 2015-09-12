@@ -14,19 +14,15 @@
  *  limitations under the License
  *
  */
-
-
-
 package org.redhelix.core.chassis;
 
-import org.redhelix.core.util.RedHxUriPath;
-
 import java.io.PrintStream;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.redhelix.core.util.RedHxAbstractColumnFormatter;
+import org.redhelix.core.util.RedHxUriPath;
 
 /**
  *
@@ -37,27 +33,8 @@ import java.util.Map;
  *
  */
 public final class RedHxChassisColumnFormatter
+        extends RedHxAbstractColumnFormatter
 {
-    private static final int COLUMN_CHAR_COUNT_PAD = 2;
-    private final String     columnDelimiter;
-    private final boolean    isRowPromptPrinted;
-    private final PrintOrder outputOrder;
-    private boolean          isPathPrinted;
-    private boolean          isSectionHeaderPrinted;
-
-    public enum PrintOrder
-    {
-
-        /**
-         * the rows are ordered in alpha order using the field name.
-         */
-        ALPHA,
-
-        /**
-         * the rows are grouped in logical sections.
-         */
-        SECTION;
-    }
 
     /**
      * output in ALPH or SECTION format. No section headers are printed.
@@ -67,16 +44,15 @@ public final class RedHxChassisColumnFormatter
      * @param outputOrder
      * @param isPathPrinted
      */
-    public RedHxChassisColumnFormatter( final boolean isRowTitlePrinted,
-            String                                    columnDelimiter,
-            PrintOrder                                outputOrder,
-            boolean                                   isPathPrinted )
+    public RedHxChassisColumnFormatter(final boolean isRowTitlePrinted,
+                                       final String columnDelimiter,
+                                       final PrintOrder outputOrder,
+                                       final boolean isPathPrinted)
     {
-        this.isRowPromptPrinted     = isRowTitlePrinted;
-        this.columnDelimiter        = columnDelimiter;
-        this.outputOrder            = outputOrder;
-        this.isSectionHeaderPrinted = false;
-        this.isPathPrinted          = isPathPrinted;
+        super(isRowTitlePrinted,
+              columnDelimiter,
+              outputOrder,
+              isPathPrinted);
     }
 
     /**
@@ -85,64 +61,44 @@ public final class RedHxChassisColumnFormatter
      * @param isRowTitlePrinted
      * @param columnDelimiter
      * @param isSectionHeaderPrinted
+     * @param isPathPrinted
      */
-    public RedHxChassisColumnFormatter( final boolean isRowTitlePrinted,
-            String                                    columnDelimiter,
-            boolean                                   isSectionHeaderPrinted,
-            boolean                                   isPathPrinted )
+    public RedHxChassisColumnFormatter(final boolean isRowTitlePrinted,
+                                       final String columnDelimiter,
+                                       final boolean isSectionHeaderPrinted,
+                                       final boolean isPathPrinted)
     {
-        this.isRowPromptPrinted     = isRowTitlePrinted;
-        this.columnDelimiter        = columnDelimiter;
-        this.outputOrder            = PrintOrder.SECTION;
-        this.isSectionHeaderPrinted = isSectionHeaderPrinted;
-        this.isPathPrinted          = isPathPrinted;
+        super(isRowTitlePrinted,
+              columnDelimiter,
+              isSectionHeaderPrinted,
+              isPathPrinted);
     }
 
-    private RedHxChassisColumnFormatter( )
+    public void print(RedHxChassis chassis,
+                      PrintStream streamOut)
     {
-        this.isRowPromptPrinted     = false;
-        this.columnDelimiter        = null;
-        this.outputOrder            = null;
-        this.isSectionHeaderPrinted = false;
-    }
-
-    public void print( RedHxChassis chassis,
-                       PrintStream  streamOut )
-    {
-        switch (outputOrder)
+        switch (super.getOutputOrder())
         {
-            case ALPHA :
+            case ALPHA:
                 printAlphaOrder(chassis,
                                 streamOut);
 
                 break;
-            case SECTION :
+            case SECTION:
                 printSectionOrder(chassis,
                                   streamOut);
 
                 break;
-            default :
-                throw new IllegalArgumentException("Unknown format order " + outputOrder);
+            default:
+                throw new IllegalArgumentException("Unknown format order " + getOutputOrder());
         }
     }
 
-    private static int getMaxCharCount( List<String> promptList )
-    {
-        int max = 0;
-
-        for (String str : promptList)
-        {
-            max = Math.max(max, str.length());
-        }
-
-        return max;
-    }
-
-    private void printAlphaOrder( RedHxChassis chassis,
-                                  PrintStream  streamOut )
+    private void printAlphaOrder(RedHxChassis chassis,
+                                 PrintStream streamOut)
     {
         List<String> promptList = new ArrayList<>();
-        List<String> valueList  = new ArrayList<>();
+        List<String> valueList = new ArrayList<>();
 
         promptList.add("Actions");
 
@@ -210,7 +166,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
             promptList.add("Computer Systems Paths");
 
@@ -259,16 +215,16 @@ public final class RedHxChassisColumnFormatter
 
         promptList.add("Led State");
 
-        if (chassis.getLedState() != null)
+        if (chassis.getIndicatorLedState() != null)
         {
-            valueList.add(chassis.getLedState().toString());
+            valueList.add(chassis.getIndicatorLedState().toString());
         }
         else
         {
             valueList.add("");
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
             promptList.add("Log Services Path");
 
@@ -337,7 +293,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
             promptList.add("Powered By");
 
@@ -379,7 +335,7 @@ public final class RedHxChassisColumnFormatter
 
         valueList.add("");
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
             promptList.add("System Manager Paths");
 
@@ -399,49 +355,26 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int           padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
-        StringBuilder sb            = new StringBuilder();
-
-        for (int i = 0; i < promptList.size(); ++i)
-        {
-            sb.setLength(0);
-
-            if (isRowPromptPrinted)
-            {
-                sb.append(promptList.get(i));
-            }
-
-            sb.append(columnDelimiter);
-
-            while (sb.length() < padTillColumn)
-            {
-                sb.append(" ");
-            }
-
-            sb.append(valueList.get(i));
-            streamOut.println(sb.toString());
-        }
+        printOutRows(streamOut,
+                     promptList,
+                     valueList);
     }
 
-    private void printSectionOrder( RedHxChassis chassis,
-                                    PrintStream  streamOut )
+    private void printSectionOrder(RedHxChassis chassis,
+                                   PrintStream streamOut)
     {
-        StringBuilder        sb                          = new StringBuilder();
-        List<String>         promptList                  = new ArrayList<>();
-        List<String>         valueList                   = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        List<String> promptList = new ArrayList<>();
+        List<String> valueList = new ArrayList<>();
         Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
 
         /*
          * ID section
          */
-        rowNumberToSectionHeaderMap.put(0,
-                                        "Identification");
+        int lineCount = 0;
+
+        rowNumberToSectionHeaderMap.put(lineCount,
+                                        "Chassis Identification");
         promptList.add("Chassis ID");
 
         if (chassis.getChassisId() != null)
@@ -453,7 +386,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        promptList.add("Chassis Description");
+        promptList.add("Description");
 
         if (chassis.getChassisDescription() != null)
         {
@@ -464,7 +397,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        promptList.add("Chassis Name");
+        promptList.add("Name");
 
         if (chassis.getChassisName() != null)
         {
@@ -486,7 +419,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        promptList.add("Manufacturer Name");
+        promptList.add("Manufacturer");
 
         if (chassis.getManufacturerName() != null)
         {
@@ -508,7 +441,7 @@ public final class RedHxChassisColumnFormatter
             valueList.add("");
         }
 
-        promptList.add("PartNumber");
+        promptList.add("Part Number");
 
         if (chassis.getPartNumber() != null)
         {
@@ -554,9 +487,9 @@ public final class RedHxChassisColumnFormatter
 
         promptList.add("Led State");
 
-        if (chassis.getLedState() != null)
+        if (chassis.getIndicatorLedState() != null)
         {
-            valueList.add(chassis.getLedState().toString());
+            valueList.add(chassis.getIndicatorLedState().toString());
         }
         else
         {
@@ -566,8 +499,9 @@ public final class RedHxChassisColumnFormatter
         /*
          * health
          */
-        rowNumberToSectionHeaderMap.put(11,
-                                        "Health");
+        lineCount = promptList.size();
+        rowNumberToSectionHeaderMap.put(lineCount,
+                                        "Chassis Health");
         promptList.add("Operating Health");
 
         if (chassis.getOperatingHealth() != null)
@@ -593,8 +527,9 @@ public final class RedHxChassisColumnFormatter
         /*
          * Actions
          */
-        rowNumberToSectionHeaderMap.put(13,
-                                        "Actions");
+        lineCount = promptList.size();
+        rowNumberToSectionHeaderMap.put(lineCount,
+                                        "Chassis Actions");
         promptList.add("Actions");
 
         if (chassis.getActionGroup() != null)
@@ -609,10 +544,11 @@ public final class RedHxChassisColumnFormatter
         /*
          * Paths
          */
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            rowNumberToSectionHeaderMap.put(13,
-                                            "Paths");
+            lineCount = promptList.size();
+            rowNumberToSectionHeaderMap.put(lineCount,
+                                            "Chassis Paths");
             promptList.add("Computer Systems Paths");
 
             if (chassis.getComputerSystemUriPathList() != null)
@@ -713,50 +649,9 @@ public final class RedHxChassisColumnFormatter
             }
         }
 
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
-
-        for (int i = 0; i < promptList.size(); ++i)
-        {
-            sb.setLength(0);
-
-            if (isSectionHeaderPrinted && rowNumberToSectionHeaderMap.keySet().contains(i))
-            {
-                String sectionHeader = rowNumberToSectionHeaderMap.get(i);
-
-                streamOut.println("-------------------------");
-                streamOut.println(sectionHeader);
-            }
-
-            if (isRowPromptPrinted)
-            {
-                sb.append(promptList.get(i));
-            }
-
-            sb.append(columnDelimiter);
-
-            while (sb.length() < padTillColumn)
-            {
-                sb.append(" ");
-            }
-
-            sb.append(valueList.get(i));
-            streamOut.println(sb.toString());
-        }
-    }
-
-    private static void valiateListElementCount( List<String> promptList,
-            List<String>                                      valueList )
-    {
-        if (promptList.size() != valueList.size())
-        {
-            throw new IllegalStateException("The outout lists are not identical in size. The prompt list contains " + promptList.size()
-                                            + " elements and the value list " + valueList.size() + " elements.");
-        }
+        printOutRowsWithSectionTitles(streamOut,
+                                      promptList,
+                                      valueList,
+                                      rowNumberToSectionHeaderMap);
     }
 }

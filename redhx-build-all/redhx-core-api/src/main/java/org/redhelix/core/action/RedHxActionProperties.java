@@ -11,17 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.action;
 
+import java.util.List;
 import org.redhelix.core.util.RedHxUriPath;
 
 /**
- *
- *
- *
+ * A single action with optional parameters.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -30,12 +26,26 @@ import org.redhelix.core.util.RedHxUriPath;
 public interface RedHxActionProperties
         extends Comparable<RedHxActionProperties>
 {
-    RedHxActionName getActionName( );
+
+    /**
+     * get the name of the action.
+     *
+     * @return the action name. A null is not returned.
+     */
+    RedHxActionName getActionName();
 
     /**
      * get the path to invoke the action.
      *
-     * @return
+     * @return the URI path used to invoke the action. A null is not returned.
      */
-    RedHxUriPath getActionPath( );
+    RedHxUriPath getActionPath();
+
+    /**
+     * get a list of parameters for the action. An action may have only one parameter
+     *
+     * @return an immutable list of action values. The list is sorted in alpha order. The list may be empty.
+     */
+
+    List<String> getActionValues();
 }

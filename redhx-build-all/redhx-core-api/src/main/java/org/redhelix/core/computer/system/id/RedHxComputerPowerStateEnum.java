@@ -26,7 +26,50 @@ package org.redhelix.core.computer.system.id;
  * @author Hank Bruning
  *
  */
-public enum RedHxComputerPowerStateEnum { ON,
-        OFF,
-        UNKNOWN,
-        RESET; }
+public enum RedHxComputerPowerStateEnum
+{
+    ON("On"),
+    OFF("Off"),
+    UNKNOWN("Unknown"),
+    RESET("Reset");
+
+    private final String jsonKeyword;
+
+    private RedHxComputerPowerStateEnum( String jsonKeyword )
+    {
+        this.jsonKeyword = jsonKeyword;
+    }
+
+    /**
+     * convert from the RedFish JSON keyword into the enumeration.
+     *
+     * @param jsonKeyword the keyword to lookup.
+     * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
+     */
+    public static RedHxComputerPowerStateEnum getInstance( String jsonKeyword )
+    {
+        RedHxComputerPowerStateEnum retVal = null;
+
+        for (RedHxComputerPowerStateEnum tmp : values())
+        {
+            if (tmp.jsonKeyword.equals(jsonKeyword))
+            {
+                retVal = tmp;
+
+                break;
+            }
+        }
+
+        return retVal;
+    }
+
+    /**
+     * get the JSON keyword that identifies the enum.
+     *
+     * @return a keyword. This has zero spaces. A null is not returned.
+     */
+    public String getJsonKeyword( )
+    {
+        return jsonKeyword;
+    }
+}

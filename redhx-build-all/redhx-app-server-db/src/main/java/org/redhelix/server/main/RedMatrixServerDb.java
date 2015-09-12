@@ -11,15 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.server.main;
 
+import java.io.PrintStream;
+import java.net.URISyntaxException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.redhelix.core.chassis.RedHxChassis;
 import org.redhelix.core.chassis.RedHxChassisCollection;
 import org.redhelix.core.chassis.RedHxChassisColumnFormatter;
 import org.redhelix.core.chassis.RedHxChassisParseException;
+import org.redhelix.core.computer.system.RedHxComputerSystem;
+import org.redhelix.core.computer.system.RedHxComputerSystemCollection;
+import org.redhelix.core.computer.system.RedHxComputerSystemColumnFormatter;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxParseException;
@@ -27,12 +32,7 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 import org.redhelix.core.util.RedHxUriPath;
 import org.redhelix.server.main.reader.chassis.RedHxChassisCollectionReader;
 import org.redhelix.server.main.reader.chassis.RedHxChassisPathCollectionReader;
-
-import java.net.URISyntaxException;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.Set;
+import org.redhelix.server.main.reader.computer.system.RedHxComputerSystemCollectionReader;
 
 /**
  * A simple way to test reading the Redfish Chassis JSON mockups from the DMTF. This requires the DMTF DSP2043_0.99.0a is running on TCP
@@ -43,17 +43,18 @@ import java.util.Set;
  */
 public class RedMatrixServerDb
 {
+
     /**
      * @param args
      */
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
 
         /**
          * turn off logging
          */
-        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
-                           "error");
+//        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
+//                           "debug");
 
         /*
          * create a communication context that will be used to talk with a single Redfish server. This does not
@@ -90,60 +91,105 @@ public class RedMatrixServerDb
                 /**
                  * Second, for each path read all the chassis data. That is it, your done.
                  */
-                RedHxChassisCollection chassisCollection = RedHxChassisCollectionReader.chassisCollectionReader(ctx,
-                        chassisPathSet);
+                RedHxChassisCollection chassisCollection = RedHxChassisCollectionReader.readPaths(ctx,
+                                                                                                  chassisPathSet);
 
-                /*
-                 * All communication with the Redfish server is over now print out the results. These are output format parameters.
-                 */
-                final boolean                     isRowTitlePrinted      = true;
-                final String                      columnDelimiter        = ":";
-                final boolean                     isSectionHeaderPrinted = true;
-                final boolean                     isPathPrinted          = true;
-                final RedHxChassisColumnFormatter formatter              = new RedHxChassisColumnFormatter(isRowTitlePrinted,
-                        columnDelimiter,
-                        isSectionHeaderPrinted,
-                        isPathPrinted);
-
-                /**
-                 * loop thru the chassis and print out the data in column format.
-                 */
-                for (RedHxChassis chassis : chassisCollection)
+                if (!chassisCollection.isEmpty())
                 {
-                    formatter.print(chassis,
-                                    System.out);
+                    RedHxComputerSystemCollection computerSystemCollection = RedHxComputerSystemCollectionReader.readPaths(ctx,
+                                                                                                                           chassisCollection);
+
+                    printChassisCollections(chassisCollection, computerSystemCollection);
+
                 }
             }
             catch (RedHxChassisParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                        null,
-                        ex);
+                                                                        null,
+                                                                        ex);
             }
             catch (RedHxHttpResponseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                        null,
-                        ex);
+                                                                        null,
+                                                                        ex);
             }
             catch (RedHxParseException ex)
             {
                 Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                        null,
-                        ex);
+                                                                        null,
+                                                                        ex);
             }
         }
         catch (URISyntaxException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                    null,
-                    ex);
+                                                                    null,
+                                                                    ex);
         }
         catch (RedHxHttpResponseException ex)
         {
             Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                    null,
-                    ex);
+                                                                    null,
+                                                                    ex);
+        }
+    }
+
+    /**
+     * print the chassis and the Computer Systems in the chassis to a stream. The data of the chassis and computer system are divided into
+     * logical sections and printed.
+     *
+     * @param chassisCollection
+     * @param computerSystemCollection
+     */
+    private static void printChassisCollections(RedHxChassisCollection chassisCollection,
+                                                RedHxComputerSystemCollection computerSystemCollection
+    )
+    {
+
+        /*
+         * All communication with the Redfish server is over now print out the results. These are output format parameters.
+         */
+        final boolean isRowTitlePrinted = true;
+        final String columnDelimiter = ":";
+        final boolean isSectionHeaderPrinted = true;
+        final boolean isPathPrinted = true;
+        final RedHxChassisColumnFormatter chassisFormatter = new RedHxChassisColumnFormatter(isRowTitlePrinted,
+                                                                                             columnDelimiter,
+                                                                                             isSectionHeaderPrinted,
+                                                                                             isPathPrinted);
+
+        final RedHxComputerSystemColumnFormatter computerSystemFormatter = new RedHxComputerSystemColumnFormatter(isRowTitlePrinted,
+                                                                                                                  columnDelimiter,
+                                                                                                                  isSectionHeaderPrinted,
+                                                                                                                  isPathPrinted);
+
+        final PrintStream outStream = System.out;
+        /**
+         * loop thru the chassis and print out the data in column format.
+         */
+        for (RedHxChassis chassis : chassisCollection)
+        {
+            chassisFormatter.print(chassis,
+                                   outStream);
+
+            for (RedHxUriPath computerSystemPath : chassis.getComputerSystemUriPathList())
+            {
+
+                final RedHxComputerSystem computerSystem = computerSystemCollection.getComputerSystem(computerSystemPath);
+
+                if (computerSystem == null)
+                {
+
+                    outStream.println("Unable to find a computer system with path " + computerSystemPath.getValue());
+                }
+                else
+                {
+                    computerSystemFormatter.print(computerSystem, outStream);
+                }
+
+            }
         }
     }
 }

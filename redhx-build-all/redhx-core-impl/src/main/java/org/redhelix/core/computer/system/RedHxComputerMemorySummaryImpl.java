@@ -34,13 +34,19 @@ public final class RedHxComputerMemorySummaryImpl
         implements RedHxComputerMemorySummary
 {
     private final RedHxOperatingStatus operatingStatus;
-    private final int                  totalSystemMemoryGiB;
+    private final long                 totalSystemMemoryGiB;
 
     public RedHxComputerMemorySummaryImpl( RedHxOperatingStatus operatingStatus,
-            int                                                 totalSystemMemoryGiB )
+            long                                                totalSystemMemoryGiB )
     {
         this.operatingStatus      = operatingStatus;
         this.totalSystemMemoryGiB = totalSystemMemoryGiB;
+
+        if (totalSystemMemoryGiB < 0)
+        {
+            throw new IllegalArgumentException("invalid totalSystemMemoryGiB. It is less than zero. Invalid value of "
+                                               + totalSystemMemoryGiB);
+        }
     }
 
     private RedHxComputerMemorySummaryImpl( )
@@ -89,7 +95,7 @@ public final class RedHxComputerMemorySummaryImpl
     }
 
     @Override
-    public int getTotalSystemMemoryGiB( )
+    public long getTotalSystemMemoryGigaBytes( )
     {
         return totalSystemMemoryGiB;
     }
@@ -100,7 +106,7 @@ public final class RedHxComputerMemorySummaryImpl
         int hash = 5;
 
         hash = 43 * hash + Objects.hashCode(this.operatingStatus);
-        hash = 43 * hash + this.totalSystemMemoryGiB;
+        hash = 43 * hash + (int) this.totalSystemMemoryGiB;
 
         return hash;
     }
@@ -113,7 +119,7 @@ public final class RedHxComputerMemorySummaryImpl
         sb.append("[ ");
         sb.append("operatingStatus=");
         sb.append(operatingStatus);
-        sb.append(", totalSystemMemoryGiB =");
+        sb.append(", totalSystemMemoryGiB=");
         sb.append(totalSystemMemoryGiB);
         sb.append(" ]");
 

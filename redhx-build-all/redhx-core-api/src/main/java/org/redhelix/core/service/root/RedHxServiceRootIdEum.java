@@ -35,6 +35,6 @@ public enum RedHxServiceRootIdEum
     REGISTRIES,
     SESSIONS_ACTIVE,
     SESSION_SERVICE,
-    SYSTEMS,
+    COMPUTER_SYSTEMS,
     TASK_SERIVCE,
 }

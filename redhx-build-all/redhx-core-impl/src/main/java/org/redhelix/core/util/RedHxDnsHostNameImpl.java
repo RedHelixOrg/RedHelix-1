@@ -28,13 +28,11 @@ public final class RedHxDnsHostNameImpl
         implements RedHxDnsHostName
 {
     /**
-     * @param maxCharCount
      * @param propName
      */
-    public RedHxDnsHostNameImpl( int    maxCharCount,
-                                 String propName )
+    public RedHxDnsHostNameImpl( String propName )
     {
-        super(maxCharCount,
+        super(MAX_CHAR_COUNT_REDH_DEFINED,
               propName);
     }
 }

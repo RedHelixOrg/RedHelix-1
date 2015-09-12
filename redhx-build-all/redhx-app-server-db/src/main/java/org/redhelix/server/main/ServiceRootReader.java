@@ -221,7 +221,7 @@ class ServiceRootReader
         map.put(KEY_SESSION_SERVICE,
                 RedHxServiceRootIdEum.SESSION_SERVICE);
         map.put(KEY_SYSTEMS,
-                RedHxServiceRootIdEum.SYSTEMS);
+                RedHxServiceRootIdEum.COMPUTER_SYSTEMS);
         map.put(KEY_TASKS,
                 RedHxServiceRootIdEum.TASK_SERIVCE);
 

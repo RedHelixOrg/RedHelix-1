@@ -93,8 +93,7 @@ final class ChassisReader
                    RedHxParseException,
                    URISyntaxException
     {
-        final RedHxChassis chassis;
-        String             tmpStr;
+        String tmpStr;
 
         tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_TYPE);
 
@@ -290,7 +289,7 @@ final class ChassisReader
         }
 
         //
-        chassis = builder.getInstance();
+        final RedHxChassis chassis = builder.getInstance();
 
         return chassis;
     }

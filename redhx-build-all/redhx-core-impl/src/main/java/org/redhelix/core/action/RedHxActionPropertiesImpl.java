@@ -11,19 +11,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.action;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import org.redhelix.core.util.RedHxUriPath;
 
-import java.util.Objects;
-
 /**
- *
- *
- *
+ * A single action. An action is a URI Path with an optional parameter.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -32,30 +29,49 @@ import java.util.Objects;
 public final class RedHxActionPropertiesImpl
         implements RedHxActionProperties
 {
-    private RedHxActionNameImpl actionName;
-    private RedHxUriPath        actionsPath;
 
-    public RedHxActionPropertiesImpl( RedHxActionNameImpl actionName,
-                                      RedHxUriPath        actionsPath )
+    private static final List<String> EMPTY_STR_LIST = Collections.unmodifiableList(new ArrayList<String>());
+    private final RedHxActionName actionName;
+    private final RedHxUriPath actionsPath;
+    private final List<String> actionValues;
+
+    public RedHxActionPropertiesImpl(final RedHxActionName actionName,
+                                     final RedHxUriPath actionsPath,
+                                     final List<String> actionValues)
     {
-        this.actionName  = actionName;
+        this.actionName = actionName;
         this.actionsPath = actionsPath;
+
+        final List<String> tmpList = new ArrayList<>();
+
+        tmpList.addAll(actionValues);
+        Collections.sort(tmpList);
+        this.actionValues = Collections.unmodifiableList(tmpList);
     }
 
-    private RedHxActionPropertiesImpl( )
+    public RedHxActionPropertiesImpl(final RedHxActionName actionName,
+                                     final RedHxUriPath actionsPath)
     {
-        this.actionName  = null;
+        this.actionName = actionName;
+        this.actionsPath = actionsPath;
+        this.actionValues = EMPTY_STR_LIST;
+    }
+
+    private RedHxActionPropertiesImpl()
+    {
+        this.actionName = null;
         this.actionsPath = null;
+        this.actionValues = null;
     }
 
     @Override
-    public int compareTo( RedHxActionProperties other )
+    public int compareTo(RedHxActionProperties other)
     {
         return this.actionName.compareTo(other.getActionName());
     }
 
     @Override
-    public boolean equals( Object obj )
+    public boolean equals(Object obj)
     {
         if (this == obj)
         {
@@ -84,23 +100,36 @@ public final class RedHxActionPropertiesImpl
             return false;
         }
 
+        if (!Objects.equals(this.actionValues, other.actionValues))
+        {
+            return false;
+        }
+
         return true;
     }
 
-    public RedHxActionNameImpl getActionName( )
+    @Override
+    public RedHxActionName getActionName()
     {
         return actionName;
     }
 
-    public RedHxUriPath getActionPath( )
+    @Override
+    public RedHxUriPath getActionPath()
     {
         return actionsPath;
     }
 
     @Override
-    public int hashCode( )
+    public List<String> getActionValues()
     {
-        int hash = 7;
+        return actionValues;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = actionName.hashCode();
 
         hash = 29 * hash + Objects.hashCode(this.actionsPath);
 
@@ -108,7 +137,7 @@ public final class RedHxActionPropertiesImpl
     }
 
     @Override
-    public String toString( )
+    public String toString()
     {
         StringBuilder sb = new StringBuilder();
 
@@ -117,6 +146,8 @@ public final class RedHxActionPropertiesImpl
         sb.append(actionName.getValue());
         sb.append(", actionsPath=");
         sb.append(actionsPath.getValue());
+        sb.append(", actionValues=");
+        sb.append(actionValues);
         sb.append(" ]");
 
         return sb.toString();

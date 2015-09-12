@@ -31,6 +31,7 @@ import org.redhelix.core.util.RedHxOperatingHealthEnum;
 import org.redhelix.core.util.RedHxOperatingStateEnum;
 import org.redhelix.core.util.RedHxUriPath;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,10 +126,10 @@ final class ChassisImpl
         this.chassisId                 = chassisId;
         this.chassisName               = chassisName;
         this.chassisType               = chassisType;
-        this.computerSystemUriPathList = computerSystemUriPathList;
+        this.computerSystemUriPathList = Collections.unmodifiableList(computerSystemUriPathList);
         this.containedByUriPath        = containedByUriPath;
         this.containsList              = containsList;
-        this.cooledByUriPathList       = cooledByUriPathList;
+        this.cooledByUriPathList       = Collections.unmodifiableList(cooledByUriPathList);
         this.ledState                  = ledState;
         this.logServicesUriPath        = logServicesUriPath;
         this.manufacturerName          = manufacturerName;
@@ -136,11 +137,11 @@ final class ChassisImpl
         this.operatingHealth           = operatingHealth;
         this.operatingState            = operatingState;
         this.partNumber                = partNumber;
-        this.poweredByList             = poweredByList;
+        this.poweredByList             = Collections.unmodifiableList(poweredByList);
         this.powerUriPath              = powerUriPath;
         this.serialNumber              = serialNumber;
         this.sku                       = sku;
-        this.systemManagerUriPathList  = systemManagerUriPathList;
+        this.systemManagerUriPathList  = Collections.unmodifiableList(systemManagerUriPathList);
         this.thermalUriPath            = thermalUriPath;
     }
 
@@ -369,7 +370,7 @@ final class ChassisImpl
     }
 
     @Override
-    public RedHxIndicatorLedStateEnum getLedState( )
+    public RedHxIndicatorLedStateEnum getIndicatorLedState( )
     {
         return ledState;
     }

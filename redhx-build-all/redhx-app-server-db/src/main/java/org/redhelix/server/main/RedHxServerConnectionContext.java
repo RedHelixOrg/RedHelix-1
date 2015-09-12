@@ -51,7 +51,7 @@ public final class RedHxServerConnectionContext
     {
         this.redfishProtocolVersion = redfishProtocolVersion;
         this.client                 = ODataClientFactory.getClient();
-        this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);    // ContentType.JSON_NO_METADATA);
+        this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
     }
 
     private RedHxServerConnectionContext( )
