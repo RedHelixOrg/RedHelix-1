@@ -45,7 +45,7 @@ the most interesting interface is org.redhelix.core.chassis.RedHxChassis. No cla
 ### Java package org.redhelix.server.*
 The classes in the Java package org.redhelix.server.* are responsible for the Java Threads that interface with the Redfish enabled servers,
 the in memory database and the AngularJS web clients. For this version 0.1 there is nothing exciting in this package. The Java Main method is called
-and then it exits. Take a look at the source code and the output of reading the chassis using [RedMatrixServerDb](./doc/dmtf-mockup/mockup.md).
+and then it exits. Take a look at the source code and the output of reading the chassis using [RedHelixServerDb](./doc/dmtf-mockup/mockup.md).
 
 ## Architecture Risk
 While desirable to scale the single JVM to handle more than 40,000 servers as comparable IPMI Java implementation it is not clear if 
@@ -57,11 +57,25 @@ socket for a response. If so, the JVM will run out of Threads. Under IPMI this w
 Redfish allows OEM extensions to the Chassis, Computer System, etc. It's not clear how these will be implemented. If you are implementing an
 OEM extension, even if it is not yet working, please contact me. I'll try and build a framework to allow it. 
 
+## RedHelix Mockup
+The output of the test program RedHelixServerDb when used with Redfish mockup file can be viewed  [How to read](./doc/dmtf-mockup/mockup.md) 
+
 ## Building
-At the moment Version 0.1 does not have a build process but the Maven dependency files are present in pom.xml
+From the dir RedHelix-1/redhx-build-all run the command 
+1. mvn package 
+
+## Running
+After building the software in can run with the Redfish mock server using the command.
+1. java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar ./redhx-app-server-db/target/redhx-app-server-db-0.1-SNAPSHOT.jar
+If the executable throws and exception indicating a premature End of File when parsing the JSON messages and a single line to the Redfish file server.js.
+The line to be inserted at line number 104 is
+
+line 103: data = JSON.stringify(data, null, '  ');
+line 104:  data = data +"  "; // a hack to so that the last char is read by function head() that is below.
+
 
 ## Other information
 1. [RedHelix Development](./doc/development.md)
 2. [RedHelix Design](./doc/design.md)
-3. [How to read](./doc/dmtf-mockup/mockup.md) a Redfish Chassis with RedHelix
+
 

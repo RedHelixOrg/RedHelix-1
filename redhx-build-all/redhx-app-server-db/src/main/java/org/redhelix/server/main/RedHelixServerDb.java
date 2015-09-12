@@ -42,7 +42,7 @@ import org.redhelix.server.main.reader.computer.system.RedHxComputerSystemCollec
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  */
-public class RedMatrixServerDb
+public class RedHelixServerDb
 {
 
     private static final String CHASSIS_SEPERATOR = "***********  Chassis  ************";
@@ -57,23 +57,29 @@ public class RedMatrixServerDb
         /**
          * turn off logging
          */
-<<<<<<< HEAD
-//      System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
-//                         "debug");
-
-=======
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
-        
-        String protocol = System.getProperty("param_protocol");
-        String hostname = System.getProperty("param_hostname");
-        String port = System.getProperty("param_port");
-        String prefix = System.getProperty("param_prefix");
-        int portNum = 0;
-        if(port != null)
+
+        /**
+         * When building using command <i>maven package</i> the linux command line<br>
+         * java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar
+         * ./redhx-app-server-db/target/redhx-app-server-db-0.1-SNAPSHOT.jar can be run from the dir RedHelix-1/redhx-build-all to connect
+         * to a local Redfish mockup server
+         */
+        final String protocol = System.getProperty("param_protocol");
+        final String hostname = System.getProperty("param_hostname");
+        final String port = System.getProperty("param_port");
+        final String prefix = System.getProperty("param_prefix");
+        final int portNum;
+        if (port != null)
+        {
             portNum = Integer.parseInt(port);
-        
->>>>>>> origin/master
+        }
+        else
+        {
+            portNum = 0;
+        }
+
         /*
          * create a communication context that will be used to talk with a single Redfish server. This does not
          * allocate and nextwork sockets.
@@ -85,8 +91,11 @@ public class RedMatrixServerDb
             /**
              * open a HTTP connection to the Redfish server provided by the DMTF mockup. The mockup server is started with the command "node
              * server.js"
+             *
              */
-            ctx.openConnection((protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP ,
+            ctx.openConnection((protocol == "https")
+                    ? RedHxTcpProtocolTypeEnum.HTTPS
+                    : RedHxTcpProtocolTypeEnum.HTTP,
                                hostname,
                                portNum,
                                prefix);
@@ -127,34 +136,34 @@ public class RedMatrixServerDb
             }
             catch (RedHxChassisParseException ex)
             {
-                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                Logger.getLogger(RedHelixServerDb.class.getName()).log(Level.SEVERE,
+                                                                       null,
+                                                                       ex);
             }
             catch (RedHxHttpResponseException ex)
             {
-                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                Logger.getLogger(RedHelixServerDb.class.getName()).log(Level.SEVERE,
+                                                                       null,
+                                                                       ex);
             }
             catch (RedHxParseException ex)
             {
-                Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                        null,
-                                                                        ex);
+                Logger.getLogger(RedHelixServerDb.class.getName()).log(Level.SEVERE,
+                                                                       null,
+                                                                       ex);
             }
         }
         catch (URISyntaxException ex)
         {
-            Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+            Logger.getLogger(RedHelixServerDb.class.getName()).log(Level.SEVERE,
+                                                                   null,
+                                                                   ex);
         }
         catch (RedHxHttpResponseException ex)
         {
-            Logger.getLogger(RedMatrixServerDb.class.getName()).log(Level.SEVERE,
-                                                                    null,
-                                                                    ex);
+            Logger.getLogger(RedHelixServerDb.class.getName()).log(Level.SEVERE,
+                                                                   null,
+                                                                   ex);
         }
     }
 
