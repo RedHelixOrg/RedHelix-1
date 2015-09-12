@@ -1,23 +1,26 @@
+***********  Chassis  ************
 -------------------------
-Identification
+Chassis Identification
 Chassis ID:             Enc1
-Chassis Description:    Enclosure With Blades Example - This enclosure is in a rack and this enclosure has one blade.  It also is managed by a redundant pair of managers which also manage the blade.
-Chassis Name:           VideoSuperMux 1
+Description:            Enclosure With Blades Example - This enclosure is in a rack and this enclosure has one blade.  It also is managed by a redundant pair of managers which also manage the blade.
+Name:                   VideoSuperMux 1
 Chassis Type:           ENCLOSURE
-Manufacturer Name:      ManufacturerName
+Manufacturer:           ManufacturerName
 Model Number:           ProductModelName
-PartNumber:             
+Part Number:            
 Asset Tag:              CustomerWritableThingy
 Serial Number:          2M220100SL
 SKU:                    
 Led State:              
 -------------------------
-Health
+Chassis Health
 Operating Health:       OK
 Operating State:        ENABLED
 -------------------------
-Paths
+Chassis Actions
 Actions:                
+-------------------------
+Chassis Paths
 Computer Systems Paths: 
 Contained By Path:      /redfish/v1/Chassis/Rack1
 Contains Paths:         /redfish/v1/Chassis/Blade1, /redfish/v1/Chassis/Blade2

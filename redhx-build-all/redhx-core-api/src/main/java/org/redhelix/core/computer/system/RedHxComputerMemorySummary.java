@@ -22,7 +22,7 @@ package org.redhelix.core.computer.system;
 import org.redhelix.core.util.RedHxOperatingStatus;
 
 /**
- *
+ * A summary of the memory quantity and status in a computer.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -30,7 +30,17 @@ import org.redhelix.core.util.RedHxOperatingStatus;
  */
 public interface RedHxComputerMemorySummary
 {
+    /**
+     * get the Computer Memory Summary.
+     *
+     * @return a null if the system memory was not defined otherwise a the summary.
+     */
     RedHxOperatingStatus getMemoryOperatingStatus( );
 
-    int getTotalSystemMemoryGiB( );
+    /**
+     * get the total amount of system memory.
+     *
+     * @return a value zero or greater.
+     */
+    long getTotalSystemMemoryGigaBytes( );
 }

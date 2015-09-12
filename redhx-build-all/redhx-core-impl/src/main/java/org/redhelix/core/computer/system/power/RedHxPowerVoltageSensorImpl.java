@@ -23,11 +23,8 @@ import org.redhelix.core.sensor.RedHxSensorNumberImpl;
 
 /**
  *
- *
- *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
- *
  */
 @Immutable
 public class RedHxPowerVoltageSensorImpl

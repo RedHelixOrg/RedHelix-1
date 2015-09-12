@@ -72,7 +72,7 @@ public interface RedHxChassis
 
     List<RedHxUriPath> getCooledByUriPathList( );
 
-    RedHxIndicatorLedStateEnum getLedState( );
+    RedHxIndicatorLedStateEnum getIndicatorLedState( );
 
     RedHxUriPath getLogServicesUriPath( );
 

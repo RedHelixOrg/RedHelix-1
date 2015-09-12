@@ -11,11 +11,15 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.server.main;
 
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
 import org.apache.olingo.client.api.domain.ClientAnnotation;
@@ -24,19 +28,19 @@ import org.apache.olingo.client.api.domain.ClientComplexValue;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.domain.ClientProperty;
 import org.apache.olingo.client.api.domain.ClientValue;
-
+import org.redhelix.core.action.RedHxActionName;
+import org.redhelix.core.action.RedHxActionNameImpl;
 import org.redhelix.core.action.RedHxActionProperties;
+import org.redhelix.core.action.RedHxActionPropertiesImpl;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.util.RedHxHttpResponseException;
+import org.redhelix.core.util.RedHxOperatingHealthEnum;
+import org.redhelix.core.util.RedHxOperatingHealthRollupEnum;
+import org.redhelix.core.util.RedHxOperatingStateEnum;
+import org.redhelix.core.util.RedHxOperatingStatus;
+import org.redhelix.core.util.RedHxOperatingStatusImpl;
 import org.redhelix.core.util.RedHxUriPath;
-
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import org.redhelix.core.util.RedHxUriPathImpl;
 
 /**
  * execute olingo commands to read the Redfish resources and links. This class executes the HTTP request to read data from the server and
@@ -50,10 +54,14 @@ import java.util.TreeSet;
  */
 public abstract class AbstractRedfishJsonReader
 {
+
     private static final String ODATA_ID_FLAG = "odata.id";
-    private final ClientEntity  entity;
-    private final boolean       isResponseValid;
-    private final RedHxUriPath  uriPath;
+    private final static String JSON_SUB_KEY_STATUS_HEALTH = "Health";
+    private final static String JSON_SUB_KEY_STATUS_STATE = "State";
+    private final static String JSON_SUB_KEY_STATUS_HEALTH_ROLLUP = "HealthRollUp";    // bug in redfish. the Resource.json file says the U is lower case but the mockups have upper case.
+    private final ClientEntity entity;
+    private final boolean isResponseValid;
+    private final RedHxUriPath uriPath;
 
     /**
      * create a reader and exeucte an HTTP get for the data in Redfish link. If the response has an HTTP error an exception is throw an no
@@ -66,15 +74,15 @@ public abstract class AbstractRedfishJsonReader
      * @throws URISyntaxException
      * @throws RedHxHttpResponseException
      */
-    protected AbstractRedfishJsonReader( final RedHxServerConnectionContext ctx,
-            final RedHxServiceRootIdEum                                     serviceRootId,
-            final RedHxUriPath                                              pathToResource )
+    protected AbstractRedfishJsonReader(final RedHxServerConnectionContext ctx,
+                                        final RedHxServiceRootIdEum serviceRootId,
+                                        final RedHxUriPath pathToResource)
             throws URISyntaxException,
                    RedHxHttpResponseException
     {
         this.uriPath = pathToResource;
 
-        final ODataEntityRequest<ClientEntity>    req      = ctx.getEntityRequest(pathToResource);
+        final ODataEntityRequest<ClientEntity> req = ctx.getEntityRequest(pathToResource);
         final ODataRetrieveResponse<ClientEntity> response = req.execute();
 
         this.isResponseValid = response.getStatusCode() == HttpURLConnection.HTTP_OK;
@@ -86,33 +94,134 @@ public abstract class AbstractRedfishJsonReader
         else
         {
             throw new RedHxHttpResponseException(serviceRootId,
-                    response.getStatusCode(),
-                    "Can not read " + serviceRootId + " " + pathToResource);
+                                                 response.getStatusCode(),
+                                                 "Can not read " + serviceRootId + " " + pathToResource);
         }
     }
 
-    private AbstractRedfishJsonReader( )
+    private AbstractRedfishJsonReader()
     {
-        this.entity          = null;
+        this.entity = null;
         this.isResponseValid = false;
-        this.uriPath         = null;
+        this.uriPath = null;
     }
 
-    public RedHxUriPath getUriPath( )
+    public RedHxUriPath getUriPath()
     {
         return uriPath;
     }
 
-    protected Set<RedHxActionProperties> getActions( String propName )
+    protected String getActionPath(String propName)
     {
 
         // use a tree set so the actions are in alpa order with the key being the action name.
-        Set<RedHxActionProperties> set        = new TreeSet<>();
-        final ClientProperty       clientProp = entity.getProperty(propName);
+        final ClientProperty clientProp = entity.getProperty(propName);
+        String str;
 
         if (clientProp != null)
         {
-            throw new UnsupportedOperationException("Reading actions is not yet implmented.");
+            str = clientProp.getValue().toString();
+        }
+        else
+        {
+            str = null;
+        }
+
+        return str;
+    }
+
+    protected Set<RedHxActionProperties> getActions(String propName)
+    {
+
+        // use a tree set so the actions are in alpa order with the key being the action name.
+        Set<RedHxActionProperties> set = new TreeSet<>();
+        final ClientProperty clientProp = entity.getProperty(propName);
+
+        if (clientProp != null)
+        {
+            /*
+             * HFB5: the action is , XXXXXXXXX anno=org.apache.olingo.client.core.domain.ClientComplexValueImpl@7f3b84b8[
+             * navigationLinks=[]
+             * associationLinks=[]
+             * annotations=[]
+             * fields={#ComputerSystem.Reset=ODataPropertyImpl{name=#ComputerSystem.Reset,valuable=org.apache.olingo.client.core.domain.ClientValuableImpl@6069db50[
+             * value=org.apache.olingo.client.core.domain.ClientComplexValueImpl@5c33f1a9[
+             *
+             * navigationLinks=[]
+             * associationLinks=[]
+             * annotations=[]
+             * fields={target=ODataPropertyImpl{name=target,valuable=org.apache.olingo.client.core.domain.ClientValuableImpl@49139829[
+             * value=/redfish/v1/Systems/1/Actions/ComputerSystem.Reset
+             * ], annotations=[]}}
+             * typeName=<null>
+             * ]
+             * ], annotations=[]}, Oem=ODataPropertyImpl{name=Oem,valuable=org.apache.olingo.client.core.domain.ClientValuableImpl@2f9f7dcf[
+             * value=org.apache.olingo.client.core.domain.ClientComplexValueImpl@1b7cc17c[
+             * navigationLinks=[]
+             * associationLinks=[]
+             * annotations=[]
+             * fields={#Contoso.Reset=ODataPropertyImpl{name=#Contoso.Reset,valuable=org.apache.olingo.client.core.domain.ClientValuableImpl@5b8dfcc1[
+             * value=org.apache.olingo.client.core.domain.ClientComplexValueImpl@77fbd92c[
+             * navigationLinks=[]
+             * associationLinks=[]
+             * annotations=[]
+             * fields={target=ODataPropertyImpl{name=target,valuable=org.apache.olingo.client.core.domain.ClientValuableImpl@72967906[
+             * value=/redfish/v1/Systems/1/OEM/Contoso/Actions/Contoso.Reset
+             * ], annotations=[]}}
+             * typeName=<null>
+             * ]
+             * ], annotations=[]}}
+             * typeName=<null>
+             * ]
+             * ], annotations=[]}}
+             * typeName=<null>
+             * ]
+             */
+            ClientComplexValue cplx = clientProp.getComplexValue();
+            Iterator<ClientProperty> iter = cplx.iterator();
+
+            while (iter.hasNext())
+            {
+                ClientProperty cp = iter.next();
+
+                if (cp.getName().equals("Oem"))
+                {
+                    Iterator<ClientProperty> iter2 = cp.getComplexValue().iterator();
+
+                    while (iter2.hasNext())
+                    {
+                        ClientProperty cp2 = iter2.next();
+                        RedHxActionName actionName = new RedHxActionNameImpl(cp2.getName());
+                        ClientValue cValue = cp2.getComplexValue().get("target").getValue();
+                        RedHxUriPath actionsPath = new RedHxUriPathImpl(cValue.toString());
+                        RedHxActionProperties action = new RedHxActionPropertiesImpl(actionName,
+                                                                                     actionsPath);
+
+                        set.add(action);
+                    }
+                }
+                else
+                {
+                    ClientComplexValue cplx2 = cp.getComplexValue();
+                    Iterator<ClientProperty> iter2 = cplx2.iterator();
+
+                    /**
+                     * todo: this does not read the ResetType@Redfish.AllowableValues for the Reset action. I can't find them using olingo
+                     * beta3.
+                     */
+                    while (iter2.hasNext())
+                    {
+                        ClientProperty cp2 = iter2.next();
+                        RedHxActionName actionName = new RedHxActionNameImpl(cp.getName());
+                        ClientValue cValue = cplx2.get("target").getValue();
+                        RedHxUriPath actionsPath = new RedHxUriPathImpl(cValue.toString());
+                        RedHxActionProperties action = new RedHxActionPropertiesImpl(actionName,
+                                                                                     actionsPath);
+
+                        set.add(action);
+                    }
+                }
+            }
         }
 
         return set;
@@ -124,10 +233,10 @@ public abstract class AbstractRedfishJsonReader
      * @param propName
      * @return
      */
-    protected String getAnnotation( String propName )
+    protected String getAnnotation(String propName)
     {
         final ClientProperty clientProp = entity.getProperty(propName);
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
@@ -162,11 +271,11 @@ public abstract class AbstractRedfishJsonReader
      * @param subKeyName
      * @return
      */
-    protected String getComplexValue( String primaryKeyName,
-                                      String subKeyName )
+    protected String getComplexValue(String primaryKeyName,
+                                     String subKeyName)
     {
         final ClientProperty clientProp = entity.getProperty(primaryKeyName);
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
@@ -193,15 +302,15 @@ public abstract class AbstractRedfishJsonReader
      * @param propName the top level JSON property name.
      * @return
      */
-    protected List<String> getLinkArray( String propName )
+    protected List<String> getLinkArray(String propName)
     {
         final ClientProperty clientProp = entity.getProperty("Links");
-        List<String>         list       = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
         if (clientProp != null)
         {
-            ClientComplexValue cplx  = clientProp.getComplexValue();
-            ClientProperty     prop2 = cplx.get(propName);
+            ClientComplexValue cplx = clientProp.getComplexValue();
+            ClientProperty prop2 = cplx.get(propName);
 
             if ((prop2 != null) && prop2.hasCollectionValue())
             {
@@ -238,19 +347,19 @@ public abstract class AbstractRedfishJsonReader
      * @param propName
      * @return
      */
-    protected String getLinkSingle( String propName )
+    protected String getLinkSingle(String propName)
     {
         final ClientProperty clientProp = entity.getProperty("Links");
-        String               retVal;
+        String retVal;
 
         if (clientProp != null)
         {
             retVal = null;
 
-            ClientComplexValue cplx  = clientProp.getComplexValue();
-            ClientProperty     prop2 = cplx.get(propName);
+            ClientComplexValue cplx = clientProp.getComplexValue();
+            ClientProperty prop2 = cplx.get(propName);
 
-            if ((prop2 != null) &&!prop2.hasCollectionValue())
+            if ((prop2 != null) && !prop2.hasCollectionValue())
             {
                 List<ClientAnnotation> annotationList = prop2.getComplexValue().asComplex().getAnnotations();
 
@@ -273,16 +382,76 @@ public abstract class AbstractRedfishJsonReader
         return retVal;
     }
 
+    protected RedHxOperatingStatus getOperatingStatus(String primaryKeyName)
+    {
+        String tmpStr = getComplexValue(primaryKeyName,
+                                        JSON_SUB_KEY_STATUS_HEALTH);
+        final RedHxOperatingHealthEnum opHealth;
+
+        if ((tmpStr != null) && !tmpStr.isEmpty())
+        {
+            opHealth = RedHxOperatingHealthEnum.getInstance(tmpStr);
+        }
+        else
+        {
+            opHealth = null;
+        }
+
+        tmpStr = getComplexValue(primaryKeyName, JSON_SUB_KEY_STATUS_STATE);
+
+        final RedHxOperatingStateEnum opState;
+
+        if ((tmpStr != null) && !tmpStr.isEmpty())
+        {
+            opState = RedHxOperatingStateEnum.getInstance(tmpStr);
+        }
+        else
+        {
+            opState = null;
+        }
+
+        tmpStr = getComplexValue(primaryKeyName, JSON_SUB_KEY_STATUS_HEALTH_ROLLUP);
+
+        RedHxOperatingHealthRollupEnum opRollup;
+
+        if ((tmpStr != null) && !tmpStr.isEmpty())
+        {
+            opRollup = RedHxOperatingHealthRollupEnum.getInstance(tmpStr);
+        }
+        else
+        {
+            opRollup = null;
+        }
+
+        /**
+         * memory operating status
+         */
+        final RedHxOperatingStatus computerOperatingStatus;
+
+        if ((opHealth != null) || (opRollup != null) || (opState != null))
+        {
+            computerOperatingStatus = new RedHxOperatingStatusImpl(opHealth,
+                                                                   opRollup,
+                                                                   opState);
+        }
+        else
+        {
+            computerOperatingStatus = null;
+        }
+
+        return computerOperatingStatus;
+    }
+
     /**
      * from the JSON response read a property they may be present. If it is not a null is returned.
      *
      * @param propName
      * @return
      */
-    protected String getOptionalProperty( String propName )
+    protected String getOptionalProperty(String propName)
     {
         final ClientProperty clientProp = entity.getProperty(propName);
-        final String         retVal;
+        final String retVal;
 
         if (clientProp != null)
         {

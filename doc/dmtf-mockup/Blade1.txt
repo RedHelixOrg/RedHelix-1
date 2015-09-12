@@ -1,23 +1,26 @@
+***********  Chassis  ************
 -------------------------
-Identification
+Chassis Identification
 Chassis ID:             Blade1
-Chassis Description:    Blade example of a blade in an 2-blade enclosure in a rack.  This blade has a manager that is also the enclosure manager and that manager is part of a redundancy pair.
-Chassis Name:           Blade 1
+Description:            Blade example of a blade in an 2-blade enclosure in a rack.  This blade has a manager that is also the enclosure manager and that manager is part of a redundancy pair.
+Name:                   Blade 1
 Chassis Type:           BLADE
-Manufacturer Name:      ContessoCompany
+Manufacturer:           ContessoCompany
 Model Number:           BladeModelNumber
-PartNumber:             
+Part Number:            
 Asset Tag:              CustomerWritableThingy
 Serial Number:          USE135ES65
 SKU:                    
 Led State:              
 -------------------------
-Health
+Chassis Health
 Operating Health:       OK
 Operating State:        ENABLED
 -------------------------
-Paths
+Chassis Actions
 Actions:                
+-------------------------
+Chassis Paths
 Computer Systems Paths: /redfish/v1/Systems/2
 Contained By Path:      /redfish/v1/Chassis/Enc1
 Contains Paths:         
@@ -26,4 +29,41 @@ Log Services Path:
 Powered By Paths:       /redfish/v1/Chassis/Enc1/Power#/PowerSupplies/0
 Power Path:             
 System Manager Paths:   /redfish/v1/Managers/2, /redfish/v1/Managers/3
-Thermal Path:       
+Thermal Path:           
+.......  Computer System  ........
+-------------------------
+Computer Identification
+URI Path:             /redfish/v1/Systems/2
+Computer ID:          2
+Description:          Description of server
+Name:                 
+Computer Type:        PHYSICAL
+Manufacturer:         Manufacturer Name
+Model Number:         Model Name
+Part Number:          
+Asset Tag:            free form asset tag
+Serial Number:        2M220100SL
+SKU:                  
+Led State:            LIT
+BIOS Version:         
+-------------------------
+Computer Boot
+Boot Source:          
+Boot Source Override: 
+Boot UEFI Target:     
+-------------------------
+Computer Memory
+Memory Status:        
+Memory Size:          0 Gig
+-------------------------
+Computer Processor
+Processor count:      0 
+Model:                
+Status:               
+-------------------------
+Computer Paths
+Chassis Paths:        /redfish/v1/Chassis/Blade1
+Cooled By Paths:      /redfish/v1/Chassis/Enc1/Thermal#/Fans
+Log Services Path:    
+Powered By Paths:     /redfish/v1/Chassis/Enc1/Power#/PowerSupplies/0
+System Manager Paths: /redfish/v1/Managers/1     

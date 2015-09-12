@@ -11,15 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
-package org.redhelix.core.chassis;
+package org.redhelix.core.computer.system;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import org.redhelix.core.util.RedHxUriPath;
 
 /**
  *
@@ -30,23 +28,24 @@ import java.util.Objects;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisCollectionImpl
-        implements RedHxChassisCollection
+public final class RedHxComputerSystemCollectionImpl
+        implements RedHxComputerSystemCollection
 {
-    private final List<RedHxChassis> list;
 
-    public RedHxChassisCollectionImpl( final List<RedHxChassis> list )
+    private final List<RedHxComputerSystem> list;
+
+    public RedHxComputerSystemCollectionImpl(final List<RedHxComputerSystem> list)
     {
         this.list = Collections.unmodifiableList(list);
     }
 
-    private RedHxChassisCollectionImpl( )
+    private RedHxComputerSystemCollectionImpl()
     {
         list = null;
     }
 
     @Override
-    public boolean equals( Object obj )
+    public boolean equals(Object obj)
     {
         if (this == obj)
         {
@@ -63,7 +62,7 @@ public final class RedHxChassisCollectionImpl
             return false;
         }
 
-        final RedHxChassisCollectionImpl other = (RedHxChassisCollectionImpl) obj;
+        final RedHxComputerSystemCollectionImpl other = (RedHxComputerSystemCollectionImpl) obj;
 
         if (!Objects.equals(this.list, other.list))
         {
@@ -74,7 +73,23 @@ public final class RedHxChassisCollectionImpl
     }
 
     @Override
-    public int hashCode( )
+    public RedHxComputerSystem getComputerSystem(RedHxUriPath computerSystemPath)
+    {
+        RedHxComputerSystem retVal = null;
+        for (RedHxComputerSystem cs : list)
+        {
+            if (cs.getComputerSystemPath().equals(computerSystemPath))
+            {
+                retVal = cs;
+                break;
+            }
+
+        }
+        return retVal;
+    }
+
+    @Override
+    public int hashCode()
     {
         int hash = 7;
 
@@ -84,27 +99,27 @@ public final class RedHxChassisCollectionImpl
     }
 
     @Override
-    public boolean isEmpty( )
+    public boolean isEmpty()
     {
         return list.isEmpty();
     }
 
     @Override
-    public Iterator<RedHxChassis> iterator( )
+    public Iterator<RedHxComputerSystem> iterator()
     {
-        ChassisIterator<RedHxChassis> iter = new ChassisIterator<>(list);
+        ComputerSystemIterator<RedHxComputerSystem> iter = new ComputerSystemIterator<>(list);
 
         return iter;
     }
 
     @Override
-    public int size( )
+    public int size()
     {
         return list.size();
     }
 
     @Override
-    public String toString( )
+    public String toString()
     {
         return list.toString();
     }

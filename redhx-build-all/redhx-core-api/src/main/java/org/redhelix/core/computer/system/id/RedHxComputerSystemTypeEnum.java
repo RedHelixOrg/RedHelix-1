@@ -26,21 +26,57 @@ package org.redhelix.core.computer.system.id;
  */
 public enum RedHxComputerSystemTypeEnum
 {
-    OS("An operating system instance"),
-    PHYSICAL("A computer system"),
-    PHYSICALLY_PARTITIONED("A hardware-based partition of a computer system"),
-    VIRTUAL("A virtual machine instance running on this system"),
-    VIRTUALLY_PARTITIONED("A virtual or software-based partition of a computer system");
+    OS("OS", "An operating system instance"),
+    PHYSICAL("Physical", "A computer system"),
+    PHYSICALLY_PARTITIONED("PhysicallyPartitioned", "A hardware-based partition of a computer system"),
+    VIRTUAL("Virtual", "A virtual machine instance running on this system"),
+    VIRTUALLY_PARTITIONED("VirtuallyPartitioned", "A virtual or software-based partition of a computer system");
 
     private final String desc;
+    private final String jsonKeyword;
 
-    private RedHxComputerSystemTypeEnum( String desc )
+    private RedHxComputerSystemTypeEnum( String jsonKeyword,
+            String                              desc )
     {
-        this.desc = desc;
+        this.jsonKeyword = jsonKeyword;
+        this.desc        = desc;
     }
 
     public String getDescription( )
     {
         return desc;
+    }
+
+    /**
+     * convert from the RedFish JSON keyword into the enumeration.
+     *
+     * @param jsonKeyword the keyword to lookup.
+     * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
+     */
+    public static RedHxComputerSystemTypeEnum getInstance( String jsonKeyword )
+    {
+        RedHxComputerSystemTypeEnum retVal = null;
+
+        for (RedHxComputerSystemTypeEnum tmp : values())
+        {
+            if (tmp.jsonKeyword.equals(jsonKeyword))
+            {
+                retVal = tmp;
+
+                break;
+            }
+        }
+
+        return retVal;
+    }
+
+    /**
+     * get the JSON keyword that identifies the enum.
+     *
+     * @return a keyword. This has zero spaces. A null is not returned.
+     */
+    public String getJsonKeyword( )
+    {
+        return jsonKeyword;
     }
 }

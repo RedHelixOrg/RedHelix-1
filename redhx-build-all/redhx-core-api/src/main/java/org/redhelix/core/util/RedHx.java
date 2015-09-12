@@ -14,9 +14,10 @@
  *  limitations under the License
  *
  */
-package org.redhelix.core.action;
 
-import org.redhelix.core.util.RedHxStringProperty;
+
+
+package org.redhelix.core.util;
 
 /**
  *
@@ -25,12 +26,6 @@ import org.redhelix.core.util.RedHxStringProperty;
  * @author Hank Bruning
  *
  */
-public interface RedHxActionName
-        extends RedHxStringProperty
+public final class RedHx
 {
-
-    /**
-     * The maximum number of characters allowed in an action name.
-     */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 40;    // arbitrary
 }

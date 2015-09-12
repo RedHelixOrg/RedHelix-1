@@ -26,20 +26,56 @@ package org.redhelix.core.util;
  */
 public enum RedHxIndicatorLedStateEnum
 {
-    BLINKING("The Indicator LED is blinking."),
-    LIT("The Indicator LED is lit."),
-    OFF("The Indicator LED is off."),
-    UNKNOWN("The state of the Indicator LED cannot be determined.");
+    BLINKING("Blinking", "The Indicator LED is blinking."),
+    LIT("Lit", "The Indicator LED is lit."),
+    OFF("Off", "The Indicator LED is off."),
+    UNKNOWN("Unknown", "The state of the Indicator LED cannot be determined.");
 
     private final String desc;
+    private final String jsonKeyword;
 
-    private RedHxIndicatorLedStateEnum( String desc )
+    private RedHxIndicatorLedStateEnum( String jsonKeyword,
+            String                             desc )
     {
-        this.desc = desc;
+        this.jsonKeyword = jsonKeyword;
+        this.desc        = desc;
     }
 
     public String getDescription( )
     {
         return desc;
+    }
+
+    /**
+     * convert from the RedFish JSON keyword into the enumeration.
+     *
+     * @param jsonKeyword the keyword to lookup.
+     * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
+     */
+    public static RedHxIndicatorLedStateEnum getInstance( String jsonKeyword )
+    {
+        RedHxIndicatorLedStateEnum retVal = null;
+
+        for (RedHxIndicatorLedStateEnum tmp : values())
+        {
+            if (tmp.jsonKeyword.equals(jsonKeyword))
+            {
+                retVal = tmp;
+
+                break;
+            }
+        }
+
+        return retVal;
+    }
+
+    /**
+     * get the JSON keyword that identifies the enum.
+     *
+     * @return a keyword. This has zero spaces. A null is not returned.
+     */
+    public String getJsonKeyword( )
+    {
+        return jsonKeyword;
     }
 }

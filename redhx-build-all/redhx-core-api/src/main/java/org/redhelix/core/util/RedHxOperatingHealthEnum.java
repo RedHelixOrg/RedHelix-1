@@ -65,4 +65,14 @@ public enum RedHxOperatingHealthEnum
 
         return retVal;
     }
+
+    /**
+     * get the JSON keyword that identifies the enum.
+     *
+     * @return a keyword. This has zero spaces. A null is not returned.
+     */
+    public String getJsonKeyword( )
+    {
+        return jsonKeyword;
+    }
 }

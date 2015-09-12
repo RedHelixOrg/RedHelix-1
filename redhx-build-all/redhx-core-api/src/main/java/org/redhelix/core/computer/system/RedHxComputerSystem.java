@@ -11,11 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.computer.system;
 
+import java.util.List;
+import java.util.UUID;
+import org.redhelix.core.action.RedHxActionGroup;
 import org.redhelix.core.computer.system.boot.RedHxComputerBootProperties;
 import org.redhelix.core.computer.system.id.RedHxComputerAssetTag;
 import org.redhelix.core.computer.system.id.RedHxComputerBiosVersion;
@@ -26,13 +26,13 @@ import org.redhelix.core.computer.system.id.RedHxComputerModelNumber;
 import org.redhelix.core.computer.system.id.RedHxComputerName;
 import org.redhelix.core.computer.system.id.RedHxComputerPartNumber;
 import org.redhelix.core.computer.system.id.RedHxComputerPowerStateEnum;
-import org.redhelix.core.computer.system.id.RedHxComputerSerialNumber;
 import org.redhelix.core.computer.system.id.RedHxComputerSKU;
+import org.redhelix.core.computer.system.id.RedHxComputerSerialNumber;
 import org.redhelix.core.computer.system.id.RedHxComputerSystemTypeEnum;
 import org.redhelix.core.util.RedHxDnsHostName;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
-
-import java.util.UUID;
+import org.redhelix.core.util.RedHxOperatingStatus;
+import org.redhelix.core.util.RedHxUriPath;
 
 /**
  *
@@ -47,45 +47,62 @@ public interface RedHxComputerSystem
                 RedHxComputerMemorySummary,
                 RedHxComputerBootProperties
 {
-    RedHxComputerAssetTag getAssetTag( );
 
-    RedHxComputerBiosVersion getBiosVersion( );
+    RedHxUriPath getComputerSystemPath();
 
-    RedHxComputerDescription getDescription( );
+    RedHxActionGroup getActionGroup();
+
+    RedHxComputerAssetTag getAssetTag();
+
+    RedHxComputerBiosVersion getBiosVersion();
+
+    List<RedHxUriPath> getChassisUriPathList();
+
+    RedHxOperatingStatus getComputerOperatingStatus();
+
+    List<RedHxUriPath> getCooledByUriPathList();
+
+    RedHxComputerDescription getDescription();
 
     /**
      * @return the hostname
      */
-    RedHxDnsHostName getHostname( );
+    RedHxDnsHostName getHostname();
 
-    RedHxComputerId getId( );
+    RedHxComputerId getComputerId();
 
     /**
      * @return the indicatorLed
      */
-    RedHxIndicatorLedStateEnum getIndicatorLed( );
+    RedHxIndicatorLedStateEnum getIndicatorLedState();
 
-    RedHxComputerManufacturerName getManufacturerName( );
+    RedHxUriPath getLogServicesUriPath();
 
-    RedHxComputerModelNumber getModelNumber( );
+    RedHxComputerManufacturerName getManufacturerName();
 
-    RedHxComputerName getName( );
+    RedHxComputerModelNumber getModelNumber();
 
-    RedHxComputerPartNumber getPartNumber( );
+    RedHxComputerName getName();
 
-    RedHxComputerPowerStateEnum getPowerState( );
+    RedHxComputerPartNumber getPartNumber();
 
-    RedHxComputerSerialNumber getSerialNumber( );
+    List<RedHxUriPath> getPoweredByList();
 
-    RedHxComputerSKU getSku( );
+    RedHxComputerPowerStateEnum getPowerState();
+
+    RedHxComputerSerialNumber getSerialNumber();
+
+    RedHxComputerSKU getSku();
+
+    List<RedHxUriPath> getSystemManagerUriPathList();
 
     /**
      * @return the systemType
      */
-    RedHxComputerSystemTypeEnum getSystemType( );
+    RedHxComputerSystemTypeEnum getSystemType();
 
     /**
      * @return the uuid
      */
-    UUID getUuid( );
+    UUID getUuid();
 }

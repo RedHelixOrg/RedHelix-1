@@ -11,7 +11,12 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-package org.redhelix.core.chassis;
+
+
+
+package org.redhelix.core.computer.system;
+
+import org.redhelix.core.chassis.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,31 +32,30 @@ import java.util.NoSuchElementException;
  * @author Hank Bruning
  *
  */
-final class ChassisIterator<RedHxChassis>
+final class ComputerSystemIterator<RedHxChassis>
         implements Iterator<RedHxChassis>
 {
-
     private final List<RedHxChassis> list;
 
-    ChassisIterator(final List<RedHxChassis> list)
+    ComputerSystemIterator( final List<RedHxChassis> list )
     {
         this.list = new ArrayList<>();
         this.list.addAll(list);
     }
 
-    private ChassisIterator()
+    private ComputerSystemIterator( )
     {
         list = null;
     }
 
     @Override
-    public boolean hasNext()
+    public boolean hasNext( )
     {
         return !list.isEmpty();
     }
 
     @Override
-    public RedHxChassis next()
+    public RedHxChassis next( )
     {
         if (list.isEmpty())
         {

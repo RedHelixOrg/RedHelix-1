@@ -16,6 +16,8 @@
 
 package org.redhelix.core.computer.system.boot;
 
+import static org.redhelix.core.computer.system.boot.RedHxComputerSystemBootSourceOverrideEnabledEnum.values;
+
 /**
  *
  *
@@ -26,19 +28,56 @@ package org.redhelix.core.computer.system.boot;
  */
 public enum RedHxComputerSystemBootSourceOverrideEnabledEnum
 {
-    CONTINUOUS("The system will boot to the target specified in the BootSourceOverrideTarget until this property is set to Disabled."),
-    DISABLED("The system will boot as normal"),
-    ONCE("ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
+    CONTINUOUS("Continuous",
+               "The system will boot to the target specified in the BootSourceOverrideTarget until this property is set to Disabled."),
+    DISABLED("Disabled", "The system will boot as normal"),
+    ONCE("Once", "ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
 
     private final String desc;
+    private final String jsonKeyword;
 
-    private RedHxComputerSystemBootSourceOverrideEnabledEnum( String desc )
+    private RedHxComputerSystemBootSourceOverrideEnabledEnum( String jsonKeyword,
+            String                                                   desc )
     {
-        this.desc = desc;
+        this.jsonKeyword = jsonKeyword;
+        this.desc        = desc;
     }
 
     public String getDescription( )
     {
         return desc;
+    }
+
+    /**
+     * convert from the RedFish JSON keyword into the enumeration.
+     *
+     * @param jsonKeyword the keyword to lookup.
+     * @return null if the argument is not a valid Redfish JSON keyword otherwise the enumeration.
+     */
+    public static RedHxComputerSystemBootSourceOverrideEnabledEnum getInstance( String jsonKeyword )
+    {
+        RedHxComputerSystemBootSourceOverrideEnabledEnum retVal = null;
+
+        for (RedHxComputerSystemBootSourceOverrideEnabledEnum tmp : values())
+        {
+            if (tmp.jsonKeyword.equals(jsonKeyword))
+            {
+                retVal = tmp;
+
+                break;
+            }
+        }
+
+        return retVal;
+    }
+
+    /**
+     * get the JSON keyword that identifies the enum.
+     *
+     * @return a keyword. This has zero spaces. A null is not returned.
+     */
+    public String getJsonKeyword( )
+    {
+        return jsonKeyword;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright 2015 JBlade LLC
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License";
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,19 +14,13 @@
  *  limitations under the License
  *
  */
-
-
-
 package org.redhelix.core.chassis;
 
-import org.redhelix.core.util.RedHxUriPath;
-
 import java.io.PrintStream;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import org.redhelix.core.util.RedHxAbstractColumnFormatter;
+import org.redhelix.core.util.RedHxUriPath;
 
 /**
  *
@@ -37,27 +31,8 @@ import java.util.Map;
  *
  */
 public final class RedHxChassisColumnFormatter
+        extends RedHxAbstractColumnFormatter
 {
-    private static final int COLUMN_CHAR_COUNT_PAD = 2;
-    private final String     columnDelimiter;
-    private final boolean    isRowPromptPrinted;
-    private final PrintOrder outputOrder;
-    private boolean          isPathPrinted;
-    private boolean          isSectionHeaderPrinted;
-
-    public enum PrintOrder
-    {
-
-        /**
-         * the rows are ordered in alpha order using the field name.
-         */
-        ALPHA,
-
-        /**
-         * the rows are grouped in logical sections.
-         */
-        SECTION;
-    }
 
     /**
      * output in ALPH or SECTION format. No section headers are printed.
@@ -67,16 +42,13 @@ public final class RedHxChassisColumnFormatter
      * @param outputOrder
      * @param isPathPrinted
      */
-    public RedHxChassisColumnFormatter( final boolean isRowTitlePrinted,
-            String                                    columnDelimiter,
-            PrintOrder                                outputOrder,
-            boolean                                   isPathPrinted )
+    public RedHxChassisColumnFormatter(final boolean isRowTitlePrinted,
+                                       final String columnDelimiter,
+                                       final boolean isPathPrinted)
     {
-        this.isRowPromptPrinted     = isRowTitlePrinted;
-        this.columnDelimiter        = columnDelimiter;
-        this.outputOrder            = outputOrder;
-        this.isSectionHeaderPrinted = false;
-        this.isPathPrinted          = isPathPrinted;
+        super(isRowTitlePrinted,
+              columnDelimiter,
+              isPathPrinted);
     }
 
     /**
@@ -85,678 +57,633 @@ public final class RedHxChassisColumnFormatter
      * @param isRowTitlePrinted
      * @param columnDelimiter
      * @param isSectionHeaderPrinted
+     * @param isPathPrinted
      */
-    public RedHxChassisColumnFormatter( final boolean isRowTitlePrinted,
-            String                                    columnDelimiter,
-            boolean                                   isSectionHeaderPrinted,
-            boolean                                   isPathPrinted )
+    public RedHxChassisColumnFormatter(final boolean isRowTitlePrinted,
+                                       final String columnDelimiter,
+                                       final boolean isSectionHeaderPrinted,
+                                       final boolean isPathPrinted)
     {
-        this.isRowPromptPrinted     = isRowTitlePrinted;
-        this.columnDelimiter        = columnDelimiter;
-        this.outputOrder            = PrintOrder.SECTION;
-        this.isSectionHeaderPrinted = isSectionHeaderPrinted;
-        this.isPathPrinted          = isPathPrinted;
+        super(isRowTitlePrinted,
+              columnDelimiter,
+              isSectionHeaderPrinted,
+              isPathPrinted);
     }
 
-    private RedHxChassisColumnFormatter( )
+    public void print(RedHxChassis chassis,
+                      PrintStream streamOut)
     {
-        this.isRowPromptPrinted     = false;
-        this.columnDelimiter        = null;
-        this.outputOrder            = null;
-        this.isSectionHeaderPrinted = false;
-    }
-
-    public void print( RedHxChassis chassis,
-                       PrintStream  streamOut )
-    {
-        switch (outputOrder)
+        super.clearRows();
+        switch (super.getOutputOrder())
         {
-            case ALPHA :
+            case ALPHA:
                 printAlphaOrder(chassis,
                                 streamOut);
 
                 break;
-            case SECTION :
+            case SECTION:
                 printSectionOrder(chassis,
                                   streamOut);
 
                 break;
-            default :
-                throw new IllegalArgumentException("Unknown format order " + outputOrder);
+            default:
+                throw new IllegalArgumentException("Unknown format order " + getOutputOrder());
         }
     }
 
-    private static int getMaxCharCount( List<String> promptList )
+    private void printAlphaOrder(RedHxChassis chassis,
+                                 PrintStream streamOut)
     {
-        int max = 0;
+        String prompt;
 
-        for (String str : promptList)
-        {
-            max = Math.max(max, str.length());
-        }
-
-        return max;
-    }
-
-    private void printAlphaOrder( RedHxChassis chassis,
-                                  PrintStream  streamOut )
-    {
-        List<String> promptList = new ArrayList<>();
-        List<String> valueList  = new ArrayList<>();
-
-        promptList.add("Actions");
+        prompt = "Actions";
 
         if (chassis.getActionGroup() != null)
         {
-            valueList.add(chassis.getActionGroup().getActionSet().toString());
+            addRow(prompt,
+                   chassis.getActionGroup().getActionSet().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Asset Tag");
+        prompt = "Asset Tag";
 
         if (chassis.getAssetTag() != null)
         {
-            valueList.add(chassis.getAssetTag().getValue());
+            addRow(prompt,
+                   chassis.getAssetTag().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Description");
+        prompt = "Chassis Description";
 
         if (chassis.getChassisDescription() != null)
         {
-            valueList.add(chassis.getChassisDescription().getValue());
+            addRow(prompt,
+                   chassis.getChassisDescription().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis ID");
+        prompt = "Chassis ID";
 
         if (chassis.getChassisId() != null)
         {
-            valueList.add(chassis.getChassisId().getValue());
+            addRow(prompt,
+                   chassis.getChassisId().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Name");
+        prompt = "Chassis Name";
 
         if (chassis.getChassisName() != null)
         {
-            valueList.add(chassis.getChassisName().getValue());
+            addRow(prompt,
+                   chassis.getChassisName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Type");
+        prompt = "Chassis Type";
 
         if (chassis.getChassisType() != null)
         {
-            valueList.add(chassis.getChassisType().toString());
+            addRow(prompt,
+                   chassis.getChassisType().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            promptList.add("Computer Systems Paths");
+            prompt = "Computer Systems Paths";
 
             if (chassis.getComputerSystemUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getComputerSystemUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getComputerSystemUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Contained By Paths");
+            prompt = "Contained By Paths";
 
             if (chassis.getContainedByUriPath() != null)
             {
-                valueList.add(chassis.getContainedByUriPath().getValue());
+                addRow(prompt,
+                       chassis.getContainedByUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Contains Paths");
+            prompt = "Contains Paths";
 
             if (chassis.getContainsList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getContainsList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getContainsList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Cooled By Paths");
+            prompt = "Cooled By Paths";
 
             if (chassis.getCooledByUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getCooledByUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getCooledByUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
         }
 
-        promptList.add("Led State");
+        prompt = "Led State";
 
-        if (chassis.getLedState() != null)
+        if (chassis.getIndicatorLedState() != null)
         {
-            valueList.add(chassis.getLedState().toString());
+            addRow(prompt,
+                   chassis.getIndicatorLedState().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            promptList.add("Log Services Path");
+            prompt = "Log Services Path";
 
             if (chassis.getLogServicesUriPath() != null)
             {
-                valueList.add(chassis.getLogServicesUriPath().getValue());
+                addRow(prompt,
+                       chassis.getLogServicesUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
         }
 
-        promptList.add("Manufacturer Name");
+        prompt = "Manufacturer Name";
 
         if (chassis.getManufacturerName() != null)
         {
-            valueList.add(chassis.getManufacturerName().getValue());
+            addRow(prompt,
+                   chassis.getManufacturerName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Model Number");
+        prompt = "Model Number";
 
         if (chassis.getModelNumber() != null)
         {
-            valueList.add(chassis.getModelNumber().getValue());
+            addRow(prompt,
+                   chassis.getModelNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Operating Health");
+        prompt = "Operating Health";
 
         if (chassis.getOperatingHealth() != null)
         {
-            valueList.add(chassis.getOperatingHealth().toString());
+            addRow(prompt,
+                   chassis.getOperatingHealth().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Operating State");
+        prompt = "Operating State";
 
         if (chassis.getOperatingState() != null)
         {
-            valueList.add(chassis.getOperatingState().toString());
+            addRow(prompt,
+                   chassis.getOperatingState().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("PartNumber");
+        prompt = "PartNumber";
 
         if (chassis.getPartNumber() != null)
         {
-            valueList.add(chassis.getPartNumber().getValue());
+            addRow(prompt,
+                   chassis.getPartNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            promptList.add("Powered By");
+            prompt = "Powered By";
 
             if (chassis.getPoweredByList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getPoweredByList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getPoweredByList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Power Path");
+            prompt = "Power Path";
 
             if (chassis.getPowerUriPath() != null)
             {
-                valueList.add(chassis.getPowerUriPath().getValue());
+                addRow(prompt,
+                       chassis.getPowerUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
         }
 
-        promptList.add("Serial Number");
+        prompt = "Serial Number";
 
         if (chassis.getSerialNumber() != null)
         {
-            valueList.add(chassis.getSerialNumber().getValue());
+            addRow(prompt,
+                   chassis.getSerialNumber().getValue());
         }
 
-        valueList.add("");
-        promptList.add("SKU");
+        addRow(prompt);
+        prompt = "SKU";
 
         if (chassis.getSku() != null)
         {
-            valueList.add(chassis.getSku().getValue());
+            addRow(prompt,
+                   chassis.getSku().getValue());
         }
 
-        valueList.add("");
+        addRow(prompt);
 
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            promptList.add("System Manager Paths");
+            prompt = "System Manager Paths";
 
             if (chassis.getSystemManagerUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getSystemManagerUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getSystemManagerUriPathList()));
             }
 
-            valueList.add("");
-            promptList.add("Thermal Path");
+            addRow(prompt);
+            prompt = "Thermal Path";
 
             if (chassis.getThermalUriPath() != null)
             {
-                valueList.add(chassis.getThermalUriPath().getValue());
+                addRow(prompt,
+                       chassis.getThermalUriPath().getValue());
             }
 
-            valueList.add("");
+            addRow(prompt);
         }
 
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int           padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
-        StringBuilder sb            = new StringBuilder();
-
-        for (int i = 0; i < promptList.size(); ++i)
-        {
-            sb.setLength(0);
-
-            if (isRowPromptPrinted)
-            {
-                sb.append(promptList.get(i));
-            }
-
-            sb.append(columnDelimiter);
-
-            while (sb.length() < padTillColumn)
-            {
-                sb.append(" ");
-            }
-
-            sb.append(valueList.get(i));
-            streamOut.println(sb.toString());
-        }
+        printOutRowsAlphaOrder(streamOut);
     }
 
-    private void printSectionOrder( RedHxChassis chassis,
-                                    PrintStream  streamOut )
+    private void printSectionOrder(RedHxChassis chassis,
+                                   PrintStream streamOut)
     {
-        StringBuilder        sb                          = new StringBuilder();
-        List<String>         promptList                  = new ArrayList<>();
-        List<String>         valueList                   = new ArrayList<>();
+
         Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
+        String prompt;
 
         /*
          * ID section
          */
-        rowNumberToSectionHeaderMap.put(0,
-                                        "Identification");
-        promptList.add("Chassis ID");
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
+                                        "Chassis Identification");
+        prompt = "Chassis ID";
 
         if (chassis.getChassisId() != null)
         {
-            valueList.add(chassis.getChassisId().getValue());
+            addRow(prompt,
+                   chassis.getChassisId().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Description");
+        prompt = "Description";
 
         if (chassis.getChassisDescription() != null)
         {
-            valueList.add(chassis.getChassisDescription().getValue());
+            addRow(prompt,
+                   chassis.getChassisDescription().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Name");
+        prompt = "Name";
 
         if (chassis.getChassisName() != null)
         {
-            valueList.add(chassis.getChassisName().getValue());
+            addRow(prompt,
+                   chassis.getChassisName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Chassis Type");
+        prompt = "Chassis Type";
 
         if (chassis.getChassisType() != null)
         {
-            valueList.add(chassis.getChassisType().toString());
+            addRow(prompt,
+                   chassis.getChassisType().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Manufacturer Name");
+        prompt = "Manufacturer";
 
         if (chassis.getManufacturerName() != null)
         {
-            valueList.add(chassis.getManufacturerName().getValue());
+            addRow(prompt,
+                   chassis.getManufacturerName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Model Number");
+        prompt = "Model Number";
 
         if (chassis.getModelNumber() != null)
         {
-            valueList.add(chassis.getModelNumber().getValue());
+            addRow(prompt,
+                   chassis.getModelNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("PartNumber");
+        prompt = "Part Number";
 
         if (chassis.getPartNumber() != null)
         {
-            valueList.add(chassis.getPartNumber().getValue());
+            addRow(prompt,
+                   chassis.getPartNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Asset Tag");
+        prompt = "Asset Tag";
 
         if (chassis.getAssetTag() != null)
         {
-            valueList.add(chassis.getAssetTag().getValue());
+            addRow(prompt,
+                   chassis.getAssetTag().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Serial Number");
+        prompt = "Serial Number";
 
         if (chassis.getSerialNumber() != null)
         {
-            valueList.add(chassis.getSerialNumber().getValue());
+            addRow(prompt,
+                   chassis.getSerialNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("SKU");
+        prompt = "SKU";
 
         if (chassis.getSku() != null)
         {
-            valueList.add(chassis.getSku().getValue());
+            addRow(prompt,
+                   chassis.getSku().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Led State");
+        prompt = "Led State";
 
-        if (chassis.getLedState() != null)
+        if (chassis.getIndicatorLedState() != null)
         {
-            valueList.add(chassis.getLedState().toString());
+            addRow(prompt,
+                   chassis.getIndicatorLedState().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /*
          * health
          */
-        rowNumberToSectionHeaderMap.put(11,
-                                        "Health");
-        promptList.add("Operating Health");
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
+                                        "Chassis Health");
+        prompt = "Operating Health";
 
         if (chassis.getOperatingHealth() != null)
         {
-            valueList.add(chassis.getOperatingHealth().toString());
+            addRow(prompt,
+                   chassis.getOperatingHealth().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Operating State");
+        prompt = "Operating State";
 
         if (chassis.getOperatingState() != null)
         {
-            valueList.add(chassis.getOperatingState().toString());
+            addRow(prompt,
+                   chassis.getOperatingState().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /*
          * Actions
          */
-        rowNumberToSectionHeaderMap.put(13,
-                                        "Actions");
-        promptList.add("Actions");
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
+                                        "Chassis Actions");
+        prompt = "Actions";
 
         if (chassis.getActionGroup() != null)
         {
-            valueList.add(chassis.getActionGroup().getActionSet().toString());
+            addRow(prompt,
+                   chassis.getActionGroup().getActionSet().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /*
          * Paths
          */
-        if (isPathPrinted)
+        if (isPathPrinted())
         {
-            rowNumberToSectionHeaderMap.put(13,
-                                            "Paths");
-            promptList.add("Computer Systems Paths");
+            rowNumberToSectionHeaderMap.put(super.getRowCount(),
+                                            "Chassis Paths");
+            prompt = "Computer Systems Paths";
 
             if (chassis.getComputerSystemUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getComputerSystemUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getComputerSystemUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Contained By Path");
+            prompt = "Contained By Path";
 
             if (chassis.getContainedByUriPath() != null)
             {
-                valueList.add(chassis.getContainedByUriPath().getValue());
+                addRow(prompt,
+                       chassis.getContainedByUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Contains Paths");
+            prompt = "Contains Paths";
 
             if (chassis.getContainsList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getContainsList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getContainsList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Cooled By Paths");
+            prompt = "Cooled By Paths";
 
             if (chassis.getCooledByUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getCooledByUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getCooledByUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Log Services Path");
+            prompt = "Log Services Path";
 
             if (chassis.getLogServicesUriPath() != null)
             {
-                valueList.add(chassis.getLogServicesUriPath().getValue());
+                addRow(prompt,
+                       chassis.getLogServicesUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Powered By Paths");
+            prompt = "Powered By Paths";
 
             if (chassis.getPoweredByList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getPoweredByList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getPoweredByList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Power Path");
+            prompt = "Power Path";
 
             if (chassis.getPowerUriPath() != null)
             {
-                valueList.add(chassis.getPowerUriPath().getValue());
+                addRow(prompt,
+                       chassis.getPowerUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("System Manager Paths");
+            prompt = "System Manager Paths";
 
             if (chassis.getSystemManagerUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(chassis.getSystemManagerUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(chassis.getSystemManagerUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Thermal Path");
+            prompt = "Thermal Path";
 
             if (chassis.getThermalUriPath() != null)
             {
-                valueList.add(chassis.getThermalUriPath().getValue());
+                addRow(prompt,
+                       chassis.getThermalUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
         }
 
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
-
-        for (int i = 0; i < promptList.size(); ++i)
-        {
-            sb.setLength(0);
-
-            if (isSectionHeaderPrinted && rowNumberToSectionHeaderMap.keySet().contains(i))
-            {
-                String sectionHeader = rowNumberToSectionHeaderMap.get(i);
-
-                streamOut.println("-------------------------");
-                streamOut.println(sectionHeader);
-            }
-
-            if (isRowPromptPrinted)
-            {
-                sb.append(promptList.get(i));
-            }
-
-            sb.append(columnDelimiter);
-
-            while (sb.length() < padTillColumn)
-            {
-                sb.append(" ");
-            }
-
-            sb.append(valueList.get(i));
-            streamOut.println(sb.toString());
-        }
-    }
-
-    private static void valiateListElementCount( List<String> promptList,
-            List<String>                                      valueList )
-    {
-        if (promptList.size() != valueList.size())
-        {
-            throw new IllegalStateException("The outout lists are not identical in size. The prompt list contains " + promptList.size()
-                                            + " elements and the value list " + valueList.size() + " elements.");
-        }
+        printOutRowsWithSectionTitles(streamOut,
+                                      rowNumberToSectionHeaderMap);
     }
 }

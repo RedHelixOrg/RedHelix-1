@@ -40,8 +40,18 @@ public final class RedHxChassisCollectionReader
 {
     private RedHxChassisCollectionReader( ) {}
 
-    public static RedHxChassisCollection chassisCollectionReader( RedHxServerConnectionContext ctx,
-            Set<RedHxUriPath>                                                                  chassisPathSet )
+    /**
+     * read a set of paths for chassis.
+     *
+     * @param ctx the client connection to the Redfish Server.
+     * @param chassisPathSet the set of paths that point chassis. This use usually provided by the service root.
+     * @return a chassis collection. A null is not return.
+     * @throws RedHxHttpResponseException
+     * @throws URISyntaxException
+     * @throws RedHxParseException
+     */
+    public static RedHxChassisCollection readPaths( RedHxServerConnectionContext ctx,
+            Set<RedHxUriPath>                                                    chassisPathSet )
             throws RedHxHttpResponseException,
                    URISyntaxException,
                    RedHxParseException
