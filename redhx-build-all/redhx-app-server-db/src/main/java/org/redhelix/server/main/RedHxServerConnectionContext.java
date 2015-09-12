@@ -16,6 +16,7 @@
 
 package org.redhelix.server.main;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.api.ODataClient;
@@ -60,12 +61,23 @@ public final class RedHxServerConnectionContext
         this.client                 = null;
     }
 
+    private ODataEntityRequest<ClientEntity> RedHxServerSetAuth(ODataEntityRequest<ClientEntity> req)
+    {
+        String username = System.getProperty("param_username");
+        String password = System.getProperty("param_password");
+        String authorization = "Basic ";
+        authorization += new String(Base64.encodeBase64((username + ":" + password).getBytes()));
+        req.addCustomHeader("Authorization", authorization);
+
+        return req;
+    }
+
     public ODataEntityRequest<ClientEntity> getChassisEntityRequest( )
     {
         URI                              chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
         ODataEntityRequest<ClientEntity> req        = client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
 
-        return req;
+        return RedHxServerSetAuth(req);
     }
 
     public ODataEntityRequest<ClientEntity> getEntityRequest( RedHxUriPath pathToResource )
@@ -74,7 +86,7 @@ public final class RedHxServerConnectionContext
         URI                              myUri = serviceRootLocator.getUri(pathToResource.getValue());
         ODataEntityRequest<ClientEntity> req   = client.getRetrieveRequestFactory().getEntityRequest(myUri);
 
-        return req;
+        return RedHxServerSetAuth(req);
     }
 
     public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion( )

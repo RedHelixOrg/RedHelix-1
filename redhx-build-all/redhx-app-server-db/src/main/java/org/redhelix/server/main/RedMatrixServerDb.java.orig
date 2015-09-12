@@ -57,20 +57,23 @@ public class RedMatrixServerDb
         /**
          * turn off logging
          */
+<<<<<<< HEAD
+//      System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
+//                         "debug");
+
+=======
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
                            "error");
-
+        
         String protocol = System.getProperty("param_protocol");
         String hostname = System.getProperty("param_hostname");
         String port = System.getProperty("param_port");
         String prefix = System.getProperty("param_prefix");
         int portNum = 0;
-        if (port != null)
-        {
+        if(port != null)
             portNum = Integer.parseInt(port);
-        }
-
-
+        
+>>>>>>> origin/master
         /*
          * create a communication context that will be used to talk with a single Redfish server. This does not
          * allocate and nextwork sockets.
@@ -83,7 +86,7 @@ public class RedMatrixServerDb
              * open a HTTP connection to the Redfish server provided by the DMTF mockup. The mockup server is started with the command "node
              * server.js"
              */
-            ctx.openConnection((protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP,
+            ctx.openConnection((protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP ,
                                hostname,
                                portNum,
                                prefix);
