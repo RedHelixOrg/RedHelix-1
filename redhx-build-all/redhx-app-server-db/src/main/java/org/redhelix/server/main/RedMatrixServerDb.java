@@ -26,6 +26,7 @@ import org.redhelix.core.computer.system.RedHxComputerSystem;
 import org.redhelix.core.computer.system.RedHxComputerSystemCollection;
 import org.redhelix.core.computer.system.RedHxComputerSystemColumnFormatter;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
+import org.redhelix.core.util.RedHxColumnOutputFormatter;
 import org.redhelix.core.util.RedHxHttpResponseException;
 import org.redhelix.core.util.RedHxParseException;
 import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
@@ -44,6 +45,9 @@ import org.redhelix.server.main.reader.computer.system.RedHxComputerSystemCollec
 public class RedMatrixServerDb
 {
 
+    private static final String CHASSIS_SEPERATOR = "***********  Chassis  ************";
+    private static final String COMPUTER_SEPERATOR = ".......  Computer System  ........";
+
     /**
      * @param args
      */
@@ -53,8 +57,8 @@ public class RedMatrixServerDb
         /**
          * turn off logging
          */
-//        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
-//                           "debug");
+//      System.setProperty("org.slf4j.simpleLogger.defaultLogLevel",
+//                         "debug");
 
         /*
          * create a communication context that will be used to talk with a single Redfish server. This does not
@@ -99,8 +103,9 @@ public class RedMatrixServerDb
                     RedHxComputerSystemCollection computerSystemCollection = RedHxComputerSystemCollectionReader.readPaths(ctx,
                                                                                                                            chassisCollection);
 
-                    printChassisCollections(chassisCollection, computerSystemCollection);
-
+                    printCollections(RedHxColumnOutputFormatter.PrintOrder.ALPHA,
+                                     chassisCollection,
+                                     computerSystemCollection);
                 }
             }
             catch (RedHxChassisParseException ex)
@@ -143,9 +148,9 @@ public class RedMatrixServerDb
      * @param chassisCollection
      * @param computerSystemCollection
      */
-    private static void printChassisCollections(RedHxChassisCollection chassisCollection,
-                                                RedHxComputerSystemCollection computerSystemCollection
-    )
+    private static void printCollections(RedHxColumnOutputFormatter.PrintOrder outputOrder,
+                                         RedHxChassisCollection chassisCollection,
+                                         RedHxComputerSystemCollection computerSystemCollection)
     {
 
         /*
@@ -155,40 +160,63 @@ public class RedMatrixServerDb
         final String columnDelimiter = ":";
         final boolean isSectionHeaderPrinted = true;
         final boolean isPathPrinted = true;
-        final RedHxChassisColumnFormatter chassisFormatter = new RedHxChassisColumnFormatter(isRowTitlePrinted,
-                                                                                             columnDelimiter,
-                                                                                             isSectionHeaderPrinted,
-                                                                                             isPathPrinted);
+        final RedHxChassisColumnFormatter chassisFormatter;
+        final RedHxComputerSystemColumnFormatter computerSystemFormatter;
 
-        final RedHxComputerSystemColumnFormatter computerSystemFormatter = new RedHxComputerSystemColumnFormatter(isRowTitlePrinted,
-                                                                                                                  columnDelimiter,
-                                                                                                                  isSectionHeaderPrinted,
-                                                                                                                  isPathPrinted);
+        /**
+         * choose between the row printing out in alpha order or grouped by sections.
+         */
+        switch (outputOrder)
+        {
+            case ALPHA:
+                chassisFormatter = new RedHxChassisColumnFormatter(isRowTitlePrinted,
+                                                                   columnDelimiter,
+                                                                   isPathPrinted);
+                computerSystemFormatter = new RedHxComputerSystemColumnFormatter(isRowTitlePrinted,
+                                                                                 columnDelimiter,
+                                                                                 isPathPrinted);
+
+                break;
+            case SECTION:
+                chassisFormatter = new RedHxChassisColumnFormatter(isRowTitlePrinted,
+                                                                   columnDelimiter,
+                                                                   isSectionHeaderPrinted,
+                                                                   isPathPrinted);
+                computerSystemFormatter = new RedHxComputerSystemColumnFormatter(isRowTitlePrinted,
+                                                                                 columnDelimiter,
+                                                                                 isSectionHeaderPrinted,
+                                                                                 isPathPrinted);
+
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown print order. " + outputOrder);
+        }
 
         final PrintStream outStream = System.out;
+
         /**
          * loop thru the chassis and print out the data in column format.
          */
         for (RedHxChassis chassis : chassisCollection)
         {
+            System.out.println(CHASSIS_SEPERATOR);
             chassisFormatter.print(chassis,
                                    outStream);
 
             for (RedHxUriPath computerSystemPath : chassis.getComputerSystemUriPathList())
             {
-
                 final RedHxComputerSystem computerSystem = computerSystemCollection.getComputerSystem(computerSystemPath);
 
                 if (computerSystem == null)
                 {
-
                     outStream.println("Unable to find a computer system with path " + computerSystemPath.getValue());
                 }
                 else
                 {
-                    computerSystemFormatter.print(computerSystem, outStream);
+                    System.out.println(COMPUTER_SEPERATOR);
+                    computerSystemFormatter.print(computerSystem,
+                                                  outStream);
                 }
-
             }
         }
     }

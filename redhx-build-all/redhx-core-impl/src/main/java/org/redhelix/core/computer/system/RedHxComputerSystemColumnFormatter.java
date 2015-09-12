@@ -1,7 +1,7 @@
 /*
  * Copyright 2015 JBlade LLC
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License";
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -17,9 +17,7 @@
 package org.redhelix.core.computer.system;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.redhelix.core.util.RedHxAbstractColumnFormatter;
 import org.redhelix.core.util.RedHxUriPath;
@@ -36,7 +34,7 @@ public final class RedHxComputerSystemColumnFormatter
 {
 
     /**
-     * output in ALPH or SECTION format. No section headers are printed.
+     * output in ALPH format. No section headers are printed.
      *
      * @param isRowTitlePrinted
      * @param columnDelimiter
@@ -45,12 +43,10 @@ public final class RedHxComputerSystemColumnFormatter
      */
     public RedHxComputerSystemColumnFormatter(boolean isRowTitlePrinted,
                                               String columnDelimiter,
-                                              PrintOrder outputOrder,
                                               boolean isPathPrinted)
     {
         super(isRowTitlePrinted,
               columnDelimiter,
-              outputOrder,
               isPathPrinted);
     }
 
@@ -93,274 +89,280 @@ public final class RedHxComputerSystemColumnFormatter
         }
     }
 
-    private void printAlphaOrder(RedHxComputerSystem computerSystem,
-                                 PrintStream streamOut)
+    private void createRows(RedHxComputerSystem computerSystem,
+                            Map<Integer, String> rowNumberToSectionHeaderMap)
     {
-        List<String> promptList = new ArrayList<>();
-        List<String> valueList = new ArrayList<>();
-    }
-
-    private void printSectionOrder(RedHxComputerSystem computerSystem,
-                                   PrintStream streamOut)
-    {
-        StringBuilder sb = new StringBuilder();
-        List<String> promptList = new ArrayList<>();
-        List<String> valueList = new ArrayList<>();
-        Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
+        String prompt;
 
         /*
          * ID section
          */
-        int lineCount = promptList.size();
-
-        rowNumberToSectionHeaderMap.put(lineCount,
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
                                         "Computer Identification");
 
         /**
          * The URI Path always is present and not null.
          */
-        promptList.add("URI Path");
-        valueList.add(computerSystem.getComputerSystemPath().getValue());
+        prompt = "URI Path";
+        addRow(prompt,
+               computerSystem.getComputerSystemPath().getValue());
 
         /*
          *
          */
-        promptList.add("Computer ID");
+        prompt = "Computer ID";
 
         if (computerSystem.getComputerId() != null)
         {
-            valueList.add(computerSystem.getComputerId().getValue());
+            addRow(prompt,
+                   computerSystem.getComputerId().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Description");
+        prompt = "Description";
 
         if (computerSystem.getDescription() != null)
         {
-            valueList.add(computerSystem.getDescription().getValue());
+            addRow(prompt,
+                   computerSystem.getDescription().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Name");
+        prompt = "Name";
 
         if (computerSystem.getName() == null)
         {
-            valueList.add(computerSystem.getName().getValue());
+            addRow(prompt,
+                   computerSystem.getName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Computer Type");
+        prompt = "Computer Type";
 
         if (computerSystem.getSystemType() != null)
         {
-            valueList.add(computerSystem.getSystemType().toString());
+            addRow(prompt,
+                   computerSystem.getSystemType().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Manufacturer");
+        prompt = "Manufacturer";
 
         if (computerSystem.getManufacturerName() != null)
         {
-            valueList.add(computerSystem.getManufacturerName().getValue());
+            addRow(prompt,
+                   computerSystem.getManufacturerName().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Model Number");
+        prompt = "Model Number";
 
         if (computerSystem.getModelNumber() != null)
         {
-            valueList.add(computerSystem.getModelNumber().getValue());
+            addRow(prompt,
+                   computerSystem.getModelNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Part Number");
+        prompt = "Part Number";
 
         if (computerSystem.getPartNumber() != null)
         {
-            valueList.add(computerSystem.getPartNumber().getValue());
+            addRow(prompt,
+                   computerSystem.getPartNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Asset Tag");
+        prompt = "Asset Tag";
 
         if (computerSystem.getAssetTag() != null)
         {
-            valueList.add(computerSystem.getAssetTag().getValue());
+            addRow(prompt,
+                   computerSystem.getAssetTag().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Serial Number");
+        prompt = "Serial Number";
 
         if (computerSystem.getSerialNumber() != null)
         {
-            valueList.add(computerSystem.getSerialNumber().getValue());
+            addRow(prompt,
+                   computerSystem.getSerialNumber().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("SKU");
+        prompt = "SKU";
 
         if (computerSystem.getSku() != null)
         {
-            valueList.add(computerSystem.getSku().getValue());
+            addRow(prompt,
+                   computerSystem.getSku().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Led State");
+        prompt = "Led State";
 
         if (computerSystem.getIndicatorLedState() != null)
         {
-            valueList.add(computerSystem.getIndicatorLedState().toString());
+            addRow(prompt,
+                   computerSystem.getIndicatorLedState().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("BIOS Version");
+        prompt = "BIOS Version";
 
         if (computerSystem.getBiosVersion() != null)
         {
-            valueList.add(computerSystem.getBiosVersion().getValue());
+            addRow(prompt,
+                   computerSystem.getBiosVersion().getValue());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /**
          * boot
          */
-        lineCount = promptList.size();
-        rowNumberToSectionHeaderMap.put(lineCount,
+        rowNumberToSectionHeaderMap.put(getRowCount(),
                                         "Computer Boot");
-        promptList.add("Boot Source");
+        prompt = "Boot Source";
 
         if (computerSystem.getBootSource() != null)
         {
-            valueList.add(computerSystem.getBootSource().toString());
+            addRow(prompt,
+                   computerSystem.getBootSource().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Boot Source Override");
+        prompt = "Boot Source Override";
 
         if (computerSystem.getBootSourceOverride() != null)
         {
-            valueList.add(computerSystem.getBootSourceOverride().toString());
+            addRow(prompt,
+                   computerSystem.getBootSourceOverride().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Boot UEFI Target");
+        prompt = "Boot UEFI Target";
 
         if (computerSystem.getBootUefiTarget() != null)
         {
-            valueList.add(computerSystem.getBootUefiTarget().toString());
+            addRow(prompt,
+                   computerSystem.getBootUefiTarget().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /**
          * memory
          */
-        lineCount = promptList.size();
-        rowNumberToSectionHeaderMap.put(lineCount,
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
                                         "Computer Memory");
-        promptList.add("Memory Status");
+        prompt = "Memory Status";
 
         if (computerSystem.getMemoryOperatingStatus() != null)
         {
-            valueList.add(computerSystem.getMemoryOperatingStatus().toString());
+            addRow(prompt,
+                   computerSystem.getMemoryOperatingStatus().toString());
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Memory Size");
+        prompt = "Memory Size";
 
         if (computerSystem.getTotalSystemMemoryGigaBytes() >= 0)
         {
-            valueList.add(computerSystem.getTotalSystemMemoryGigaBytes() + " Gig");
+            addRow(prompt,
+                   computerSystem.getTotalSystemMemoryGigaBytes() + " Gig");
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /**
          * Processor
          */
-        lineCount = promptList.size();
-        rowNumberToSectionHeaderMap.put(lineCount,
+        rowNumberToSectionHeaderMap.put(super.getRowCount(),
                                         "Computer Processor");
-        promptList.add("Processor count");
+        prompt = "Processor count";
 
         if (computerSystem.getProcessorCount() >= 0)
         {
-            valueList.add(computerSystem.getProcessorCount() + " ");
+            addRow(prompt,
+                   computerSystem.getProcessorCount() + " ");
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Model");
+        prompt = "Model";
 
         if (computerSystem.getModelName() != null)
         {
-            valueList.add(computerSystem.getModelName() + " ");
+            addRow(prompt,
+                   computerSystem.getModelName() + " ");
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
-        promptList.add("Status");
+        prompt = "Status";
 
         if (computerSystem.getProcessorOperatingStatus() != null)
         {
-            valueList.add(computerSystem.getProcessorOperatingStatus() + " ");
+            addRow(prompt,
+                   computerSystem.getProcessorOperatingStatus() + " ");
         }
         else
         {
-            valueList.add("");
+            addRow(prompt);
         }
 
         /*
@@ -368,68 +370,96 @@ public final class RedHxComputerSystemColumnFormatter
          */
         if (isPathPrinted())
         {
-            lineCount = promptList.size();
-            rowNumberToSectionHeaderMap.put(lineCount,
+            rowNumberToSectionHeaderMap.put(super.getRowCount(),
                                             "Computer Paths");
-            promptList.add("Chassis Paths");
+            prompt = "Chassis Paths";
 
             if (computerSystem.getChassisUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(computerSystem.getChassisUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(computerSystem.getChassisUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Cooled By Paths");
+            prompt = "Cooled By Paths";
 
             if (computerSystem.getCooledByUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(computerSystem.getCooledByUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(computerSystem.getCooledByUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Log Services Path");
+            prompt = "Log Services Path";
 
             if (computerSystem.getLogServicesUriPath() != null)
             {
-                valueList.add(computerSystem.getLogServicesUriPath().getValue());
+                addRow(prompt,
+                       computerSystem.getLogServicesUriPath().getValue());
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("Powered By Paths");
+            prompt = "Powered By Paths";
 
             if (computerSystem.getPoweredByList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(computerSystem.getPoweredByList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(computerSystem.getPoweredByList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
 
-            promptList.add("System Manager Paths");
+            prompt = "System Manager Paths";
 
             if (computerSystem.getSystemManagerUriPathList() != null)
             {
-                valueList.add(RedHxUriPath.getPathListAsString(computerSystem.getSystemManagerUriPathList()));
+                addRow(prompt,
+                       RedHxUriPath.getPathListAsString(computerSystem.getSystemManagerUriPathList()));
             }
             else
             {
-                valueList.add("");
+                addRow(prompt);
             }
         }
+    }
 
+    private void printAlphaOrder(RedHxComputerSystem computerSystem,
+                                 PrintStream streamOut)
+    {
+
+        /**
+         * create the map but it will be ignored when actually printed out.
+         */
+        Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
+
+        createRows(computerSystem,
+                   rowNumberToSectionHeaderMap);
+
+        /**
+         * calling this print method sorts the output in Alpha order.
+         */
+        printOutRowsAlphaOrder(streamOut);
+    }
+
+    private void printSectionOrder(RedHxComputerSystem computerSystem,
+                                   PrintStream streamOut)
+    {
+        Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
+
+        createRows(computerSystem,
+                   rowNumberToSectionHeaderMap);
         printOutRowsWithSectionTitles(streamOut,
-                                      promptList,
-                                      valueList,
                                       rowNumberToSectionHeaderMap);
     }
 }

@@ -17,6 +17,8 @@
 package org.redhelix.core.util;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,6 +41,7 @@ public abstract class RedHxAbstractColumnFormatter
     private final RedHxChassisColumnFormatter.PrintOrder outputOrder;
     private boolean isPathPrinted;
     private boolean isSectionHeaderPrinted;
+    private final List<PromptValuePair> rowList;
 
     /**
      * output in ALPH or SECTION format. No section headers are printed.
@@ -50,14 +53,14 @@ public abstract class RedHxAbstractColumnFormatter
      */
     public RedHxAbstractColumnFormatter(final boolean isRowTitlePrinted,
                                         final String columnDelimiter,
-                                        final RedHxChassisColumnFormatter.PrintOrder outputOrder,
                                         final boolean isPathPrinted)
     {
         this.isRowPromptPrinted = isRowTitlePrinted;
         this.columnDelimiter = columnDelimiter;
-        this.outputOrder = outputOrder;
+        this.outputOrder = RedHxChassisColumnFormatter.PrintOrder.ALPHA;
         this.isSectionHeaderPrinted = false;
         this.isPathPrinted = isPathPrinted;
+        this.rowList = new ArrayList<>();
     }
 
     /**
@@ -77,6 +80,7 @@ public abstract class RedHxAbstractColumnFormatter
         this.outputOrder = RedHxChassisColumnFormatter.PrintOrder.SECTION;
         this.isSectionHeaderPrinted = isSectionHeaderPrinted;
         this.isPathPrinted = isPathPrinted;
+        this.rowList = new ArrayList<>();
     }
 
     private RedHxAbstractColumnFormatter()
@@ -85,6 +89,35 @@ public abstract class RedHxAbstractColumnFormatter
         this.columnDelimiter = null;
         this.outputOrder = null;
         this.isSectionHeaderPrinted = false;
+        this.rowList = null;
+    }
+
+    /**
+     * add a row with a single prompt and single data value.
+     *
+     * @param prompt
+     * @param value
+     */
+    protected void addRow(String prompt,
+                          String value)
+    {
+        PromptValuePair row = new PromptValuePair(prompt,
+                                                  value);
+
+        rowList.add(row);
+    }
+
+    /**
+     * add a row that has only a prompt and no data to display.
+     *
+     * @param prompt
+     */
+    protected void addRow(String prompt)
+    {
+        PromptValuePair row = new PromptValuePair(prompt,
+                                                  "");
+
+        rowList.add(row);
     }
 
     protected String getColumnDelimiter()
@@ -95,6 +128,11 @@ public abstract class RedHxAbstractColumnFormatter
     protected PrintOrder getOutputOrder()
     {
         return outputOrder;
+    }
+
+    protected int getRowCount()
+    {
+        return rowList.size();
     }
 
     protected boolean isPathPrinted()
@@ -119,27 +157,28 @@ public abstract class RedHxAbstractColumnFormatter
      * @param promptList
      * @param valueList
      */
-    protected void printOutRows(PrintStream streamOut,
-                                List<String> promptList,
-                                List<String> valueList)
+    protected void printOutRowsAlphaOrder(PrintStream streamOut)
     {
-
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
+        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount();
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < promptList.size(); ++i)
+        /**
+         * sort the row list by prompt
+         */
+        Collections.sort(rowList);
+
+        /*
+         *
+         */
+        for (int i = 0; i < rowList.size(); ++i)
         {
+            final PromptValuePair row = rowList.get(i);
+
             sb.setLength(0);
 
             if (isRowPromptPrinted())
             {
-                sb.append(promptList.get(i));
+                sb.append(row.getPrompt());
             }
 
             sb.append(getColumnDelimiter());
@@ -149,41 +188,35 @@ public abstract class RedHxAbstractColumnFormatter
                 sb.append(" ");
             }
 
-            sb.append(valueList.get(i));
+            sb.append(row.getValue());
             streamOut.println(sb.toString());
         }
     }
+    private static final String SECTION_SEPERATOR = "-------------------------";
 
     protected void printOutRowsWithSectionTitles(PrintStream streamOut,
-                                                 List<String> promptList,
-                                                 List<String> valueList,
                                                  Map<Integer, String> rowNumberToSectionHeaderMap)
     {
-
-        /**
-         * All the output data is in two lists, now place them on the ouputStream
-         */
-        valiateListElementCount(promptList,
-                                valueList);
-
-        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount(promptList);
+        int padTillColumn = COLUMN_CHAR_COUNT_PAD + getMaxCharCount();
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < promptList.size(); ++i)
+        for (int i = 0; i < rowList.size(); ++i)
         {
+            final PromptValuePair row = rowList.get(i);
+
             sb.setLength(0);
 
             if (isSectionHeaderPrinted() && rowNumberToSectionHeaderMap.keySet().contains(i))
             {
                 String sectionHeader = rowNumberToSectionHeaderMap.get(i);
 
-                streamOut.println("-------------------------");
+                streamOut.println(SECTION_SEPERATOR);
                 streamOut.println(sectionHeader);
             }
 
             if (isRowPromptPrinted())
             {
-                sb.append(promptList.get(i));
+                sb.append(row.getPrompt());
             }
 
             sb.append(getColumnDelimiter());
@@ -193,42 +226,32 @@ public abstract class RedHxAbstractColumnFormatter
                 sb.append(" ");
             }
 
-            sb.append(valueList.get(i));
+            sb.append(row.getValue());
             streamOut.println(sb.toString());
         }
     }
 
-    private static int getMaxCharCount(List<String> promptList)
+    private int getMaxCharCount()
     {
         int max = 0;
 
-        for (String str : promptList)
+        for (PromptValuePair row : rowList)
         {
-            max = Math.max(max, str.length());
+            max = Math.max(max, row.getPrompt().length());
         }
 
         return max;
     }
 
-    private static void valiateListElementCount(List<String> promptList,
-                                                List<String> valueList)
-    {
-        if (promptList.size() != valueList.size())
-        {
-            throw new IllegalStateException("The outout lists are not identical in size. The prompt list contains " + promptList.size()
-                    + " elements and the value list " + valueList.size() + " elements.");
-        }
-    }
-
-    protected class PromptValuePair
+    private class PromptValuePair
             implements Comparable<PromptValuePair>
     {
 
         private final String prompt;
         private final String value;
 
-        public PromptValuePair(String prompt,
-                               String value)
+        PromptValuePair(String prompt,
+                        String value)
         {
             this.prompt = prompt;
             this.value = value;

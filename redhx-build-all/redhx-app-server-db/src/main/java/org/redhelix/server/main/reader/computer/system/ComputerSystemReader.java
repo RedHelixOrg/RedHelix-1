@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 import org.redhelix.core.action.RedHxActionProperties;
+import org.redhelix.core.annotations.Immutable;
 import org.redhelix.core.computer.system.RedHxComputerSystem;
 import org.redhelix.core.computer.system.RedHxComputerSystemBuilder;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Hank Bruning
  *
  */
+@Immutable
 final class ComputerSystemReader
         extends AbstractRedfishJsonReader
 {
