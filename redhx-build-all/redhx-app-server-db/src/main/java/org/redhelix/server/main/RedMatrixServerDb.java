@@ -103,7 +103,10 @@ public class RedMatrixServerDb
                     RedHxComputerSystemCollection computerSystemCollection = RedHxComputerSystemCollectionReader.readPaths(ctx,
                                                                                                                            chassisCollection);
 
-                    printCollections(RedHxColumnOutputFormatter.PrintOrder.ALPHA,
+                    /**
+                     * todo print on in section order. A bug is in printing in alpha order and all blades have the same prompt
+                     */
+                    printCollections(RedHxColumnOutputFormatter.PrintOrder.SECTION,
                                      chassisCollection,
                                      computerSystemCollection);
                 }

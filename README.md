@@ -1,5 +1,5 @@
 #RedHelix GitHub Repository
-Date September 2, 2015, Version 0.1
+Date September 12, 2015, Version 0.1
 ##Overview
 RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
 The RedHelix server uses the Redfish specification to monitor multiple devices. It builds a in memory database representing the inventory
@@ -15,19 +15,21 @@ each server. At present the database is only in limited to what is in memory and
 From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
 
 ## Development Status
-At present, September 2, 2015 there is no hardware implementing Redfish for sale or available to RedHelix for testing. If you have Redfish capable
+At present, September 12, 2015 there is no hardware implementing Redfish for sale or available to RedHelix for testing. If you have Redfish capable
 hardware contact us. The current Java software
 is tested with the DMTF Redfish mockup files. This prevents any development of Redfish operations that change the state of the server, for example
 to reboot it.  The software is undergoing massive changes. It's pre-alpa and not ready to use but you can see the direction it is going.
 
-##Roadmap
-As of September 2, 2015 RedHelix is developing with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
+9/2/2015 HTTP reading of the Chassis messages and saving them in Java classes. 
+9/12/2015 HP has added HTTPS with Basic Authorization. See scripts  winBuild.cmd  and winRun.cmd. Thanks Dan
+9/12/2015 Added processing for Computer System JSON messages. SimpleStorage, Ethernets, Memory status is not yet added.
 
-1. HTTP reading of the Chassis messages and saving them in Java classes. Done.
+##Roadmap
+As of September 12, 2015 RedHelix is developing with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
+
+1. A browsers interface to RedHelixDb using AngularJs.
 2. Implement the Java threads used to monitor a single Redfish server and store the chassis information in the RedHelixDb database.
-3. A browsers interface to RedHelixDb using AngularJs.
-4. HTTP reading of the Computer System messages and saving them in Java classes.
-5. Standalone server called RedHelixDb containing an in memory databases of the Chassis and Computer System.
+3. Standalone server called RedHelixDb containing an in memory databases of the Chassis and Computer System.
 
 ## Architecture
 RedHelix is designed to run in a single Java Virtual Machine(JVM). The connection to manage servers implementing Redfish is accomplished using

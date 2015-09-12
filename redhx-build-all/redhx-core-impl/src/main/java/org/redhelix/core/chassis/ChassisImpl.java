@@ -11,11 +11,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.chassis;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import org.redhelix.core.action.RedHxActionGroup;
 import org.redhelix.core.chassis.id.RedHxChassisAssetTag;
 import org.redhelix.core.chassis.id.RedHxChassisDescription;
@@ -24,16 +24,12 @@ import org.redhelix.core.chassis.id.RedHxChassisManufacturerName;
 import org.redhelix.core.chassis.id.RedHxChassisModelNumber;
 import org.redhelix.core.chassis.id.RedHxChassisName;
 import org.redhelix.core.chassis.id.RedHxChassisPartNumber;
-import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.chassis.id.RedHxChassisSKU;
+import org.redhelix.core.chassis.id.RedHxChassisSerialNumber;
 import org.redhelix.core.util.RedHxIndicatorLedStateEnum;
 import org.redhelix.core.util.RedHxOperatingHealthEnum;
 import org.redhelix.core.util.RedHxOperatingStateEnum;
 import org.redhelix.core.util.RedHxUriPath;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -45,29 +41,30 @@ import java.util.Objects;
 final class ChassisImpl
         implements RedHxChassis
 {
-    private RedHxActionGroup             actionGroup;
-    private RedHxChassisAssetTag         assetTag;
-    private RedHxChassisDescription      chassisDescription;
-    private RedHxChassisId               chassisId;
-    private RedHxChassisName             chassisName;
-    private RedHxChassisTypeEnum         chassisType;
-    private List<RedHxUriPath>           computerSystemUriPathList;
-    private RedHxUriPath                 containedByUriPath;
-    private List<RedHxUriPath>           containsList;
-    private List<RedHxUriPath>           cooledByUriPathList;
-    private RedHxIndicatorLedStateEnum   ledState;
-    private RedHxUriPath                 logServicesUriPath;
+
+    private RedHxActionGroup actionGroup;
+    private RedHxChassisAssetTag assetTag;
+    private RedHxChassisDescription chassisDescription;
+    private RedHxChassisId chassisId;
+    private RedHxChassisName chassisName;
+    private RedHxChassisTypeEnum chassisType;
+    private List<RedHxUriPath> computerSystemUriPathList;
+    private RedHxUriPath containedByUriPath;
+    private List<RedHxUriPath> containsList;
+    private List<RedHxUriPath> cooledByUriPathList;
+    private RedHxIndicatorLedStateEnum ledState;
+    private RedHxUriPath logServicesUriPath;
     private RedHxChassisManufacturerName manufacturerName;
-    private RedHxChassisModelNumber      modelNumber;
-    private RedHxOperatingHealthEnum     operatingHealth;
-    private RedHxOperatingStateEnum      operatingState;
-    private RedHxChassisPartNumber       partNumber;
-    private List<RedHxUriPath>           poweredByList;
-    private RedHxUriPath                 powerUriPath;
-    private RedHxChassisSerialNumber     serialNumber;
-    private RedHxChassisSKU              sku;
-    private List<RedHxUriPath>           systemManagerUriPathList;
-    private RedHxUriPath                 thermalUriPath;
+    private RedHxChassisModelNumber modelNumber;
+    private RedHxOperatingHealthEnum operatingHealth;
+    private RedHxOperatingStateEnum operatingState;
+    private RedHxChassisPartNumber partNumber;
+    private List<RedHxUriPath> poweredByList;
+    private RedHxUriPath powerUriPath;
+    private RedHxChassisSerialNumber serialNumber;
+    private RedHxChassisSKU sku;
+    private List<RedHxUriPath> systemManagerUriPathList;
+    private RedHxUriPath thermalUriPath;
 
     /**
      * create a Chassis. The arguments are arranged in alpha order.
@@ -96,83 +93,83 @@ final class ChassisImpl
      * @param systemManagerUriPathList
      * @param thermalUriPath
      */
-    ChassisImpl( RedHxActionGroup             actionGroup,
-                 RedHxChassisAssetTag         assetTag,
-                 RedHxChassisDescription      chassisDescription,
-                 RedHxChassisId               chassisId,
-                 RedHxChassisName             chassisName,
-                 RedHxChassisTypeEnum         chassisType,
-                 List<RedHxUriPath>           computerSystemUriPathList,
-                 RedHxUriPath                 containedByUriPath,
-                 List<RedHxUriPath>           containsList,
-                 List<RedHxUriPath>           cooledByUriPathList,
-                 RedHxIndicatorLedStateEnum   ledState,
-                 RedHxUriPath                 logServicesUriPath,
-                 RedHxChassisManufacturerName manufacturerName,
-                 RedHxChassisModelNumber      modelNumber,
-                 RedHxOperatingHealthEnum     operatingHealth,
-                 RedHxOperatingStateEnum      operatingState,
-                 RedHxChassisPartNumber       partNumber,
-                 List<RedHxUriPath>           poweredByList,
-                 RedHxUriPath                 powerUriPath,
-                 RedHxChassisSerialNumber     serialNumber,
-                 RedHxChassisSKU              sku,
-                 List<RedHxUriPath>           systemManagerUriPathList,
-                 RedHxUriPath                 thermalUriPath )
+    ChassisImpl(RedHxActionGroup actionGroup,
+                RedHxChassisAssetTag assetTag,
+                RedHxChassisDescription chassisDescription,
+                RedHxChassisId chassisId,
+                RedHxChassisName chassisName,
+                RedHxChassisTypeEnum chassisType,
+                List<RedHxUriPath> computerSystemUriPathList,
+                RedHxUriPath containedByUriPath,
+                List<RedHxUriPath> containsList,
+                List<RedHxUriPath> cooledByUriPathList,
+                RedHxIndicatorLedStateEnum ledState,
+                RedHxUriPath logServicesUriPath,
+                RedHxChassisManufacturerName manufacturerName,
+                RedHxChassisModelNumber modelNumber,
+                RedHxOperatingHealthEnum operatingHealth,
+                RedHxOperatingStateEnum operatingState,
+                RedHxChassisPartNumber partNumber,
+                List<RedHxUriPath> poweredByList,
+                RedHxUriPath powerUriPath,
+                RedHxChassisSerialNumber serialNumber,
+                RedHxChassisSKU sku,
+                List<RedHxUriPath> systemManagerUriPathList,
+                RedHxUriPath thermalUriPath)
     {
-        this.actionGroup               = actionGroup;
-        this.assetTag                  = assetTag;
-        this.chassisDescription        = chassisDescription;
-        this.chassisId                 = chassisId;
-        this.chassisName               = chassisName;
-        this.chassisType               = chassisType;
+        this.actionGroup = actionGroup;
+        this.assetTag = assetTag;
+        this.chassisDescription = chassisDescription;
+        this.chassisId = chassisId;
+        this.chassisName = chassisName;
+        this.chassisType = chassisType;
         this.computerSystemUriPathList = Collections.unmodifiableList(computerSystemUriPathList);
-        this.containedByUriPath        = containedByUriPath;
-        this.containsList              = containsList;
-        this.cooledByUriPathList       = Collections.unmodifiableList(cooledByUriPathList);
-        this.ledState                  = ledState;
-        this.logServicesUriPath        = logServicesUriPath;
-        this.manufacturerName          = manufacturerName;
-        this.modelNumber               = modelNumber;
-        this.operatingHealth           = operatingHealth;
-        this.operatingState            = operatingState;
-        this.partNumber                = partNumber;
-        this.poweredByList             = Collections.unmodifiableList(poweredByList);
-        this.powerUriPath              = powerUriPath;
-        this.serialNumber              = serialNumber;
-        this.sku                       = sku;
-        this.systemManagerUriPathList  = Collections.unmodifiableList(systemManagerUriPathList);
-        this.thermalUriPath            = thermalUriPath;
+        this.containedByUriPath = containedByUriPath;
+        this.containsList = containsList;
+        this.cooledByUriPathList = Collections.unmodifiableList(cooledByUriPathList);
+        this.ledState = ledState;
+        this.logServicesUriPath = logServicesUriPath;
+        this.manufacturerName = manufacturerName;
+        this.modelNumber = modelNumber;
+        this.operatingHealth = operatingHealth;
+        this.operatingState = operatingState;
+        this.partNumber = partNumber;
+        this.poweredByList = Collections.unmodifiableList(poweredByList);
+        this.powerUriPath = powerUriPath;
+        this.serialNumber = serialNumber;
+        this.sku = sku;
+        this.systemManagerUriPathList = Collections.unmodifiableList(systemManagerUriPathList);
+        this.thermalUriPath = thermalUriPath;
     }
 
-    private ChassisImpl( )
+    private ChassisImpl()
     {
-        this.assetTag                  = null;
-        this.chassisDescription        = null;
-        this.chassisId                 = null;
-        this.chassisName               = null;
-        this.chassisType               = null;
+        this.assetTag = null;
+        this.chassisDescription = null;
+        this.chassisId = null;
+        this.chassisName = null;
+        this.chassisType = null;
         this.computerSystemUriPathList = null;
-        this.containedByUriPath        = null;
-        this.containsList              = null;
-        this.cooledByUriPathList       = null;
-        this.ledState                  = null;
-        this.logServicesUriPath        = null;
-        this.manufacturerName          = null;
-        this.modelNumber               = null;
-        this.operatingHealth           = null;
-        this.operatingState            = null;
-        this.partNumber                = null;
-        this.poweredByList             = null;
-        this.powerUriPath              = null;
-        this.serialNumber              = null;
-        this.sku                       = null;
-        this.systemManagerUriPathList  = null;
-        this.thermalUriPath            = null;
+        this.containedByUriPath = null;
+        this.containsList = null;
+        this.cooledByUriPathList = null;
+        this.ledState = null;
+        this.logServicesUriPath = null;
+        this.manufacturerName = null;
+        this.modelNumber = null;
+        this.operatingHealth = null;
+        this.operatingState = null;
+        this.partNumber = null;
+        this.poweredByList = null;
+        this.powerUriPath = null;
+        this.serialNumber = null;
+        this.sku = null;
+        this.systemManagerUriPathList = null;
+        this.thermalUriPath = null;
     }
 
     @Override
-    public boolean equals( Object obj )
+    public boolean equals(Object obj)
     {
         if (this == obj)
         {
@@ -310,145 +307,145 @@ final class ChassisImpl
     }
 
     @Override
-    public RedHxActionGroup getActionGroup( )
+    public RedHxActionGroup getActionGroup()
     {
         return actionGroup;
     }
 
     @Override
-    public RedHxChassisAssetTag getAssetTag( )
+    public RedHxChassisAssetTag getAssetTag()
     {
         return assetTag;
     }
 
     @Override
-    public RedHxChassisDescription getChassisDescription( )
+    public RedHxChassisDescription getChassisDescription()
     {
         return chassisDescription;
     }
 
     @Override
-    public RedHxChassisId getChassisId( )
+    public RedHxChassisId getChassisId()
     {
         return chassisId;
     }
 
     @Override
-    public RedHxChassisName getChassisName( )
+    public RedHxChassisName getChassisName()
     {
         return chassisName;
     }
 
     @Override
-    public RedHxChassisTypeEnum getChassisType( )
+    public RedHxChassisTypeEnum getChassisType()
     {
         return chassisType;
     }
 
     @Override
-    public List<RedHxUriPath> getComputerSystemUriPathList( )
+    public List<RedHxUriPath> getComputerSystemUriPathList()
     {
         return computerSystemUriPathList;
     }
 
     @Override
-    public RedHxUriPath getContainedByUriPath( )
+    public RedHxUriPath getContainedByUriPath()
     {
         return containedByUriPath;
     }
 
     @Override
-    public List<RedHxUriPath> getContainsList( )
+    public List<RedHxUriPath> getContainsList()
     {
         return containsList;
     }
 
     @Override
-    public List<RedHxUriPath> getCooledByUriPathList( )
+    public List<RedHxUriPath> getCooledByUriPathList()
     {
         return cooledByUriPathList;
     }
 
     @Override
-    public RedHxIndicatorLedStateEnum getIndicatorLedState( )
+    public RedHxIndicatorLedStateEnum getIndicatorLedState()
     {
         return ledState;
     }
 
     @Override
-    public RedHxUriPath getLogServicesUriPath( )
+    public RedHxUriPath getLogServicesUriPath()
     {
         return logServicesUriPath;
     }
 
     @Override
-    public RedHxChassisManufacturerName getManufacturerName( )
+    public RedHxChassisManufacturerName getManufacturerName()
     {
         return manufacturerName;
     }
 
     @Override
-    public RedHxChassisModelNumber getModelNumber( )
+    public RedHxChassisModelNumber getModelNumber()
     {
         return modelNumber;
     }
 
     @Override
-    public RedHxOperatingHealthEnum getOperatingHealth( )
+    public RedHxOperatingHealthEnum getOperatingHealth()
     {
         return operatingHealth;
     }
 
     @Override
-    public RedHxOperatingStateEnum getOperatingState( )
+    public RedHxOperatingStateEnum getOperatingState()
     {
         return operatingState;
     }
 
     @Override
-    public RedHxChassisPartNumber getPartNumber( )
+    public RedHxChassisPartNumber getPartNumber()
     {
         return partNumber;
     }
 
     @Override
-    public List<RedHxUriPath> getPoweredByList( )
+    public List<RedHxUriPath> getPoweredByList()
     {
         return poweredByList;
     }
 
     @Override
-    public RedHxUriPath getPowerUriPath( )
+    public RedHxUriPath getPowerUriPath()
     {
         return powerUriPath;
     }
 
     @Override
-    public RedHxChassisSerialNumber getSerialNumber( )
+    public RedHxChassisSerialNumber getSerialNumber()
     {
         return serialNumber;
     }
 
     @Override
-    public RedHxChassisSKU getSku( )
+    public RedHxChassisSKU getSku()
     {
         return sku;
     }
 
     @Override
-    public List<RedHxUriPath> getSystemManagerUriPathList( )
+    public List<RedHxUriPath> getSystemManagerUriPathList()
     {
         return systemManagerUriPathList;
     }
 
     @Override
-    public RedHxUriPath getThermalUriPath( )
+    public RedHxUriPath getThermalUriPath()
     {
         return thermalUriPath;
     }
 
     @Override
-    public int hashCode( )
+    public int hashCode()
     {
         int hash = 5;
 
@@ -460,30 +457,15 @@ final class ChassisImpl
     }
 
     @Override
-    public String toString( )
+    public String toString()
     {
         StringBuilder toStringBuilder;
 
         toStringBuilder = new StringBuilder("{");
 
-        if (actionGroup != null)
-        {
-            toStringBuilder.append("actionGroup=").append(this.actionGroup);
-        }
-
-        if (assetTag != null)
-        {
-            toStringBuilder.append(", assetTag=").append(this.assetTag.getValue());
-        }
-
-        if (chassisDescription != null)
-        {
-            toStringBuilder.append(", chassisDescription=").append(this.chassisDescription.getValue());
-        }
-
         if (chassisId != null)
         {
-            toStringBuilder.append(", chassisId=").append(this.chassisId.getValue());
+            toStringBuilder.append("chassisId=").append(this.chassisId.getValue());
         }
 
         if (chassisName != null)
@@ -491,12 +473,27 @@ final class ChassisImpl
             toStringBuilder.append(", chassisName=").append(this.chassisName.getValue());
         }
 
+        if (assetTag != null)
+        {
+            toStringBuilder.append(", assetTag=").append(this.assetTag.getValue());
+        }
+
+        if (actionGroup != null)
+        {
+            toStringBuilder.append(" actionGroup=").append(this.actionGroup);
+        }
+
+        if (chassisDescription != null)
+        {
+            toStringBuilder.append(", chassisDescription=").append(this.chassisDescription.getValue());
+        }
+
         if (chassisType != null)
         {
             toStringBuilder.append(", chassisType=").append(this.chassisType);
         }
 
-        if ((computerSystemUriPathList != null) &&!computerSystemUriPathList.isEmpty())
+        if ((computerSystemUriPathList != null) && !computerSystemUriPathList.isEmpty())
         {
             toStringBuilder.append(", computerSystemUriPathList=");
             createPathString(toStringBuilder,
@@ -508,14 +505,14 @@ final class ChassisImpl
             toStringBuilder.append(", containedByUriPath=").append(this.containedByUriPath.getValue());
         }
 
-        if ((containsList != null) &&!containsList.isEmpty())
+        if ((containsList != null) && !containsList.isEmpty())
         {
             toStringBuilder.append(", containsList=");
             createPathString(toStringBuilder,
                              containsList);
         }
 
-        if ((cooledByUriPathList != null) &&!cooledByUriPathList.isEmpty())
+        if ((cooledByUriPathList != null) && !cooledByUriPathList.isEmpty())
         {
             toStringBuilder.append(", cooledByUriPathList=");
             createPathString(toStringBuilder,
@@ -557,7 +554,7 @@ final class ChassisImpl
             toStringBuilder.append(", partNumber=").append(this.partNumber.getValue());
         }
 
-        if ((poweredByList != null) &&!poweredByList.isEmpty())
+        if ((poweredByList != null) && !poweredByList.isEmpty())
         {
             toStringBuilder.append(", poweredByList=").append(this.poweredByList);
         }
@@ -577,7 +574,7 @@ final class ChassisImpl
             toStringBuilder.append(", sku=").append(this.sku.getValue());
         }
 
-        if ((systemManagerUriPathList != null) &&!systemManagerUriPathList.isEmpty())
+        if ((systemManagerUriPathList != null) && !systemManagerUriPathList.isEmpty())
         {
             toStringBuilder.append(", systemManagerUriPathList=");
             createPathString(toStringBuilder,
@@ -594,8 +591,8 @@ final class ChassisImpl
         return toStringBuilder.toString();
     }
 
-    private static void createPathString( StringBuilder toStringBuilder,
-            List<RedHxUriPath>                          pathList )
+    private static void createPathString(StringBuilder toStringBuilder,
+                                         List<RedHxUriPath> pathList)
     {
         toStringBuilder.append("[");
 
@@ -614,4 +611,5 @@ final class ChassisImpl
 
         toStringBuilder.append("]");
     }
+
 }

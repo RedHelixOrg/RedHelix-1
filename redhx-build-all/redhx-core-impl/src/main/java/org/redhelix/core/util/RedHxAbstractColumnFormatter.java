@@ -43,6 +43,11 @@ public abstract class RedHxAbstractColumnFormatter
     private boolean isSectionHeaderPrinted;
     private final List<PromptValuePair> rowList;
 
+    protected void clearRows()
+    {
+        rowList.clear();
+    }
+
     /**
      * output in ALPH or SECTION format. No section headers are printed.
      *

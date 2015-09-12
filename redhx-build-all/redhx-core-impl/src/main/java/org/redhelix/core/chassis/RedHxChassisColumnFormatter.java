@@ -73,6 +73,7 @@ public final class RedHxChassisColumnFormatter
     public void print(RedHxChassis chassis,
                       PrintStream streamOut)
     {
+        super.clearRows();
         switch (super.getOutputOrder())
         {
             case ALPHA:
@@ -379,7 +380,6 @@ public final class RedHxChassisColumnFormatter
     private void printSectionOrder(RedHxChassis chassis,
                                    PrintStream streamOut)
     {
-        StringBuilder sb = new StringBuilder();
 
         Map<Integer, String> rowNumberToSectionHeaderMap = new HashMap<>();
         String prompt;

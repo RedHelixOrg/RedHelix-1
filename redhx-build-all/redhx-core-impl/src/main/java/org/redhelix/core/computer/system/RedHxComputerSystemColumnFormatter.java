@@ -72,6 +72,7 @@ public final class RedHxComputerSystemColumnFormatter
     public void print(RedHxComputerSystem computerSystem,
                       PrintStream streamOut)
     {
+        super.clearRows();
         switch (super.getOutputOrder())
         {
             case ALPHA:
