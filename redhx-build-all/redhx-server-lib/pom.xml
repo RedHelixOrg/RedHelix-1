@@ -7,15 +7,36 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
     <artifactId>redhx-server-lib</artifactId>
+    
+    <properties>
+        <javax.version>2.5</javax.version>
+        <odata.version>4.0.0-beta-03</odata.version>
+        <slf4j.version>1.7.7</slf4j.version>
+         <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    
     <packaging>jar</packaging>
+
+    
+    
     <dependencies>
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${javax.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>redhx-core-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.redhelix.core.impl</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>redhx-core-impl</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
@@ -23,33 +44,39 @@
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-commons-core</artifactId>
-            <version>4.0.0-beta-03</version>
+            <version>${odata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-commons-api</artifactId>
-            <version>4.0.0-beta-03</version>
+            <version>${odata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-client-core</artifactId>
-            <version>4.0.0-beta-03</version>
+            <version>${odata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-client-api</artifactId>
-            <version>4.0.0-beta-03</version>
+            <version>${odata.version}</version>
+        </dependency>
+      
+        <dependency>
+            <groupId>org.apache.olingo</groupId>
+            <artifactId>odata-server-api</artifactId>
+            <version>${odata.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.olingo</groupId>
+            <artifactId>odata-server-core</artifactId>
+            <version>${odata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
-        
     </dependencies>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
 </project>
