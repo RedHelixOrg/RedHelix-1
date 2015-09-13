@@ -6,7 +6,9 @@ are only two lines that do the heavy lifting of reading the Chassis information.
 
 1. [RedHxChassisPathCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L112)
 2. [RedHxChassisCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L117)
+
 and to read all the Redfish Computer Systems
+
 1. [RedHxComputerSystemCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L125)
 
 The rest of the source code is error checking. The output from this program, chassis information only, when used with the DMTF mockup files is

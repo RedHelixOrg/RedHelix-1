@@ -46,15 +46,18 @@ The output of the test program RedHelixClientReport when used with Redfish mocku
 
 ## Building
 From the dir RedHelix-1/redhx-build-all run the command 
-1. mvn package 
+
+mvn package 
 
 ## Running
 After building the software in can run with the Redfish mock server using the command. From the dir redhx-build-all run:
+
 1. java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar ./redhx-server-util/target/redhx-server-util-0.1-SNAPSHOT.jar
 If the executable throws and exception indicating a premature End of File when parsing the JSON messages and a single line to the Redfish file server.js.
 The line to be inserted at line number 104 is
 
 line 103: data = JSON.stringify(data, null, '  ');
+
 line 104:  data = data +"  "; // a hack to so that the last char is read by function head() that is below.
 
 

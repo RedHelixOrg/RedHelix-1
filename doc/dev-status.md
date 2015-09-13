@@ -9,8 +9,10 @@ to reboot it.  The software is undergoing massive changes. It's pre-alpa and not
 The old maven project redhx-app-server-db has been removed. The Java main method for running Redhelix was in RedHxServerDb and it has moved
 to the maven project redhx-server-util as RedHelixClientReport.java. There is more error checking.
 In preparation for the web interface two new java projects have been introduced.
+
 1. redhx-server-db The main RESTfull threads that read Redfish JSON messages and use AngularJS to communicate with web browsers.
 2. redhx-server-lib This is where all the JSON readers of the Redfish live.
+
 As a result of these changes a new git up brach for version 0.2 has been made.
 
 
