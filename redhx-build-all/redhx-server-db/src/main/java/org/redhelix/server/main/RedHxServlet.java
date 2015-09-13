@@ -139,12 +139,12 @@ public class RedHxServlet
             handler.process(req,
                             resp);
         }
-        catch (RuntimeException e)
+        catch (RuntimeException ex)
         {
-            LOG.error("Server Error occurred in ExampleServlet",
-                      e);
+            LOG.error("Server Error occurred in RedHxServlet",
+                      ex);
 
-            throw new ServletException(e);
+            throw new ServletException(ex);
         }
     }
 }

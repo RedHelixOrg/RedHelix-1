@@ -44,20 +44,29 @@ public final class RedHxServiceEdmProvider
 {
 
     // Service Namespace
-    public static final String NAMESPACE = "OData.Demo";
 
-    //  EDM Container
-    public static final String CONTAINER_NAME = "Container";
-    public static final FullQualifiedName CONTAINER = new FullQualifiedName(NAMESPACE,
-                                                                            CONTAINER_NAME);
+    private static final String NAMESPACE = "OData.Demo";
 
-    //  Entity Types Names
-    public static final String ET_PRODUCT_NAME = "Product";
-    public static final FullQualifiedName ET_PRODUCT_FQN = new FullQualifiedName(NAMESPACE,
-                                                                                 ET_PRODUCT_NAME);
+    // EDM Container
+    private static final String CONTAINER_NAME = "Container";
+    private static final FullQualifiedName CONTAINER = new FullQualifiedName(NAMESPACE,
+                                                                             CONTAINER_NAME);
 
-    //  Entity Set Names
-    public static final String ES_PRODUCTS_NAME = "Products";
+    // Entity Types Names and is singluar
+    private static final String ET_CHASSIS_NAME = "chassis";
+    private static final String ET_COMPUTER_SYSTEM_NAME = "computerSystem";
+
+    /*
+     *  This singluar.
+     */
+    private static final FullQualifiedName ET_CHASSIS_FQN = new FullQualifiedName(NAMESPACE,
+                                                                                  ET_CHASSIS_NAME);
+    private static final FullQualifiedName ET_COMPUTER_SYSTEM_FQN = new FullQualifiedName(NAMESPACE,
+                                                                                          ET_COMPUTER_SYSTEM_NAME);
+
+    // Entity Set Names and is plural
+    public static final String ES_CHASSISX_NAME = "chassisx";
+    public static final String ES_COMPUTER_SYSTEMS_NAME = "computerSystems";
 
     @Override
     public CsdlEntityContainer getEntityContainer()
@@ -67,7 +76,8 @@ public final class RedHxServiceEdmProvider
         // create EntitySets
         List<CsdlEntitySet> entitySets = new ArrayList<>();
 
-        entitySets.add(getEntitySet(CONTAINER, ES_PRODUCTS_NAME));
+        entitySets.add(getEntitySet(CONTAINER, ES_CHASSISX_NAME));
+        entitySets.add(getEntitySet(CONTAINER, ES_COMPUTER_SYSTEMS_NAME));
 
         // create EntityContainer
         CsdlEntityContainer entityContainer = new CsdlEntityContainer();
@@ -103,12 +113,21 @@ public final class RedHxServiceEdmProvider
     {
         if (entityContainer.equals(CONTAINER))
         {
-            if (entitySetName.equals(ES_PRODUCTS_NAME))
+            if (entitySetName.equals(ES_CHASSISX_NAME))
             {
                 CsdlEntitySet entitySet = new CsdlEntitySet();
 
-                entitySet.setName(ES_PRODUCTS_NAME);
-                entitySet.setType(ET_PRODUCT_FQN);
+                entitySet.setName(ES_CHASSISX_NAME);
+                entitySet.setType(ET_CHASSIS_FQN);
+
+                return entitySet;
+            }
+            else if (entitySetName.equals(ES_COMPUTER_SYSTEMS_NAME))
+            {
+                CsdlEntitySet entitySet = new CsdlEntitySet();
+
+                entitySet.setName(ES_COMPUTER_SYSTEMS_NAME);
+                entitySet.setType(ET_COMPUTER_SYSTEM_FQN);
 
                 return entitySet;
             }
@@ -123,7 +142,7 @@ public final class RedHxServiceEdmProvider
     {
 
         // this method is called for one of the EntityTypes that are configured in the Schema
-        if (entityTypeName.equals(ET_PRODUCT_FQN))
+        if (entityTypeName.equals(ET_CHASSIS_FQN))
         {
             // create EntityType properties
             CsdlProperty id = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
@@ -139,7 +158,29 @@ public final class RedHxServiceEdmProvider
             // configure EntityType
             CsdlEntityType entityType = new CsdlEntityType();
 
-            entityType.setName(ET_PRODUCT_NAME);
+            entityType.setName(ET_CHASSIS_NAME);
+            entityType.setProperties(Arrays.asList(id, name, description));
+            entityType.setKey(Collections.singletonList(propertyRef));
+
+            return entityType;
+        }
+        else if (entityTypeName.equals(ET_COMPUTER_SYSTEM_FQN))
+        {
+            // create EntityType properties
+            CsdlProperty id = new CsdlProperty().setName("CID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+            CsdlProperty name = new CsdlProperty().setName("CName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+            CsdlProperty description
+                         = new CsdlProperty().setName("CDescription").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+
+            // create CsdlPropertyRef for Key element
+            CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+
+            propertyRef.setName("ID");
+
+            // configure EntityType
+            CsdlEntityType entityType = new CsdlEntityType();
+
+            entityType.setName(ET_COMPUTER_SYSTEM_NAME);
             entityType.setProperties(Arrays.asList(id, name, description));
             entityType.setKey(Collections.singletonList(propertyRef));
 
@@ -162,7 +203,8 @@ public final class RedHxServiceEdmProvider
         // add EntityTypes
         List<CsdlEntityType> entityTypes = new ArrayList<>();
 
-        entityTypes.add(getEntityType(ET_PRODUCT_FQN));
+        entityTypes.add(getEntityType(ET_CHASSIS_FQN));
+        entityTypes.add(getEntityType(ET_COMPUTER_SYSTEM_FQN));
         schema.setEntityTypes(entityTypes);
 
         // add EntityContainer

@@ -108,7 +108,7 @@ public final class RedHxChassisCollectionProcessor
         EntityCollection entityCollection = new EntityCollection();
 
         // check for which EdmEntitySet the data is requested
-        if (RedHxServiceEdmProvider.ES_PRODUCTS_NAME.equals(edmEntitySet.getName()))
+        if (RedHxServiceEdmProvider.ES_CHASSISX_NAME.equals(edmEntitySet.getName()))
         {
             List<Entity> entityList = entityCollection.getEntities();
 
