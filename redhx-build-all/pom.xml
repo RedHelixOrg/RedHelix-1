@@ -8,8 +8,10 @@
 
     <modules>
         <module>redhx-core-api</module>
-        <module>redhx-app-server-db</module>
         <module>redhx-core-impl</module>
+        <module>redhx-server-lib</module>
+        <module>redhx-server-db</module>
+        <module>redhx-server-util</module>
     </modules>
 
     <properties>

@@ -1,5 +1,8 @@
 #RedHelix GitHub Repository
-Date September 12, 2015, Version 0.1
+Date September 13, 2015, Version 0.1
+## Major Implementation change.
+On September 12,2015 the maven projects were renamed and the main method has moved. See  [RedHelix Development Status](./doc/dev-status.md)
+
 ##Overview
 RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
 The RedHelix server uses the Redfish specification to monitor multiple devices. It builds a in memory database representing the inventory
@@ -15,17 +18,11 @@ each server. At present the database is only in limited to what is in memory and
 From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
 
 ## Development Status
-At present, September 12, 2015 there is no hardware implementing Redfish for sale or available to RedHelix for testing. If you have Redfish capable
-hardware contact us. The current Java software
-is tested with the DMTF Redfish mockup files. This prevents any development of Redfish operations that change the state of the server, for example
-to reboot it.  The software is undergoing massive changes. It's pre-alpa and not ready to use but you can see the direction it is going.
-
-9/2/2015 HTTP reading of the Chassis messages and saving them in Java classes. 
-9/12/2015 HP has added HTTPS with Basic Authorization. See scripts  winBuild.cmd  and winRun.cmd. Thanks Dan
-9/12/2015 Added processing for Computer System JSON messages. SimpleStorage, Ethernets, Memory status is not yet added.
+1. [RedHelix Development Status](./doc/dev-status.md)
+2. [RedHelix Development Guidelines](./doc/dev-guidelines.md)
 
 ##Roadmap
-As of September 12, 2015 RedHelix is developing with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
+As of September 13, 2015 RedHelix is developing with the DMTF mockup files found in DSP2043_0.99.0. Development will proceed in this order.
 
 1. A browsers interface to RedHelixDb using AngularJs.
 2. Implement the Java threads used to monitor a single Redfish server and store the chassis information in the RedHelixDb database.
@@ -34,48 +31,36 @@ As of September 12, 2015 RedHelix is developing with the DMTF mockup files found
 ## Architecture
 RedHelix is designed to run in a single Java Virtual Machine(JVM). The connection to manage servers implementing Redfish is accomplished using
 the Apache Olingo  [Olingo](http://olingo.apache.org/doc/odata4/index.html). library for version 4 of the OData protocol. The connection to the Web Browsers will use Google's AngularJS, an implemntation of JavaScript.
-As of RedHelix 0.1 this has not been implemented.
+As of RedHelix 0.1 this has not been implemented. 
 ![RedHelix Architecture](https://rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-1.svg)
 <!-- perment cached CDN comment. https://cdn.rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-1.svg -->
-### Java package org.redhelix.core.*
-The classes in the Java package org.redhelix.core.* are immutable thread safe 
-implementations of the Redfish JSON messages. This package does not implement Java threads. As of version 0.1 there are 107 classes with and 
-the most interesting interface is org.redhelix.core.chassis.RedHxChassis. No class in org.redhelix.core.* depend on the Olingo library. 
+An overview of the architecture is found at [RedHelix Design](./doc/design.md)
 
-### Java package org.redhelix.server.*
-The classes in the Java package org.redhelix.server.* are responsible for the Java Threads that interface with the Redfish enabled servers,
-the in memory database and the AngularJS web clients. For this version 0.1 there is nothing exciting in this package. The Java Main method is called
-and then it exits. Take a look at the source code and the output of reading the chassis using [RedHelixServerDb](./doc/dmtf-mockup/mockup.md).
-
-## Architecture Risk
-While desirable to scale the single JVM to handle more than 40,000 servers as comparable IPMI Java implementation it is not clear if 
-HTTP and Olingo can scale. The issue that needs to be addressed is once a HTTP Get is sent by RedHelix does a Java Thread then block waiting on the TCP 
-socket for a response. If so, the JVM will run out of Threads. Under IPMI this was not an issue due to the connectionless nature of UDP
-10 threads could handle in all incomming traffic from the 40,000+ servers.
 
 ## OEM Extensions
 Redfish allows OEM extensions to the Chassis, Computer System, etc. It's not clear how these will be implemented. If you are implementing an
 OEM extension, even if it is not yet working, please contact me. I'll try and build a framework to allow it. 
 
 ## RedHelix Mockup
-The output of the test program RedHelixServerDb when used with Redfish mockup file can be viewed  [How to read](./doc/dmtf-mockup/mockup.md) 
+The output of the test program RedHelixClientReport when used with Redfish mockup file can be viewed  [How to read](./doc/dmtf-mockup/mockup.md) 
 
 ## Building
 From the dir RedHelix-1/redhx-build-all run the command 
-1. mvn package 
+
+mvn package 
 
 ## Running
-After building the software in can run with the Redfish mock server using the command.
-1. java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar ./redhx-app-server-db/target/redhx-app-server-db-0.1-SNAPSHOT.jar
+After building the software in can run with the Redfish mock server using the command. From the dir redhx-build-all run:
+
+1. java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar ./redhx-server-util/target/redhx-server-util-0.1-SNAPSHOT.jar
 If the executable throws and exception indicating a premature End of File when parsing the JSON messages and a single line to the Redfish file server.js.
 The line to be inserted at line number 104 is
 
 line 103: data = JSON.stringify(data, null, '  ');
+
 line 104:  data = data +"  "; // a hack to so that the last char is read by function head() that is below.
 
 
-## Other information
-1. [RedHelix Development](./doc/development.md)
-2. [RedHelix Design](./doc/design.md)
+
 
 

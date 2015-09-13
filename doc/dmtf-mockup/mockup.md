@@ -4,8 +4,12 @@ and display only the Redfish Chassis information. The Redhelix is compact.
 Here is the source for reading all the chassis information from a Redfish server. The majority of the source code is error checking and there
 are only two lines that do the heavy lifting of reading the Chassis information. In the source code
 
-1. [RedHxChassisPathCollectionReader.java](../../redhx-app-server-db/src/main/java/org/redhelix/server/main/RedMatrixServerDb.java#L84)
-2. [RedHxChassisCollectionReader.java](../../redhx-app-server-db/src/main/java/org/redhelix/server/main/RedMatrixServerDb.java#L89)
+1. [RedHxChassisPathCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L112)
+2. [RedHxChassisCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L117)
+
+and to read all the Redfish Computer Systems
+
+1. [RedHxComputerSystemCollectionReader.java](../../redhx-server-util/src/main/java/org/redhelix/server/main/RedHelixClientReport.java#L125)
 
 The rest of the source code is error checking. The output from this program, chassis information only, when used with the DMTF mockup files is
 
