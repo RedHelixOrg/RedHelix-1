@@ -17,23 +17,24 @@
 package org.redhelix.server.main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.apache.olingo.commons.api.ODataException;
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlAbstractEdmProvider;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainer;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainerInfo;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
-import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
-import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
+import org.redhelix.server.main.chassis.RedHxChassisServiceEdmProvider;
+import org.redhelix.server.main.chassis.computer.system.RedHxComputerSystemServiceEdmProvider;
+import org.redhelix.server.main.edm.RedHxEdmProvider;
 
 /**
  *
+ * Create the Entity Data Model for the RedHelix JSON messages. RedHelix entitys are added to the data model by adding them to the static
+ * list in {@link #createEdmList() }. Each entry in the liust implements the {@link  org.redhelix.server.main.edm.RedHxEdmProvider} class
+ * which is a package public class that describes each of the major services provided by RedHelix.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
@@ -43,30 +44,15 @@ public final class RedHxServiceEdmProvider
         extends CsdlAbstractEdmProvider
 {
 
-    // Service Namespace
-
-    private static final String NAMESPACE = "OData.Demo";
-
     // EDM Container
     private static final String CONTAINER_NAME = "Container";
-    private static final FullQualifiedName CONTAINER = new FullQualifiedName(NAMESPACE,
+    private static final FullQualifiedName CONTAINER = new FullQualifiedName(RedHxEdmProvider.NAMESPACE,
                                                                              CONTAINER_NAME);
+    private static final List<RedHxEdmProvider> EDM_PROVIDER_LIST = createEdmList();
 
-    // Entity Types Names and is singluar
-    private static final String ET_CHASSIS_NAME = "chassis";
-    private static final String ET_COMPUTER_SYSTEM_NAME = "computerSystem";
-
-    /*
-     *  This singluar.
-     */
-    private static final FullQualifiedName ET_CHASSIS_FQN = new FullQualifiedName(NAMESPACE,
-                                                                                  ET_CHASSIS_NAME);
-    private static final FullQualifiedName ET_COMPUTER_SYSTEM_FQN = new FullQualifiedName(NAMESPACE,
-                                                                                          ET_COMPUTER_SYSTEM_NAME);
-
-    // Entity Set Names and is plural
-    public static final String ES_CHASSISX_NAME = "chassisx";
-    public static final String ES_COMPUTER_SYSTEMS_NAME = "computerSystems";
+    public RedHxServiceEdmProvider()
+    {
+    }
 
     @Override
     public CsdlEntityContainer getEntityContainer()
@@ -76,8 +62,10 @@ public final class RedHxServiceEdmProvider
         // create EntitySets
         List<CsdlEntitySet> entitySets = new ArrayList<>();
 
-        entitySets.add(getEntitySet(CONTAINER, ES_CHASSISX_NAME));
-        entitySets.add(getEntitySet(CONTAINER, ES_COMPUTER_SYSTEMS_NAME));
+        for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
+        {
+            entitySets.add(edmProvider.getEntitySet());
+        }
 
         // create EntityContainer
         CsdlEntityContainer entityContainer = new CsdlEntityContainer();
@@ -113,23 +101,17 @@ public final class RedHxServiceEdmProvider
     {
         if (entityContainer.equals(CONTAINER))
         {
-            if (entitySetName.equals(ES_CHASSISX_NAME))
+            for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
             {
-                CsdlEntitySet entitySet = new CsdlEntitySet();
+                if (entitySetName.equals(edmProvider.getEntitySetName()))
+                {
+                    CsdlEntitySet entitySet = new CsdlEntitySet();
 
-                entitySet.setName(ES_CHASSISX_NAME);
-                entitySet.setType(ET_CHASSIS_FQN);
+                    entitySet.setName(edmProvider.getEntitySetName());
+                    entitySet.setType(edmProvider.getFqdName());
 
-                return entitySet;
-            }
-            else if (entitySetName.equals(ES_COMPUTER_SYSTEMS_NAME))
-            {
-                CsdlEntitySet entitySet = new CsdlEntitySet();
-
-                entitySet.setName(ES_COMPUTER_SYSTEMS_NAME);
-                entitySet.setType(ET_COMPUTER_SYSTEM_FQN);
-
-                return entitySet;
+                    break;
+                }
             }
         }
 
@@ -140,54 +122,19 @@ public final class RedHxServiceEdmProvider
     public CsdlEntityType getEntityType(FullQualifiedName entityTypeName)
             throws ODataException
     {
+        CsdlEntityType entityType = null;
 
-        // this method is called for one of the EntityTypes that are configured in the Schema
-        if (entityTypeName.equals(ET_CHASSIS_FQN))
+        for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
         {
-            // create EntityType properties
-            CsdlProperty id = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-            CsdlProperty name = new CsdlProperty().setName("Name").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-            CsdlProperty description
-                         = new CsdlProperty().setName("Description").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+            if (entityTypeName.equals(edmProvider.getFqdName()))
+            {
+                entityType = edmProvider.getEntityType();
 
-            // create CsdlPropertyRef for Key element
-            CsdlPropertyRef propertyRef = new CsdlPropertyRef();
-
-            propertyRef.setName("ID");
-
-            // configure EntityType
-            CsdlEntityType entityType = new CsdlEntityType();
-
-            entityType.setName(ET_CHASSIS_NAME);
-            entityType.setProperties(Arrays.asList(id, name, description));
-            entityType.setKey(Collections.singletonList(propertyRef));
-
-            return entityType;
-        }
-        else if (entityTypeName.equals(ET_COMPUTER_SYSTEM_FQN))
-        {
-            // create EntityType properties
-            CsdlProperty id = new CsdlProperty().setName("CID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-            CsdlProperty name = new CsdlProperty().setName("CName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-            CsdlProperty description
-                         = new CsdlProperty().setName("CDescription").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-
-            // create CsdlPropertyRef for Key element
-            CsdlPropertyRef propertyRef = new CsdlPropertyRef();
-
-            propertyRef.setName("ID");
-
-            // configure EntityType
-            CsdlEntityType entityType = new CsdlEntityType();
-
-            entityType.setName(ET_COMPUTER_SYSTEM_NAME);
-            entityType.setProperties(Arrays.asList(id, name, description));
-            entityType.setKey(Collections.singletonList(propertyRef));
-
-            return entityType;
+                break;
+            }
         }
 
-        return null;
+        return entityType;
     }
 
     @Override
@@ -198,13 +145,16 @@ public final class RedHxServiceEdmProvider
         // create Schema
         CsdlSchema schema = new CsdlSchema();
 
-        schema.setNamespace(NAMESPACE);
+        schema.setNamespace(RedHxEdmProvider.NAMESPACE);
 
         // add EntityTypes
         List<CsdlEntityType> entityTypes = new ArrayList<>();
 
-        entityTypes.add(getEntityType(ET_CHASSIS_FQN));
-        entityTypes.add(getEntityType(ET_COMPUTER_SYSTEM_FQN));
+        for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
+        {
+            entityTypes.add(edmProvider.getEntityType());
+        }
+
         schema.setEntityTypes(entityTypes);
 
         // add EntityContainer
@@ -216,5 +166,15 @@ public final class RedHxServiceEdmProvider
         schemas.add(schema);
 
         return schemas;
+    }
+
+    private static List<RedHxEdmProvider> createEdmList()
+    {
+        List<RedHxEdmProvider> list = new ArrayList<>();
+
+        list.add(new RedHxChassisServiceEdmProvider());
+        list.add(new RedHxComputerSystemServiceEdmProvider());
+
+        return list;
     }
 }

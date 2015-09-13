@@ -41,7 +41,6 @@ import org.apache.olingo.server.api.serializer.SerializerResult;
 import org.apache.olingo.server.api.uri.UriInfo;
 import org.apache.olingo.server.api.uri.UriResource;
 import org.apache.olingo.server.api.uri.UriResourceEntitySet;
-import org.redhelix.server.main.RedHxServiceEdmProvider;
 
 /**
  *
@@ -108,7 +107,7 @@ public final class RedHxChassisCollectionProcessor
         EntityCollection entityCollection = new EntityCollection();
 
         // check for which EdmEntitySet the data is requested
-        if (RedHxServiceEdmProvider.ES_CHASSISX_NAME.equals(edmEntitySet.getName()))
+        if (RedHxChassisServiceEdmProvider.ES_CHASSISX_NAME.equals(edmEntitySet.getName()))
         {
             List<Entity> entityList = entityCollection.getEntities();
 
