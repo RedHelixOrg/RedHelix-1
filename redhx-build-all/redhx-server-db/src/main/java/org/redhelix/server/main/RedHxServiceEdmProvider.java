@@ -44,7 +44,6 @@ public final class RedHxServiceEdmProvider
 {
 
     // Service Namespace
-
     public static final String NAMESPACE = "OData.Demo";
 
     //  EDM Container
@@ -66,7 +65,7 @@ public final class RedHxServiceEdmProvider
     {
 
         // create EntitySets
-        List<CsdlEntitySet> entitySets = new ArrayList<CsdlEntitySet>();
+        List<CsdlEntitySet> entitySets = new ArrayList<>();
 
         entitySets.add(getEntitySet(CONTAINER, ES_PRODUCTS_NAME));
 
@@ -84,7 +83,7 @@ public final class RedHxServiceEdmProvider
             throws ODataException
     {
 
-        // This method is invoked when displaying the Service Document at e.g. http://localhost:8080/DemoService/DemoService.svc
+        // This method is invoked when displaying the Service Document at e.g. http://localhost:8080/RedHelix.svc/
         if ((entityContainerName == null) || entityContainerName.equals(CONTAINER))
         {
             CsdlEntityContainerInfo entityContainerInfo = new CsdlEntityContainerInfo();

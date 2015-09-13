@@ -17,7 +17,6 @@
 package org.redhelix.server.main;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,21 +32,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author bruningh
+ * @author Hank Bruning
  */
-//@WebServlet(
-//        name = "RedHxDemoServlet",
-//        urlPatterns =
-//        {
-//            "/RedHxDemoServlet"
-//        }
-//)
-public class RedHxDemoServlet
+public class RedHxServlet
         extends HttpServlet
 {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(RedHxDemoServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RedHxServlet.class);
 
     /**
      * Returns a short description of the servlet.
@@ -57,7 +49,7 @@ public class RedHxDemoServlet
     @Override
     public String getServletInfo()
     {
-        return "Short description";
+        return "RedHelix OData v4 service";
     }
 
     /**
@@ -68,34 +60,33 @@ public class RedHxDemoServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException,
-                   IOException
-    {
-        processRequest(request,
-                       response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
-            throws ServletException,
-                   IOException
-    {
-        processRequest(request,
-                       response);
-    }
-
+//    @Override
+//    protected void doGet(HttpServletRequest request,
+//                         HttpServletResponse response)
+//            throws ServletException,
+//                   IOException
+//    {
+//        processRequest(request,
+//                       response);
+//    }
+//
+//    /**
+//     * Handles the HTTP <code>POST</code> method.
+//     *
+//     * @param request servlet request
+//     * @param response servlet response
+//     * @throws ServletException if a servlet-specific error occurs
+//     * @throws IOException if an I/O error occurs
+//     */
+//    @Override
+//    protected void doPost(HttpServletRequest request,
+//                          HttpServletResponse response)
+//            throws ServletException,
+//                   IOException
+//    {
+//        processRequest(request,
+//                       response);
+//    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -104,30 +95,29 @@ public class RedHxDemoServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request,
-                                  HttpServletResponse response)
-            throws ServletException,
-                   IOException
-    {
-        response.setContentType("text/html;charset=UTF-8");
-
-        try (PrintWriter out = response.getWriter())
-        {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RedHxDemoServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RedHxDemoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-
-        System.out.println("HFB5: processing request.");
-    }
-
+//    protected void processRequest(HttpServletRequest request,
+//                                  HttpServletResponse response)
+//            throws ServletException,
+//                   IOException
+//    {
+//        response.setContentType("text/html;charset=UTF-8");
+//
+//        try (PrintWriter out = response.getWriter())
+//        {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet RedHxDemoServlet</title>");
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet RedHxDemoServlet at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+//
+//        System.out.println("HFB5: processing request.");
+//    }
     @Override
     protected void service(final HttpServletRequest req,
                            final HttpServletResponse resp)
@@ -135,7 +125,6 @@ public class RedHxDemoServlet
                    IOException
     {
 
-        System.out.println("HFB5: in service.");
         try
         {
             // create odata handler and configure it with CsdlEdmProvider and Processor
