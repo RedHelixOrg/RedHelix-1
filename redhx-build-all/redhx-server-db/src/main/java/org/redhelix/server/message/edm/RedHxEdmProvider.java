@@ -12,7 +12,7 @@
  * the License
  * 
  */
-package org.redhelix.server.main.edm;
+package org.redhelix.server.message.edm;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;

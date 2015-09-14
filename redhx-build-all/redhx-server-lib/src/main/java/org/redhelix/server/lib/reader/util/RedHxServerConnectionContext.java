@@ -29,9 +29,14 @@ import org.redhelix.core.util.RedHxRedfishProtocolVersionEnum;
 import org.redhelix.core.util.RedHxUriPath;
 
 /**
- * the communication parameters used to contact a single Redfish OData provider.
- *
- *
+ * the communication parameters used to contact a single Redfish OData provider. After this class
+ * has been created the next method to call is {@link #openConnection() }.
+ * <p>
+ * To create this class the version of the Redfish protocol must be specified. This implies prior
+ * knowledge of the Redfish server before a TCP connection is opened to it.. The Redfish
+ * specification v1.0, Section 8.4.3 M-SEARCH Response mandates that the reply to the discovery
+ * message must include the Redfish version supported by the server.
+ * </p>
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
@@ -40,57 +45,149 @@ import org.redhelix.core.util.RedHxUriPath;
 public final class RedHxServerConnectionContext {
 
   private final ODataClient client;
+  private final String hostName;
+  private final RedHxTcpProtocolTypeEnum httpProtocol;
+  private final String password;
   private final RedHxRedfishProtocolVersionEnum redfishProtocolVersion;
+  private final int tcpPortNumber;
+  private final String userName;
   private RedHxServiceRootLocator serviceRootLocator;
 
-  public RedHxServerConnectionContext(
-      final RedHxRedfishProtocolVersionEnum redfishProtocolVersion) {
+  /**
+   * Create the context for the connection to the Redfish server with basic HTTP authentication.
+   * Creating the class does not require a free TCP port number on the local host.
+   *
+   * @param redfishProtocolVersion the Redfish protocol version to used. See this class's
+   *        description for the reason this shall not be null.
+   * @param httpProtocol the type of TCP connection to use. This shall not be null.
+   * @param hostName the hostname of the Redfish server. This shall not be null.
+   * @param tcpPortNumber the TCP port number in the hostName argument to connect to.
+   * @param userName the user name used for HTTPs basic authorization. This shall not be null.
+   * @param password the password for the userName for HTTPs basic authorization. This shall not be
+   *        null.
+   * @throws RedHxHttpResponseException
+   * @throws URISyntaxException
+   */
+  public RedHxServerConnectionContext(final RedHxRedfishProtocolVersionEnum redfishProtocolVersion,
+      final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName, final int tcpPortNumber,
+      final String userName, final String password) {
     this.redfishProtocolVersion = redfishProtocolVersion;
+    this.httpProtocol = httpProtocol;
+    this.hostName = hostName;
+    this.tcpPortNumber = tcpPortNumber;
+    this.userName = userName;
+    this.password = password;
+
+    //
+    this.client = ODataClientFactory.getClient();
+    this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
+  }
+
+  /**
+   * Create the context for the connection to the Redfish server with no HTTP authentication.
+   * Creating the class does not require a free TCP port number on the local host.
+   *
+   * @param redfishProtocolVersion the Redfish protocol version to used. See this class's
+   *        description for the reason this shall not be null.
+   * @param httpProtocol the type of TCP connection to use. This shall not be null.
+   * @param hostName the hostname of the Redfish server. This shall not be null.
+   * @param tcpPortNumber the TCP port number in the hostName argument to connect to.
+   */
+  public RedHxServerConnectionContext(final RedHxRedfishProtocolVersionEnum redfishProtocolVersion,
+      final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName, final int tcpPortNumber) {
+    this.redfishProtocolVersion = redfishProtocolVersion;
+    this.httpProtocol = httpProtocol;
+    this.hostName = hostName;
+    this.tcpPortNumber = tcpPortNumber;
+    this.userName = null;
+    this.password = null;
+
+    //
     this.client = ODataClientFactory.getClient();
     this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
   }
 
   private RedHxServerConnectionContext() {
     this.redfishProtocolVersion = null;
+    this.httpProtocol = null;
+    this.hostName = null;
+    this.tcpPortNumber = -1;
+    this.userName = null;
+    this.password = null;
+
+    //
     this.client = null;
+    this.serviceRootLocator = null;
   }
 
-  private ODataEntityRequest<ClientEntity> RedHxServerSetAuth(
-      ODataEntityRequest<ClientEntity> req) {
-    String username = System.getProperty("param_username");
-    String password = System.getProperty("param_password");
-    String authorization = "Basic ";
-    authorization += new String(Base64.encodeBase64((username + ":" + password).getBytes()));
-    req.addCustomHeader("Authorization", authorization);
-
-    return req;
-  }
-
+  /**
+   * get an OData entity request for a Redfish Chassis. The user name an password created when the
+   * connection was opened will be used.
+   *
+   * @return
+   */
   public ODataEntityRequest<ClientEntity> getChassisEntityRequest() {
     URI chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
     ODataEntityRequest<ClientEntity> req =
         client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
 
-    return RedHxServerSetAuth(req);
+    if (userName != null) {
+      req = setServerAuth(req);
+    }
+
+    return req;
   }
 
+  /**
+   * get an OData entity request for a Redfish resource. The user name an password created when the
+   * connection was opened will be used.
+   *
+   * @param pathToResource
+   * @return
+   * @throws URISyntaxException
+   */
   public ODataEntityRequest<ClientEntity> getEntityRequest(RedHxUriPath pathToResource)
       throws URISyntaxException {
     URI myUri = serviceRootLocator.getUri(pathToResource.getValue());
     ODataEntityRequest<ClientEntity> req =
         client.getRetrieveRequestFactory().getEntityRequest(myUri);
 
-    return RedHxServerSetAuth(req);
+    if (userName != null) {
+      req = setServerAuth(req);
+    }
+
+    return req;
   }
 
   public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion() {
     return redfishProtocolVersion;
   }
 
-  public void openConnection(final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName,
-      final int tcpPortNumber, final String servicePrefix)
-          throws URISyntaxException, RedHxHttpResponseException {
+  /**
+   * open a connection to a Redfish server. The Redfish specification does not require HTTP
+   * authentication or authorization when it is created so that the top level services, Chassis,
+   * Computer System, etc can be validated that they are present.
+   *
+   * @throws URISyntaxException
+   * @throws RedHxHttpResponseException
+   */
+  public void openConnection() throws URISyntaxException, RedHxHttpResponseException {
     serviceRootLocator = ServiceRootReader.getServiceRootLocator(client, httpProtocol, hostName,
-        tcpPortNumber, servicePrefix, RedHxRedfishProtocolVersionEnum.VERSION_1);
+        tcpPortNumber, RedHxRedfishProtocolVersionEnum.VERSION_1);
+  }
+
+  /**
+   * Add to the HTTP request basic server authorization.
+   *
+   * @param req the request to add.
+   * @return
+   */
+  private ODataEntityRequest<ClientEntity> setServerAuth(ODataEntityRequest<ClientEntity> req) {
+    String authorization = "Basic ";
+
+    authorization += new String(Base64.encodeBase64((userName + ":" + password).getBytes()));
+    req.addCustomHeader("Authorization", authorization);
+
+    return req;
   }
 }

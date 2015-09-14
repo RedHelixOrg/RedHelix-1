@@ -1,11 +1,11 @@
 /*
  * Copyright 2015 JBlade LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -77,19 +77,16 @@ class ServiceRootReader {
    *        it uses http only.
    * @param hostName the name of the host to read from.
    * @param tcpPortNumber the TCP pprt number to read the service from.
-   * @param servicePrefix the prefix that appears in the URI immedialy after the TCP port number and
-   *        before the string redfish. This may be null.
-   *
    * @param redfishProtocolVersion the redfish protocol version.
    * @return the locator containing all Redfish services available on the host:tcp port number
    * @throws URISyntaxException
    */
   public static RedHxServiceRootLocator getServiceRootLocator(final ODataClient client,
       final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName, final int tcpPortNumber,
-      final String servicePrefix, final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
+      final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
           throws URISyntaxException, RedHxHttpResponseException {
-    RedHxServiceRootId serviceRoot = new RedHxServiceRootIdImpl(httpProtocol, hostName,
-        tcpPortNumber, servicePrefix, redfishProtocolVersion);
+    RedHxServiceRootId serviceRoot =
+        new RedHxServiceRootIdImpl(httpProtocol, hostName, tcpPortNumber, redfishProtocolVersion);
     final String serviceRootStr = serviceRoot.getServiceRootString();
     final URI redfishEntitySetURI =
         client.newURIBuilder(serviceRootStr).appendEntitySetSegment(ENTITY_SET_NAME).build();
@@ -99,7 +96,6 @@ class ServiceRootReader {
 
     final ODataRetrieveResponse<ClientEntitySet> serviceRootResponse =
         client.getRetrieveRequestFactory().getEntitySetRequest(redfishEntitySetURI).execute();
-
     final List<ClientEntity> list;
     final String tcpProtocolStr;
 
