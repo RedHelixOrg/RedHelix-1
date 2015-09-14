@@ -67,14 +67,15 @@ public final class RedHxChassisCollectionProcessor implements EntityCollectionPr
     // parsed service URI)
     List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
     UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0); // in
-                                                                                             // our
-                                                                                             // example,
-                                                                                             // the
-                                                                                             // first
-                                                                                             // segment
-                                                                                             // is
-                                                                                             // the
-                                                                                             // EntitySet
+
+    // our
+    // example,
+    // the
+    // first
+    // segment
+    // is
+    // the
+    // EntitySet
     EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
 
     // 2nd: fetch the data from backend for this requested EntitySetName

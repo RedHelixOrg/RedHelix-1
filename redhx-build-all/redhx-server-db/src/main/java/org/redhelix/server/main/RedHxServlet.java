@@ -48,9 +48,13 @@ public class RedHxServlet extends HttpServlet {
   }
 
   @Override
+  public void init() throws ServletException {
+    super.init();
+  }
+
+  @Override
   protected void service(final HttpServletRequest req, final HttpServletResponse resp)
       throws ServletException, IOException {
-
     try {
       // create odata handler and configure it with CsdlEdmProvider and Processor
       OData odata = OData.newInstance();
