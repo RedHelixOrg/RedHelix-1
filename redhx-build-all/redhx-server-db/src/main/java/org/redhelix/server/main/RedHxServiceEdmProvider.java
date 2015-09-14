@@ -80,18 +80,17 @@ public final class RedHxServiceEdmProvider
     public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
             throws ODataException
     {
-
+        CsdlEntityContainerInfo entityContainerInfo = null;
         // This method is invoked when displaying the Service Document at e.g. http://localhost:8080/RedHelix.svc/
         if ((entityContainerName == null) || entityContainerName.equals(CONTAINER))
         {
-            CsdlEntityContainerInfo entityContainerInfo = new CsdlEntityContainerInfo();
+            entityContainerInfo = new CsdlEntityContainerInfo();
 
             entityContainerInfo.setContainerName(CONTAINER);
 
-            return entityContainerInfo;
         }
 
-        return null;
+        return entityContainerInfo;
     }
 
     @Override
@@ -99,13 +98,17 @@ public final class RedHxServiceEdmProvider
                                       String entitySetName)
             throws ODataException
     {
+        CsdlEntitySet entitySet = null;
+
         if (entityContainer.equals(CONTAINER))
         {
+
+            System.out.println("HFB5: looking for " + entityContainer + ", entitySetName=" + entitySetName);
             for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
             {
                 if (entitySetName.equals(edmProvider.getEntitySetName()))
                 {
-                    CsdlEntitySet entitySet = new CsdlEntitySet();
+                    entitySet = new CsdlEntitySet();
 
                     entitySet.setName(edmProvider.getEntitySetName());
                     entitySet.setType(edmProvider.getFqdName());
@@ -115,7 +118,7 @@ public final class RedHxServiceEdmProvider
             }
         }
 
-        return null;
+        return entitySet;
     }
 
     @Override

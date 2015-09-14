@@ -39,7 +39,6 @@ public final class RedHxChassisServiceEdmProvider
 {
 
     // Entity Types Names and is singluar
-
     private static final String ET_CHASSIS_NAME = "chassis";
 
     /*
@@ -58,7 +57,6 @@ public final class RedHxChassisServiceEdmProvider
     @Override
     public CsdlEntityType getEntityType()
     {
-
         // create EntityType properties
         CsdlProperty id = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
         CsdlProperty name = new CsdlProperty().setName("Name").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
