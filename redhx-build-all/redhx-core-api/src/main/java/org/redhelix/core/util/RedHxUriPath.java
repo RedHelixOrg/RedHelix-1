@@ -11,9 +11,6 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
  */
-
-
-
 package org.redhelix.core.util;
 
 import java.util.List;
@@ -28,12 +25,13 @@ import java.util.List;
 public interface RedHxUriPath
         extends RedHxStringProperty
 {
+
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 250;    // arbitrary
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 250;    // arbitrary
 
-    public static String getPathListAsString( List<RedHxUriPath> list )
+    public static String getPathListAsString(List<RedHxUriPath> list)
     {
         StringBuilder sb = new StringBuilder();
 

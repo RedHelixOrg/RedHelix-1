@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet>
+        <servlet-name>RedHxServlet</servlet-name>
+        <servlet-class>org.redhelix.server.main.RedHxServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedHxServlet</servlet-name>
+        <url-pattern>/RedHelix.svc/v1/*</url-pattern> <!-- the v1 is the protocol version. Also found as the RedHxRdbProtocolVersionEnum -->
+    </servlet-mapping>
+</web-app>

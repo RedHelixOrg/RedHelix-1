@@ -6,7 +6,7 @@
         <artifactId>redhx-build-all</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.redhelix.core.impl</groupId>
+    <groupId>org.redhelix</groupId>
     <artifactId>redhx-core-impl</artifactId>
     <packaging>jar</packaging>
     <build>
