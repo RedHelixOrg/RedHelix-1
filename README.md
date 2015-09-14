@@ -12,7 +12,8 @@ and status of the devices and provides a Restfull API to query the history of th
 All RedHelix software is under the Apache 2.0 license.
 
 ## Redfish vs. RedHelix 
-While both Redfish and RedHelix manage servers using a RESTful interface they are very [Different](./doc/redfish-vs-redhelix.md) implementations. 
+While both Redfish and RedHelix manage servers using a RESTful interface they differ on the Graphics User Interface, RESTful protocol and how
+concisely hardware is defined. For more detail look at [Redfish vs. RedHelix](./doc/redfish-vs-redhelix.md) 
 
 ## Development Status
 1. [RedHelix Development Status](./doc/dev-status.md)
