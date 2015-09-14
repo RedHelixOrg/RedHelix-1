@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxPowerSupplyNameImpl extends RedHxAbstractStringProperty implements
-    RedHxPowerSupplyName {
+public final class RedHxPowerSupplyNameImpl extends RedHxAbstractStringProperty
+    implements RedHxPowerSupplyName {
 
   /**
    * @param maxCharCount

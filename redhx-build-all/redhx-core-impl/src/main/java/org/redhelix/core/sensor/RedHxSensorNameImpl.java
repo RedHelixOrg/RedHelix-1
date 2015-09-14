@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxSensorNameImpl extends RedHxAbstractStringProperty implements
-    RedHxSensorName {
+public final class RedHxSensorNameImpl extends RedHxAbstractStringProperty
+    implements RedHxSensorName {
 
   public static final byte MAX_CHARACTER_COUNT = 30;
 

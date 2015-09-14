@@ -23,8 +23,8 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public final class RedHxPowerIntervalMinimumWattsImpl extends RedHxAbstractPowerWatts implements
-    RedHxPowerIntervalMinimumWatts {
+public final class RedHxPowerIntervalMinimumWattsImpl extends RedHxAbstractPowerWatts
+    implements RedHxPowerIntervalMinimumWatts {
 
   /**
    * @param wattsMajor

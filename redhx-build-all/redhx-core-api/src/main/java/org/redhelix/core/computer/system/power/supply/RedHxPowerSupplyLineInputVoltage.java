@@ -19,7 +19,7 @@ import org.redhelix.core.computer.system.power.RedHxPowerVoltageReading;
  * A voltage reading for the line supplying the power supply.
  *
  * @I <br>
- * <br>
+ *    <br>
  *
  *
  * @since RedHelix Version 0.1

@@ -20,14 +20,14 @@ package org.redhelix.core.util;
  *
  */
 public enum RedHxOperatingStateEnum {
-  ABSENT("Absent", "This function or resource is not present or not detected"), DISABLED(
-      "Disabled", "This function or resource has been disabled"), ENABLED("Enabled",
-      "This function or resource has been enabled"), INTEST("InTest",
-      "This function or resource is undergoing testing"), STANDBY_OFFLINE("StandbyOffline",
-      "This function or resource is enabled, but awaiting an external action to activate it"), STANDBY_SPARE(
-      "StandbySpare",
-      "This function or resource is part of a redundancy set and is awaiting a failover or other external action to activate it."), STARTING(
-      "Starting", "This function or resource is starting");
+  ABSENT("Absent", "This function or resource is not present or not detected"), DISABLED("Disabled",
+      "This function or resource has been disabled"), ENABLED("Enabled",
+          "This function or resource has been enabled"), INTEST("InTest",
+              "This function or resource is undergoing testing"), STANDBY_OFFLINE("StandbyOffline",
+                  "This function or resource is enabled, but awaiting an external action to activate it"), STANDBY_SPARE(
+                      "StandbySpare",
+                      "This function or resource is part of a redundancy set and is awaiting a failover or other external action to activate it."), STARTING(
+                          "Starting", "This function or resource is starting");
 
   private final String desc;
   private final String jsonKeyword;

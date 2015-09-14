@@ -27,53 +27,44 @@ import org.redhelix.core.util.RedHxUriPath;
 import org.redhelix.server.lib.reader.util.RedHxServerConnectionContext;
 
 /**
- * read a collection of links to unique computer systems on the Redfish server. This class does not have a public constructor.
+ * read a collection of links to unique computer systems on the Redfish server. This class does not
+ * have a public constructor.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  */
-public final class RedHxComputerSystemCollectionReader
-{
+public final class RedHxComputerSystemCollectionReader {
 
-    private RedHxComputerSystemCollectionReader()
-    {
-    }
+  private RedHxComputerSystemCollectionReader() {}
 
-    /**
-     * read all computer systems in a collection of chassis.
-     *
-     * @param ctx
-     * @param chassisCollection
-     * @return
-     * @throws RedHxHttpResponseException
-     * @throws URISyntaxException
-     * @throws RedHxParseException
-     */
-    public static RedHxComputerSystemCollection readPaths(RedHxServerConnectionContext ctx,
-                                                          RedHxChassisCollection chassisCollection)
-            throws RedHxHttpResponseException,
-                   URISyntaxException,
-                   RedHxParseException
-    {
-        final List<RedHxComputerSystem> list = new ArrayList<>();
+  /**
+   * read all computer systems in a collection of chassis.
+   *
+   * @param ctx
+   * @param chassisCollection
+   * @return
+   * @throws RedHxHttpResponseException
+   * @throws URISyntaxException
+   * @throws RedHxParseException
+   */
+  public static RedHxComputerSystemCollection readPaths(RedHxServerConnectionContext ctx,
+      RedHxChassisCollection chassisCollection)
+          throws RedHxHttpResponseException, URISyntaxException, RedHxParseException {
+    final List<RedHxComputerSystem> list = new ArrayList<>();
 
-        for (RedHxChassis chassis : chassisCollection)
-        {
-            for (RedHxUriPath uriPath : chassis.getComputerSystemUriPathList())
-            {
-                ComputerSystemReader reader = new ComputerSystemReader(ctx,
-                                                                       uriPath);
-                RedHxComputerSystem computer = reader.readComputerSystem();
+    for (RedHxChassis chassis : chassisCollection) {
+      for (RedHxUriPath uriPath : chassis.getComputerSystemUriPathList()) {
+        ComputerSystemReader reader = new ComputerSystemReader(ctx, uriPath);
+        RedHxComputerSystem computer = reader.readComputerSystem();
 
-                if (computer != null)
-                {
-                    list.add(computer);
-                }
-            }
+        if (computer != null) {
+          list.add(computer);
         }
-
-        RedHxComputerSystemCollection collection = new RedHxComputerSystemCollectionImpl(list);
-
-        return collection;
+      }
     }
+
+    RedHxComputerSystemCollection collection = new RedHxComputerSystemCollectionImpl(list);
+
+    return collection;
+  }
 }

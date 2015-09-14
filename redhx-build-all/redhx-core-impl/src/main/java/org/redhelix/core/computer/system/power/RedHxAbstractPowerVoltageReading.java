@@ -66,15 +66,15 @@ public abstract class RedHxAbstractPowerVoltageReading implements RedHxPowerVolt
     }
 
     if ((voltageMajor == MAX_VOLTAGE_MAJOR_READING) && (voltageMinor > 0)) {
-      throw new IllegalArgumentException("Invalid argumentsr. The voltage can not be more than "
-          + MAX_VOLTAGE_MAJOR_READING + ".0 volts. It was " + voltageMajor + "." + voltageMinor
-          + " volts.");
+      throw new IllegalArgumentException(
+          "Invalid argumentsr. The voltage can not be more than " + MAX_VOLTAGE_MAJOR_READING
+              + ".0 volts. It was " + voltageMajor + "." + voltageMinor + " volts.");
     }
 
     if ((voltageMajor == MIN_VOLTAGE_MAJOR_READING) && (voltageMinor > 0)) {
-      throw new IllegalArgumentException("Invalid arguments. The voltage can not be less than "
-          + MIN_VOLTAGE_MAJOR_READING + ".0 volts. It was " + voltageMajor + "." + voltageMinor
-          + " volts.");
+      throw new IllegalArgumentException(
+          "Invalid arguments. The voltage can not be less than " + MIN_VOLTAGE_MAJOR_READING
+              + ".0 volts. It was " + voltageMajor + "." + voltageMinor + " volts.");
     }
 
     this.voltageMajor = voltageMajor;

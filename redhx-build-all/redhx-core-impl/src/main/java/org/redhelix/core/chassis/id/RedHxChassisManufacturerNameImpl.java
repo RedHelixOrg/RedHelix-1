@@ -22,8 +22,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisManufacturerNameImpl extends RedHxAbstractStringProperty implements
-    RedHxChassisManufacturerName {
+public final class RedHxChassisManufacturerNameImpl extends RedHxAbstractStringProperty
+    implements RedHxChassisManufacturerName {
 
   /**
    *

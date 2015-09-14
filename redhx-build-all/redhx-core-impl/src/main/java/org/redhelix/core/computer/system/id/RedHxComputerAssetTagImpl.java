@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerAssetTagImpl extends RedHxAbstractStringProperty implements
-    RedHxComputerAssetTag {
+public final class RedHxComputerAssetTagImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerAssetTag {
 
   /**
    * @param propName

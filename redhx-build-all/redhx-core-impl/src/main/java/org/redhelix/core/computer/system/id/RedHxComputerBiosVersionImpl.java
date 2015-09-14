@@ -22,8 +22,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerBiosVersionImpl extends RedHxAbstractStringProperty implements
-    RedHxComputerBiosVersion {
+public final class RedHxComputerBiosVersionImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerBiosVersion {
 
   public RedHxComputerBiosVersionImpl(String propName) {
     super(MAX_CHAR_COUNT_RED_HELIX_DEFINED, propName);

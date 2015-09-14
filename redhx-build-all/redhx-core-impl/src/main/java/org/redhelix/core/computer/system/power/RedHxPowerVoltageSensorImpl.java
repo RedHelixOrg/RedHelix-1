@@ -24,8 +24,8 @@ import org.redhelix.core.sensor.RedHxSensorNumberImpl;
  * @author Hank Bruning
  */
 @Immutable
-public class RedHxPowerVoltageSensorImpl extends RedHxAbstractSensor implements
-    RedHxPowerVoltageSensor {
+public class RedHxPowerVoltageSensorImpl extends RedHxAbstractSensor
+    implements RedHxPowerVoltageSensor {
 
   private final RedHxPowerVoltageReading voltage;
 

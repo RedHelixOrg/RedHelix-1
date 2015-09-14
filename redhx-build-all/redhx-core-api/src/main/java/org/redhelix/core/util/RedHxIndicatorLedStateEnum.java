@@ -22,9 +22,9 @@ package org.redhelix.core.util;
  *
  */
 public enum RedHxIndicatorLedStateEnum {
-  BLINKING("Blinking", "The Indicator LED is blinking."), LIT("Lit", "The Indicator LED is lit."), OFF(
-      "Off", "The Indicator LED is off."), UNKNOWN("Unknown",
-      "The state of the Indicator LED cannot be determined.");
+  BLINKING("Blinking", "The Indicator LED is blinking."), LIT("Lit",
+      "The Indicator LED is lit."), OFF("Off", "The Indicator LED is off."), UNKNOWN("Unknown",
+          "The state of the Indicator LED cannot be determined.");
 
   private final String desc;
   private final String jsonKeyword;

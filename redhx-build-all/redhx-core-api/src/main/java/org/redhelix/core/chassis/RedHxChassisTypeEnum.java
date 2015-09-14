@@ -23,23 +23,23 @@ package org.redhelix.core.chassis;
 public enum RedHxChassisTypeEnum {
   BLADE(
       "An enclosed or semi-enclosed, typically vertically-oriented, system chassis which must be plugged into a multi-system chassis to function normally"), CARD(
-      "A loose device or circuit board intended to be installed in a system or other enclosure"), CARTRIDGE(
-      "A small self-contained system intended to be plugged into a multi-system chassis"), COMPONENT(
-      "A small chassis, card, or device which contains devices for a particular subsystem or function"), DRAWER(
-      "An enclosed or semi-enclosed, typically horizontally-oriented, system chassis which may be slid into a multi-system chassis."), ENCLOSURE(
-      "A generic term for a chassis that does not fit any other description"), EXPANSION(
-      "A chassis which expands the capabilities or capacity of another chassis"), MODULE(
-      "A small, typically removable, chassis or card which contains devices for a particular subsystem or function"), OTHER(
-      "A chassis that does not fit any of these definitions"), POD(
-      "A collection of equipment racks in a large, likely transportable, container"), RACK(
-      "An equipment rack, typically a 19-inch wide freestanding unit"), RACKMOUNT(
-      "A single system chassis designed specifically for mounting in an equipment rack"), ROW(
-      "A collection of equipment racks"), SHELF(
-      "An enclosed or semi-enclosed, typically horizontally-oriented, system chassis which must be plugged into a multi-system chassis to function normally"), SIDECAR(
-      "A chassis that mates mechanically with another chassis to expand its capabilities or capacity"), SLED(
-      "An enclosed or semi-enclosed, system chassis which must be plugged into a multi-system chassis to function normally similar to a blade type chassis."), STANDALONE(
-      "A single, free-standing system, commonly called a tower or desktop chassis"), ZONE(
-      "A logical division or portion of a physical chassis that contains multiple devices or systems that cannot be physically separated");
+          "A loose device or circuit board intended to be installed in a system or other enclosure"), CARTRIDGE(
+              "A small self-contained system intended to be plugged into a multi-system chassis"), COMPONENT(
+                  "A small chassis, card, or device which contains devices for a particular subsystem or function"), DRAWER(
+                      "An enclosed or semi-enclosed, typically horizontally-oriented, system chassis which may be slid into a multi-system chassis."), ENCLOSURE(
+                          "A generic term for a chassis that does not fit any other description"), EXPANSION(
+                              "A chassis which expands the capabilities or capacity of another chassis"), MODULE(
+                                  "A small, typically removable, chassis or card which contains devices for a particular subsystem or function"), OTHER(
+                                      "A chassis that does not fit any of these definitions"), POD(
+                                          "A collection of equipment racks in a large, likely transportable, container"), RACK(
+                                              "An equipment rack, typically a 19-inch wide freestanding unit"), RACKMOUNT(
+                                                  "A single system chassis designed specifically for mounting in an equipment rack"), ROW(
+                                                      "A collection of equipment racks"), SHELF(
+                                                          "An enclosed or semi-enclosed, typically horizontally-oriented, system chassis which must be plugged into a multi-system chassis to function normally"), SIDECAR(
+                                                              "A chassis that mates mechanically with another chassis to expand its capabilities or capacity"), SLED(
+                                                                  "An enclosed or semi-enclosed, system chassis which must be plugged into a multi-system chassis to function normally similar to a blade type chassis."), STANDALONE(
+                                                                      "A single, free-standing system, commonly called a tower or desktop chassis"), ZONE(
+                                                                          "A logical division or portion of a physical chassis that contains multiple devices or systems that cannot be physically separated");
 
   private RedHxChassisTypeEnum(String desc) {}
 }

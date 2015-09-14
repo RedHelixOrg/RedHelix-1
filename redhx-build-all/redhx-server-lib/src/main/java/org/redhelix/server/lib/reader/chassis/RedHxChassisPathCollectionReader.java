@@ -92,8 +92,8 @@ public final class RedHxChassisPathCollectionReader {
 
             chassisPathSet.add(path);
           } else {
-            throw new RedHxChassisParseException("Unable to find keyword "
-                + ODATA_SINGLE_CHASSIS_KEYWORD);
+            throw new RedHxChassisParseException(
+                "Unable to find keyword " + ODATA_SINGLE_CHASSIS_KEYWORD);
           }
         } else {
           throw new RedHxChassisParseException("The JSON message did not contains a class "

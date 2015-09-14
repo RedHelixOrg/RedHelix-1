@@ -22,15 +22,17 @@ package org.redhelix.core.computer.system.boot;
  *
  */
 public enum RedHxComputerBootSourceEnum {
-  BIOS_SETUP("BiosSetup", "Boot to the BIOS Setup Utility"), CD("Cd", "Boot from the CD/DVD disc"), DIAGS(
-      "Diags", "Boot the manufacturer's Diagnostics program"), FLOPPY("Floppy",
-      "Boot from the floppy disk drive"), HDD("Hdd", "Boot from a hard drive"), NONE("None",
-      "Boot from the normal boot device"), PXE("Pxe",
-      "Boot from the Pre-Boot EXecution (PXE) environment"), UEFI_SHELL("UefiShell",
-      "Boot to the UEFI Shell"), UEFI_TARGET("UefiTarget",
-      "Boot to the UEFI Device specified in the UefiTargetBootSourceOverride property"), USB("Usb",
-      "Boot from a USB device as specified by the system BIOS"), UTILITIES("Utilities",
-      "Boot the manufacturer's Utilities program(s)");
+  BIOS_SETUP("BiosSetup", "Boot to the BIOS Setup Utility"), CD("Cd",
+      "Boot from the CD/DVD disc"), DIAGS("Diags",
+          "Boot the manufacturer's Diagnostics program"), FLOPPY("Floppy",
+              "Boot from the floppy disk drive"), HDD("Hdd", "Boot from a hard drive"), NONE("None",
+                  "Boot from the normal boot device"), PXE("Pxe",
+                      "Boot from the Pre-Boot EXecution (PXE) environment"), UEFI_SHELL("UefiShell",
+                          "Boot to the UEFI Shell"), UEFI_TARGET("UefiTarget",
+                              "Boot to the UEFI Device specified in the UefiTargetBootSourceOverride property"), USB(
+                                  "Usb",
+                                  "Boot from a USB device as specified by the system BIOS"), UTILITIES(
+                                      "Utilities", "Boot the manufacturer's Utilities program(s)");
 
   private final String desc;
   private final String jsonKeyword;

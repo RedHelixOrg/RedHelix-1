@@ -22,9 +22,10 @@ package org.redhelix.core.computer.system.power.supply;
  *
  */
 public enum RedHxPowerSupplyLineInputVoltageTypeEnum {
-  AC_HIGH_LINE("277V AC input"), AC_LOW_LINE("100-127V AC input"), AC_MID_LINE("200-240V AC input"), DC_480V(
-      "High Voltage DC input (380V)"), DC_NEG_48V("-48V DC input"), UNKNOWN(
-      "The power supply line input voltage type cannot be determined");
+  AC_HIGH_LINE("277V AC input"), AC_LOW_LINE("100-127V AC input"), AC_MID_LINE(
+      "200-240V AC input"), DC_480V("High Voltage DC input (380V)"), DC_NEG_48V(
+          "-48V DC input"), UNKNOWN(
+              "The power supply line input voltage type cannot be determined");
 
   private final String desc;
 

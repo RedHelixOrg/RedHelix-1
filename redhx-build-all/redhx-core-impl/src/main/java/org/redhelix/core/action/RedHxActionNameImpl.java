@@ -24,8 +24,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxActionNameImpl extends RedHxAbstractStringProperty implements
-    RedHxActionName {
+public final class RedHxActionNameImpl extends RedHxAbstractStringProperty
+    implements RedHxActionName {
 
   /**
    *

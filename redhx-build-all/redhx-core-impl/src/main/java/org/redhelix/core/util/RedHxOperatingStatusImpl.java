@@ -29,7 +29,8 @@ public final class RedHxOperatingStatusImpl implements RedHxOperatingStatus {
   private final RedHxOperatingStateEnum operatingState;
 
   public RedHxOperatingStatusImpl(RedHxOperatingHealthEnum operatingHealth,
-      RedHxOperatingHealthRollupEnum operatingHealthRollUp, RedHxOperatingStateEnum operatingState) {
+      RedHxOperatingHealthRollupEnum operatingHealthRollUp,
+      RedHxOperatingStateEnum operatingState) {
     this.operatingHealth = operatingHealth;
     this.operatingHealthRollUp = operatingHealthRollUp;
     this.operatingState = operatingState;

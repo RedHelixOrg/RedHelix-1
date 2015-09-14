@@ -23,8 +23,8 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public final class RedHxPowerRequestedWattsImpl extends RedHxAbstractPowerWatts implements
-    RedHxPowerRequestedWatts {
+public final class RedHxPowerRequestedWattsImpl extends RedHxAbstractPowerWatts
+    implements RedHxPowerRequestedWatts {
 
   public RedHxPowerRequestedWattsImpl(final short wattsMajor, final byte wattsMinor) {
     super(wattsMajor, wattsMinor);

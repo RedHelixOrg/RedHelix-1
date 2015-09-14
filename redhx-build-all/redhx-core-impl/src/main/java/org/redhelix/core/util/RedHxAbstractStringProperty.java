@@ -21,8 +21,8 @@ package org.redhelix.core.util;
  * @author Hank Bruning
  *
  */
-public abstract class RedHxAbstractStringProperty implements RedHxStringProperty,
-    Comparable<RedHxStringProperty> {
+public abstract class RedHxAbstractStringProperty
+    implements RedHxStringProperty, Comparable<RedHxStringProperty> {
 
   /**
    * The maximum number of characters allowed in a
