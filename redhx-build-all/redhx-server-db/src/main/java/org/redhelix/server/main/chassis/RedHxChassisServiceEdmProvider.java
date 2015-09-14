@@ -16,15 +16,13 @@
  */
 package org.redhelix.server.main.chassis;
 
+import java.util.Arrays;
+import java.util.Collections;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
-
 import org.redhelix.server.main.edm.RedHxAbstractEdmProvider;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  *
@@ -54,6 +52,11 @@ public final class RedHxChassisServiceEdmProvider
               ES_CHASSISX_NAME);
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     @Override
     public CsdlEntityType getEntityType()
     {

@@ -31,5 +31,5 @@ public interface RedHxComputerBootUefiTargetSourceOverride
     /**
      * The maximum number of characters in a UEFI boot path.
      */
-    public static final short MAX_CHAR_COUNT_REDH_DEFINED = 200;
+    public static final short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 200;
 }

@@ -32,5 +32,5 @@ public interface RedHxProcessorModel
     /**
      * The maximum number of characters allowed in a Processor Model Name.
      */
-    public static final byte MAX_CHAR_COUNT_REDH_DEFINED = 30;    // arbrartray.
+    public static final byte MAX_CHAR_COUNT_RED_HELIX_DEFINED = 30;    // arbrartray.
 }

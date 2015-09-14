@@ -31,7 +31,7 @@ public interface RedHxUriPath
     /**
      * The maximum number of characters allowed in a manufacturer name.
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 250;    // arbitrary
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 250;    // arbitrary
 
     public static String getPathListAsString( List<RedHxUriPath> list )
     {

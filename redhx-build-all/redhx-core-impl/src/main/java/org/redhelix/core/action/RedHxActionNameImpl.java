@@ -37,7 +37,7 @@ public final class RedHxActionNameImpl
      */
     public RedHxActionNameImpl( String propName )
     {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
+        super(MAX_CHAR_COUNT_RED_HELIX_DEFINED,
               propName);
     }
 }

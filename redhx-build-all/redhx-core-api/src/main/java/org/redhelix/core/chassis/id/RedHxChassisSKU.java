@@ -32,5 +32,5 @@ public interface RedHxChassisSKU
     /**
      * The maximum number of characters allowed in a SKU.
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 40;    // arbitrary
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 40;    // arbitrary
 }

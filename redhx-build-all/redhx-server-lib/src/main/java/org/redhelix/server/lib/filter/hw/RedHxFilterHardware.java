@@ -14,27 +14,34 @@
  *  limitations under the License
  *
  */
+package org.redhelix.server.lib.filter.hw;
 
-
-
-package org.redhelix.core.computer.system.id;
-
-import org.redhelix.core.util.RedHxAbstractStringProperty;
+import org.redhelix.server.lib.filter.util.RedHxAbstractFilter;
 
 /**
  *
+ * filter hardware by physical attributes.
+ * <p>
+ * The filter contains these parameters:
+ * </p>
+ * <ul>
+ * <li>siteName</li>
+ * <li>roomName</li>
+ * <li>rackName</li>
+ * <li>redfishHardwareType</li>
+ * <li>manufacturerName</li>
+ * <li>redfishSchemaVersion</li>
+ * <li>poweredBy</li>
+ * <li>cooledBy</li>
+ * <li>poweredOnState</li>
+ * <li>operatingState</li>
+ * </ul>
  *
- * @since RedHelix Version 0.1
+ * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerBiosVersionImpl
-        extends RedHxAbstractStringProperty
-        implements RedHxComputerBiosVersion
+public final class RedHxFilterHardware
+        extends RedHxAbstractFilter
 {
-    public RedHxComputerBiosVersionImpl( String propName )
-    {
-        super(MAX_CHAR_COUNT_RED_HELIX_DEFINED,
-              propName);
-    }
 }

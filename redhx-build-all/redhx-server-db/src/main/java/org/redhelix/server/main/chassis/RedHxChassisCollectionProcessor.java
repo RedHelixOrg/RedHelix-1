@@ -73,6 +73,7 @@ public final class RedHxChassisCollectionProcessor
                    SerializerException
     {
 
+        //  The filter RedHxFilterHardware will work with request.getRawQueryPath()
         // 1st we have retrieve the requested EntitySet from the uriInfo object (representation of the parsed service URI)
         List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
         UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0);    // in our example, the first segment is the EntitySet

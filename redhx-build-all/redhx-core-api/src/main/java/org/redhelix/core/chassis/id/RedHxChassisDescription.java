@@ -32,5 +32,5 @@ public interface RedHxChassisDescription
     /**
      * The maximum number of characters allowed in a chassis description
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 1000;    // arbitrary
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 1000;    // arbitrary
 }

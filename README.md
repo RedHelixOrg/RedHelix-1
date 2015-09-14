@@ -12,10 +12,7 @@ and status of the devices and provides a Restfull API to query the history of th
 All RedHelix software is under the Apache 2.0 license.
 
 ## Redfish vs. RedHelix 
-Redfish provides the HTTP protocol and JSON messages to monitor a single server. RedHelix does not. RedHelix provides a database contaning 
-multiple servers that implement Redfish and the history for
-each server. At present the database is only in limited to what is in memory and when the Java Virtual Machine shuts down all history is destroyed.
-From a user perspective RedHelix can have multiple interfaces to a browser. The first will use [AngularJS](https://angularjs.org).
+While both Redfish and RedHelix manage servers using a RESTful interface they are very [Different](./doc/redfish-vs-redhelix.md) implementations. 
 
 ## Development Status
 1. [RedHelix Development Status](./doc/dev-status.md)

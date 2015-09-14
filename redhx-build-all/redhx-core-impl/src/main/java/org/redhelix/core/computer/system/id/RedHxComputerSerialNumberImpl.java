@@ -32,7 +32,7 @@ public final class RedHxComputerSerialNumberImpl
      */
     public RedHxComputerSerialNumberImpl( String propName )
     {
-        super(MAX_CHAR_COUNT_REDH_DEFINED,
+        super(MAX_CHAR_COUNT_RED_HELIX_DEFINED,
               propName);
     }
 }

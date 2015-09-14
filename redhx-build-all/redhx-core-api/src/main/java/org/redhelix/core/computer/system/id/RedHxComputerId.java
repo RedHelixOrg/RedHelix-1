@@ -33,5 +33,5 @@ public interface RedHxComputerId
     /**
      * The maximum number of characters allowed in a chassisId.
      */
-    public final static short MAX_CHAR_COUNT_REDH_DEFINED = 50;    // arbitrary
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 50;    // arbitrary
 }

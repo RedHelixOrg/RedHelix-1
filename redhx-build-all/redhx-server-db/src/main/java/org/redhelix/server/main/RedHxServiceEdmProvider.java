@@ -103,7 +103,6 @@ public final class RedHxServiceEdmProvider
         if (entityContainer.equals(CONTAINER))
         {
 
-            System.out.println("HFB5: looking for " + entityContainer + ", entitySetName=" + entitySetName);
             for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST)
             {
                 if (entitySetName.equals(edmProvider.getEntitySetName()))
