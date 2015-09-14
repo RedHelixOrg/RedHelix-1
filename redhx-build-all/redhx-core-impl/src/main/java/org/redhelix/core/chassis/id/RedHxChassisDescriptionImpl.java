@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisDescriptionImpl extends RedHxAbstractStringProperty implements
-    RedHxChassisDescription {
+public final class RedHxChassisDescriptionImpl extends RedHxAbstractStringProperty
+    implements RedHxChassisDescription {
 
   /**
    * @param maxCharCount

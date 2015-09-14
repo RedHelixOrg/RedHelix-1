@@ -43,66 +43,63 @@ import org.redhelix.core.util.RedHxUriPath;
  *
  */
 public interface RedHxComputerSystem
-        extends RedHxComputerProcessorSummary,
-                RedHxComputerMemorySummary,
-                RedHxComputerBootProperties
-{
+    extends RedHxComputerProcessorSummary, RedHxComputerMemorySummary, RedHxComputerBootProperties {
 
-    RedHxUriPath getComputerSystemPath();
+  RedHxUriPath getComputerSystemPath();
 
-    RedHxActionGroup getActionGroup();
+  RedHxActionGroup getActionGroup();
 
-    RedHxComputerAssetTag getAssetTag();
+  RedHxComputerAssetTag getAssetTag();
 
-    RedHxComputerBiosVersion getBiosVersion();
+  RedHxComputerBiosVersion getBiosVersion();
 
-    List<RedHxUriPath> getChassisUriPathList();
+  List<RedHxUriPath> getChassisUriPathList();
 
-    RedHxOperatingStatus getComputerOperatingStatus();
+  RedHxOperatingStatus getComputerOperatingStatus();
 
-    List<RedHxUriPath> getCooledByUriPathList();
+  List<RedHxUriPath> getCooledByUriPathList();
 
-    RedHxComputerDescription getDescription();
+  RedHxComputerDescription getDescription();
 
-    /**
-     * @return the hostname
-     */
-    RedHxDnsHostName getHostname();
+  /**
+   * @return the hostname
+   */
+  RedHxDnsHostName getHostname();
 
-    RedHxComputerId getComputerId();
+  RedHxComputerId getComputerId();
 
-    /**
-     * @return the indicatorLed
-     */
-    RedHxIndicatorLedStateEnum getIndicatorLedState();
+  /**
+   * @return the indicatorLed
+   */
+  RedHxIndicatorLedStateEnum getIndicatorLedState();
 
-    RedHxUriPath getLogServicesUriPath();
+  RedHxUriPath getLogServicesUriPath();
 
-    RedHxComputerManufacturerName getManufacturerName();
+  RedHxComputerManufacturerName getManufacturerName();
 
-    RedHxComputerModelNumber getModelNumber();
+  RedHxComputerModelNumber getModelNumber();
 
-    RedHxComputerName getName();
+  RedHxComputerName getName();
 
-    RedHxComputerPartNumber getPartNumber();
+  RedHxComputerPartNumber getPartNumber();
 
-    List<RedHxUriPath> getPoweredByList();
+  List<RedHxUriPath> getPoweredByList();
 
-    RedHxComputerPowerStateEnum getPowerState();
+  RedHxComputerPowerStateEnum getPowerState();
 
-    RedHxComputerSerialNumber getSerialNumber();
+  RedHxComputerSerialNumber getSerialNumber();
 
-    RedHxComputerSKU getSku();
+  RedHxComputerSKU getSku();
 
-    List<RedHxUriPath> getSystemManagerUriPathList();
+  List<RedHxUriPath> getSystemManagerUriPathList();
 
-    /**
-     * @return the systemType
-     */
-    RedHxComputerSystemTypeEnum getSystemType();
+  /**
+   * @return the systemType
+   */
+  RedHxComputerSystemTypeEnum getSystemType();
 
-    /**
-     * @return the uuid
-     */
-    UUID getUuid();
+  /**
+   * @return the uuid
+   */
+  UUID getUuid();
 }

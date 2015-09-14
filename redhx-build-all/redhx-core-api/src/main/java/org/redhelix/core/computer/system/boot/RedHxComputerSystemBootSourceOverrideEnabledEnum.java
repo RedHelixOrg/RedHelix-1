@@ -24,11 +24,10 @@ import static org.redhelix.core.computer.system.boot.RedHxComputerSystemBootSour
  *
  */
 public enum RedHxComputerSystemBootSourceOverrideEnabledEnum {
-  CONTINUOUS(
-      "Continuous",
+  CONTINUOUS("Continuous",
       "The system will boot to the target specified in the BootSourceOverrideTarget until this property is set to Disabled."), DISABLED(
-      "Disabled", "The system will boot as normal"), ONCE("Once",
-      "ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
+          "Disabled", "The system will boot as normal"), ONCE("Once",
+              "ON ITS NEXT BOOT CYCLE, THE SYSTEM WILL BOOT (ONE TIME) TO THE BOOT SOURCE OVERRIDE TARGET.");
 
   private final String desc;
   private final String jsonKeyword;

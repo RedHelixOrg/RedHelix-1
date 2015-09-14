@@ -77,8 +77,8 @@ final class ChassisReader extends AbstractRedfishJsonReader {
    * @throws RedHxHttpResponseException
    * @throws URISyntaxException
    */
-  RedHxChassis readChassis() throws RedHxHttpResponseException, RedHxParseException,
-      URISyntaxException {
+  RedHxChassis readChassis()
+      throws RedHxHttpResponseException, RedHxParseException, URISyntaxException {
     String tmpStr;
 
     tmpStr = getOptionalProperty(JSON_KEY_CHASSIS_TYPE);
@@ -86,10 +86,10 @@ final class ChassisReader extends AbstractRedfishJsonReader {
     RedHxChassisTypeEnum chassisType = RedHxChassisBuilder.convertChassisType(tmpStr);
 
     if (chassisType == null) {
-      throw new RedHxParseException(RedHxServiceRootIdEum.CHASSIS, "The path to "
-          + super.getUriPath().getValue()
-          + " for the chassis does not contain the required field \"" + JSON_KEY_CHASSIS_TYPE
-          + "\" in the JSON message.");
+      throw new RedHxParseException(RedHxServiceRootIdEum.CHASSIS,
+          "The path to " + super.getUriPath().getValue()
+              + " for the chassis does not contain the required field \"" + JSON_KEY_CHASSIS_TYPE
+              + "\" in the JSON message.");
     }
 
     RedHxChassisBuilder builder = new RedHxChassisBuilder(chassisType);

@@ -27,41 +27,32 @@ import java.util.NoSuchElementException;
  * @author Hank Bruning
  *
  */
-final class ChassisIterator<RedHxChassis>
-        implements Iterator<RedHxChassis>
-{
+final class ChassisIterator<RedHxChassis> implements Iterator<RedHxChassis> {
 
-    private final List<RedHxChassis> list;
+  private final List<RedHxChassis> list;
 
-    ChassisIterator(final List<RedHxChassis> list)
-    {
-        this.list = new ArrayList<>();
-        this.list.addAll(list);
+  ChassisIterator(final List<RedHxChassis> list) {
+    this.list = new ArrayList<>();
+    this.list.addAll(list);
+  }
+
+  private ChassisIterator() {
+    list = null;
+  }
+
+  @Override
+  public boolean hasNext() {
+    return !list.isEmpty();
+  }
+
+  @Override
+  public RedHxChassis next() {
+    if (list.isEmpty()) {
+      throw new NoSuchElementException();
+    } else {
+      RedHxChassis chassis = list.remove(0);
+
+      return chassis;
     }
-
-    private ChassisIterator()
-    {
-        list = null;
-    }
-
-    @Override
-    public boolean hasNext()
-    {
-        return !list.isEmpty();
-    }
-
-    @Override
-    public RedHxChassis next()
-    {
-        if (list.isEmpty())
-        {
-            throw new NoSuchElementException();
-        }
-        else
-        {
-            RedHxChassis chassis = list.remove(0);
-
-            return chassis;
-        }
-    }
+  }
 }

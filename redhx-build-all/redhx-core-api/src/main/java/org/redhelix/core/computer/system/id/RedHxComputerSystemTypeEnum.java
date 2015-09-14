@@ -22,10 +22,12 @@ package org.redhelix.core.computer.system.id;
  *
  */
 public enum RedHxComputerSystemTypeEnum {
-  OS("OS", "An operating system instance"), PHYSICAL("Physical", "A computer system"), PHYSICALLY_PARTITIONED(
-      "PhysicallyPartitioned", "A hardware-based partition of a computer system"), VIRTUAL(
-      "Virtual", "A virtual machine instance running on this system"), VIRTUALLY_PARTITIONED(
-      "VirtuallyPartitioned", "A virtual or software-based partition of a computer system");
+  OS("OS", "An operating system instance"), PHYSICAL("Physical",
+      "A computer system"), PHYSICALLY_PARTITIONED("PhysicallyPartitioned",
+          "A hardware-based partition of a computer system"), VIRTUAL("Virtual",
+              "A virtual machine instance running on this system"), VIRTUALLY_PARTITIONED(
+                  "VirtuallyPartitioned",
+                  "A virtual or software-based partition of a computer system");
 
   private final String desc;
   private final String jsonKeyword;

@@ -28,99 +28,82 @@ import org.redhelix.core.util.RedHxUriPath;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerSystemCollectionImpl
-        implements RedHxComputerSystemCollection
-{
+public final class RedHxComputerSystemCollectionImpl implements RedHxComputerSystemCollection {
 
-    private final List<RedHxComputerSystem> list;
+  private final List<RedHxComputerSystem> list;
 
-    public RedHxComputerSystemCollectionImpl(final List<RedHxComputerSystem> list)
-    {
-        this.list = Collections.unmodifiableList(list);
+  public RedHxComputerSystemCollectionImpl(final List<RedHxComputerSystem> list) {
+    this.list = Collections.unmodifiableList(list);
+  }
+
+  private RedHxComputerSystemCollectionImpl() {
+    list = null;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    private RedHxComputerSystemCollectionImpl()
-    {
-        list = null;
+    if (obj == null) {
+      return false;
     }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        if (obj == null)
-        {
-            return false;
-        }
-
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final RedHxComputerSystemCollectionImpl other = (RedHxComputerSystemCollectionImpl) obj;
-
-        if (!Objects.equals(this.list, other.list))
-        {
-            return false;
-        }
-
-        return true;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
 
-    @Override
-    public RedHxComputerSystem getComputerSystem(RedHxUriPath computerSystemPath)
-    {
-        RedHxComputerSystem retVal = null;
-        for (RedHxComputerSystem cs : list)
-        {
-            if (cs.getComputerSystemPath().equals(computerSystemPath))
-            {
-                retVal = cs;
-                break;
-            }
+    final RedHxComputerSystemCollectionImpl other = (RedHxComputerSystemCollectionImpl) obj;
 
-        }
-        return retVal;
+    if (!Objects.equals(this.list, other.list)) {
+      return false;
     }
 
-    @Override
-    public int hashCode()
-    {
-        int hash = 7;
+    return true;
+  }
 
-        hash = 97 * hash + Objects.hashCode(this.list);
+  @Override
+  public RedHxComputerSystem getComputerSystem(RedHxUriPath computerSystemPath) {
+    RedHxComputerSystem retVal = null;
+    for (RedHxComputerSystem cs : list) {
+      if (cs.getComputerSystemPath().equals(computerSystemPath)) {
+        retVal = cs;
+        break;
+      }
 
-        return hash;
     }
+    return retVal;
+  }
 
-    @Override
-    public boolean isEmpty()
-    {
-        return list.isEmpty();
-    }
+  @Override
+  public int hashCode() {
+    int hash = 7;
 
-    @Override
-    public Iterator<RedHxComputerSystem> iterator()
-    {
-        ComputerSystemIterator<RedHxComputerSystem> iter = new ComputerSystemIterator<>(list);
+    hash = 97 * hash + Objects.hashCode(this.list);
 
-        return iter;
-    }
+    return hash;
+  }
 
-    @Override
-    public int size()
-    {
-        return list.size();
-    }
+  @Override
+  public boolean isEmpty() {
+    return list.isEmpty();
+  }
 
-    @Override
-    public String toString()
-    {
-        return list.toString();
-    }
+  @Override
+  public Iterator<RedHxComputerSystem> iterator() {
+    ComputerSystemIterator<RedHxComputerSystem> iter = new ComputerSystemIterator<>(list);
+
+    return iter;
+  }
+
+  @Override
+  public int size() {
+    return list.size();
+  }
+
+  @Override
+  public String toString() {
+    return list.toString();
+  }
 }

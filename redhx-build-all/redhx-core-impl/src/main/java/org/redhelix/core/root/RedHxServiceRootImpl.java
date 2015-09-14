@@ -266,17 +266,13 @@ public final class RedHxServiceRootImpl implements RedHxServiceRoot {
     result = prime * result + ((SessionService == null) ? 0 : SessionService.hashCode());
     result = prime * result + ((accountService == null) ? 0 : accountService.hashCode());
     result = prime * result + ((chassisCollection == null) ? 0 : chassisCollection.hashCode());
-    result =
-        prime * result
-            + ((computerSystemCollection == null) ? 0 : computerSystemCollection.hashCode());
+    result = prime * result
+        + ((computerSystemCollection == null) ? 0 : computerSystemCollection.hashCode());
     result = prime * result + ((eventService == null) ? 0 : eventService.hashCode());
     result = prime * result + ((managerCollection == null) ? 0 : managerCollection.hashCode());
     result = prime * result + ((messageVignette == null) ? 0 : messageVignette.hashCode());
-    result =
-        prime
-            * result
-            + ((messageVignetteRegistryFileCollection == null) ? 0
-                : messageVignetteRegistryFileCollection.hashCode());
+    result = prime * result + ((messageVignetteRegistryFileCollection == null) ? 0
+        : messageVignetteRegistryFileCollection.hashCode());
     result = prime * result + ((protocolVersion == null) ? 0 : protocolVersion.hashCode());
     result =
         prime * result + ((schemaFileCollection == null) ? 0 : schemaFileCollection.hashCode());

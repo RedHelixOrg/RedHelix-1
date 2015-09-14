@@ -48,8 +48,8 @@ public final class RedHxChassisCollectionReader {
    * @throws RedHxParseException
    */
   public static RedHxChassisCollection readPaths(RedHxServerConnectionContext ctx,
-      Set<RedHxUriPath> chassisPathSet) throws RedHxHttpResponseException, URISyntaxException,
-      RedHxParseException {
+      Set<RedHxUriPath> chassisPathSet)
+          throws RedHxHttpResponseException, URISyntaxException, RedHxParseException {
     final List<RedHxChassis> list = new ArrayList<>();
 
     for (RedHxUriPath link : chassisPathSet) {

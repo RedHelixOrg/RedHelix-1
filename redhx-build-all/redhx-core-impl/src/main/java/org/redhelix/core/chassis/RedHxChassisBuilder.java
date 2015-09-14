@@ -99,12 +99,11 @@ public final class RedHxChassisBuilder {
   }
 
   public RedHxChassis getInstance() {
-    RedHxChassis chassis =
-        new ChassisImpl(actionGroup, assetTag, chassisDescription, chassisId, chassisName,
-            chassisType, computerSystemUriPathList, containedByUriPath, containsList,
-            cooledByUriPathList, ledState, logServicesUriPath, manufacturerName, modelNumber,
-            operatingHealth, operatingState, partNumber, poweredByList, powerUriPath, serialNumber,
-            sku, systemManagerUriPathList, thermalUriPath);
+    RedHxChassis chassis = new ChassisImpl(actionGroup, assetTag, chassisDescription, chassisId,
+        chassisName, chassisType, computerSystemUriPathList, containedByUriPath, containsList,
+        cooledByUriPathList, ledState, logServicesUriPath, manufacturerName, modelNumber,
+        operatingHealth, operatingState, partNumber, poweredByList, powerUriPath, serialNumber, sku,
+        systemManagerUriPathList, thermalUriPath);
 
     return chassis;
   }

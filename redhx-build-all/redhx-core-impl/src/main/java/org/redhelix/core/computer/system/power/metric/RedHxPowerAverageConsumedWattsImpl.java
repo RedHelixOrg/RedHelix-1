@@ -23,8 +23,8 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public final class RedHxPowerAverageConsumedWattsImpl extends RedHxAbstractPowerWatts implements
-    RedHxPowerAverageConsumedWatts {
+public final class RedHxPowerAverageConsumedWattsImpl extends RedHxAbstractPowerWatts
+    implements RedHxPowerAverageConsumedWatts {
 
   public RedHxPowerAverageConsumedWattsImpl(final short wattsMajor, final byte wattsMinor) {
     super(wattsMajor, wattsMinor);

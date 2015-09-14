@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxProcessorModelImpl extends RedHxAbstractStringProperty implements
-    RedHxProcessorModel {
+public final class RedHxProcessorModelImpl extends RedHxAbstractStringProperty
+    implements RedHxProcessorModel {
 
   public RedHxProcessorModelImpl(String model) {
     super(MAX_CHAR_COUNT_RED_HELIX_DEFINED, model);

@@ -20,8 +20,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerSerialNumberImpl extends RedHxAbstractStringProperty implements
-    RedHxComputerSerialNumber {
+public final class RedHxComputerSerialNumberImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerSerialNumber {
 
   /**
    * @param propName

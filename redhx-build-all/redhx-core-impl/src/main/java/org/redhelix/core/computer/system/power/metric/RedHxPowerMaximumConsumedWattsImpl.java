@@ -23,8 +23,8 @@ import org.redhelix.core.computer.system.power.RedHxAbstractPowerWatts;
  * @author Hank Bruning
  *
  */
-public final class RedHxPowerMaximumConsumedWattsImpl extends RedHxAbstractPowerWatts implements
-    RedHxPowerMaximumConsumedWatts {
+public final class RedHxPowerMaximumConsumedWattsImpl extends RedHxAbstractPowerWatts
+    implements RedHxPowerMaximumConsumedWatts {
 
   /**
    * @param wattsMajor

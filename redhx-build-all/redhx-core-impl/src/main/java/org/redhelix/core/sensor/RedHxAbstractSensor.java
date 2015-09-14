@@ -32,7 +32,8 @@ public abstract class RedHxAbstractSensor implements RedHxGenericSensor {
    * @param sensorName the sensor name. This shall not be null.
    * @param sensorNumber the sensor number. This shall not be null.
    */
-  protected RedHxAbstractSensor(RedHxSensorNameImpl sensorName, RedHxSensorNumberImpl sensorNumber) {
+  protected RedHxAbstractSensor(RedHxSensorNameImpl sensorName,
+      RedHxSensorNumberImpl sensorNumber) {
     super();
     this.sensorName = sensorName;
     this.sensorNumber = sensorNumber;

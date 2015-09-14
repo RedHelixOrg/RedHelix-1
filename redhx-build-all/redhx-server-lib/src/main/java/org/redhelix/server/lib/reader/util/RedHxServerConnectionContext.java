@@ -37,67 +37,60 @@ import org.redhelix.core.util.RedHxUriPath;
  * @author Hank Bruning
  *
  */
-public final class RedHxServerConnectionContext
-{
+public final class RedHxServerConnectionContext {
 
-    private final ODataClient client;
-    private final RedHxRedfishProtocolVersionEnum redfishProtocolVersion;
-    private RedHxServiceRootLocator serviceRootLocator;
+  private final ODataClient client;
+  private final RedHxRedfishProtocolVersionEnum redfishProtocolVersion;
+  private RedHxServiceRootLocator serviceRootLocator;
 
-    public RedHxServerConnectionContext(final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
-    {
-        this.redfishProtocolVersion = redfishProtocolVersion;
-        this.client = ODataClientFactory.getClient();
-        this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
-    }
+  public RedHxServerConnectionContext(
+      final RedHxRedfishProtocolVersionEnum redfishProtocolVersion) {
+    this.redfishProtocolVersion = redfishProtocolVersion;
+    this.client = ODataClientFactory.getClient();
+    this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
+  }
 
-    private RedHxServerConnectionContext()
-    {
-        this.redfishProtocolVersion = null;
-        this.client = null;
-    }
+  private RedHxServerConnectionContext() {
+    this.redfishProtocolVersion = null;
+    this.client = null;
+  }
 
-    private ODataEntityRequest<ClientEntity> RedHxServerSetAuth(ODataEntityRequest<ClientEntity> req)
-    {
-        String username = System.getProperty("param_username");
-        String password = System.getProperty("param_password");
-        String authorization = "Basic ";
-        authorization += new String(Base64.encodeBase64((username + ":" + password).getBytes()));
-        req.addCustomHeader("Authorization", authorization);
+  private ODataEntityRequest<ClientEntity> RedHxServerSetAuth(
+      ODataEntityRequest<ClientEntity> req) {
+    String username = System.getProperty("param_username");
+    String password = System.getProperty("param_password");
+    String authorization = "Basic ";
+    authorization += new String(Base64.encodeBase64((username + ":" + password).getBytes()));
+    req.addCustomHeader("Authorization", authorization);
 
-        return req;
-    }
+    return req;
+  }
 
-    public ODataEntityRequest<ClientEntity> getChassisEntityRequest()
-    {
-        URI chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
-        ODataEntityRequest<ClientEntity> req = client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
+  public ODataEntityRequest<ClientEntity> getChassisEntityRequest() {
+    URI chassisUri = serviceRootLocator.getUri(RedHxServiceRootIdEum.CHASSIS);
+    ODataEntityRequest<ClientEntity> req =
+        client.getRetrieveRequestFactory().getEntityRequest(chassisUri);
 
-        return RedHxServerSetAuth(req);
-    }
+    return RedHxServerSetAuth(req);
+  }
 
-    public ODataEntityRequest<ClientEntity> getEntityRequest(RedHxUriPath pathToResource)
-            throws URISyntaxException
-    {
-        URI myUri = serviceRootLocator.getUri(pathToResource.getValue());
-        ODataEntityRequest<ClientEntity> req = client.getRetrieveRequestFactory().getEntityRequest(myUri);
+  public ODataEntityRequest<ClientEntity> getEntityRequest(RedHxUriPath pathToResource)
+      throws URISyntaxException {
+    URI myUri = serviceRootLocator.getUri(pathToResource.getValue());
+    ODataEntityRequest<ClientEntity> req =
+        client.getRetrieveRequestFactory().getEntityRequest(myUri);
 
-        return RedHxServerSetAuth(req);
-    }
+    return RedHxServerSetAuth(req);
+  }
 
-    public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion()
-    {
-        return redfishProtocolVersion;
-    }
+  public RedHxRedfishProtocolVersionEnum getRedfishProtocolVersion() {
+    return redfishProtocolVersion;
+  }
 
-    public void openConnection(final RedHxTcpProtocolTypeEnum httpProtocol,
-                               final String hostName,
-                               final int tcpPortNumber,
-                               final String servicePrefix)
-            throws URISyntaxException,
-                   RedHxHttpResponseException
-    {
-        serviceRootLocator = ServiceRootReader.getServiceRootLocator(client, httpProtocol, hostName, tcpPortNumber, servicePrefix,
-                                                                     RedHxRedfishProtocolVersionEnum.VERSION_1);
-    }
+  public void openConnection(final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName,
+      final int tcpPortNumber, final String servicePrefix)
+          throws URISyntaxException, RedHxHttpResponseException {
+    serviceRootLocator = ServiceRootReader.getServiceRootLocator(client, httpProtocol, hostName,
+        tcpPortNumber, servicePrefix, RedHxRedfishProtocolVersionEnum.VERSION_1);
+  }
 }

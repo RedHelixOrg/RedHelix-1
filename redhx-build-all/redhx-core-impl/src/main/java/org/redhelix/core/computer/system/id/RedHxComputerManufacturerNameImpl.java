@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerManufacturerNameImpl extends RedHxAbstractStringProperty implements
-    RedHxComputerManufacturerName {
+public final class RedHxComputerManufacturerNameImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerManufacturerName {
 
   /**
    * @param propName

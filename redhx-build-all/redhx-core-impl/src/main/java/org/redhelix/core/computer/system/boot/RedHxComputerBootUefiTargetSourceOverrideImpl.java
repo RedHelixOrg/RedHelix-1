@@ -22,8 +22,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerBootUefiTargetSourceOverrideImpl extends
-    RedHxAbstractStringProperty implements RedHxComputerBootUefiTargetSourceOverride {
+public final class RedHxComputerBootUefiTargetSourceOverrideImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerBootUefiTargetSourceOverride {
 
   /**
    * @param path

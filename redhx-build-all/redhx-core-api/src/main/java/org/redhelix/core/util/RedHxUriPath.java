@@ -22,29 +22,24 @@ import java.util.List;
  * @author Hank Bruning
  *
  */
-public interface RedHxUriPath
-        extends RedHxStringProperty
-{
+public interface RedHxUriPath extends RedHxStringProperty {
 
-    /**
-     * The maximum number of characters allowed in a manufacturer name.
-     */
-    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 250;    // arbitrary
+  /**
+   * The maximum number of characters allowed in a manufacturer name.
+   */
+  public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 250; // arbitrary
 
-    public static String getPathListAsString(List<RedHxUriPath> list)
-    {
-        StringBuilder sb = new StringBuilder();
+  public static String getPathListAsString(List<RedHxUriPath> list) {
+    StringBuilder sb = new StringBuilder();
 
-        for (RedHxUriPath path : list)
-        {
-            if (sb.length() > 0)
-            {
-                sb.append(", ");
-            }
+    for (RedHxUriPath path : list) {
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
 
-            sb.append(path.getValue());
-        }
-
-        return sb.toString();
+      sb.append(path.getValue());
     }
+
+    return sb.toString();
+  }
 }

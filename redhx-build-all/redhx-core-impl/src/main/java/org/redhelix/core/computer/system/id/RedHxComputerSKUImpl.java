@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerSKUImpl extends RedHxAbstractStringProperty implements
-    RedHxComputerSKU {
+public final class RedHxComputerSKUImpl extends RedHxAbstractStringProperty
+    implements RedHxComputerSKU {
 
   /**
    * @param propName

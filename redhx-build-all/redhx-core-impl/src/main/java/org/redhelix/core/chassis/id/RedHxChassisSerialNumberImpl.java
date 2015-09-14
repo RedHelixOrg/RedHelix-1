@@ -23,8 +23,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisSerialNumberImpl extends RedHxAbstractStringProperty implements
-    RedHxChassisSerialNumber {
+public final class RedHxChassisSerialNumberImpl extends RedHxAbstractStringProperty
+    implements RedHxChassisSerialNumber {
 
   /**
    *

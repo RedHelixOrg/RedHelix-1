@@ -20,8 +20,8 @@ package org.redhelix.core.util;
  * @author Hank Bruning
  *
  */
-public final class RedHxDnsHostNameImpl extends RedHxAbstractStringProperty implements
-    RedHxDnsHostName {
+public final class RedHxDnsHostNameImpl extends RedHxAbstractStringProperty
+    implements RedHxDnsHostName {
 
   /**
    * @param propName

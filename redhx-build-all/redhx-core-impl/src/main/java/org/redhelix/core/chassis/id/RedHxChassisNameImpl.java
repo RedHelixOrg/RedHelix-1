@@ -22,8 +22,8 @@ import org.redhelix.core.util.RedHxAbstractStringProperty;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisNameImpl extends RedHxAbstractStringProperty implements
-    RedHxChassisName {
+public final class RedHxChassisNameImpl extends RedHxAbstractStringProperty
+    implements RedHxChassisName {
 
   /**
    * @param propName

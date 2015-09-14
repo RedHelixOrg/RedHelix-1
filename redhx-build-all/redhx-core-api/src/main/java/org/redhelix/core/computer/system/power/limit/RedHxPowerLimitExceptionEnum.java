@@ -24,7 +24,7 @@ package org.redhelix.core.computer.system.power.limit;
 public enum RedHxPowerLimitExceptionEnum {
   HARD_POWER_OFF("Turn the power off immediately when the limit is exceeded."), LOG_EVENT_ONLY(
       "Log an event when the limit is exceeded, but take no further action."), NO_ACTION(
-      "Take no action when the limit is exceeded."), OEM("Take an OEM-defined action.");
+          "Take no action when the limit is exceeded."), OEM("Take an OEM-defined action.");
 
   private final String desc;
 

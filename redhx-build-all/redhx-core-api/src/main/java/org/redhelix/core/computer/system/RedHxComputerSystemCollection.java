@@ -22,29 +22,27 @@ import org.redhelix.core.util.RedHxUriPath;
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  */
-public interface RedHxComputerSystemCollection
-        extends Iterable<RedHxComputerSystem>
-{
+public interface RedHxComputerSystemCollection extends Iterable<RedHxComputerSystem> {
 
-    /**
-     * test if the the collection contains any computer systems.
-     *
-     * @return true if there are one or more computer systems.
-     */
-    boolean isEmpty();
+  /**
+   * test if the the collection contains any computer systems.
+   *
+   * @return true if there are one or more computer systems.
+   */
+  boolean isEmpty();
 
-    /**
-     * get the number of computer systems in the collection.
-     *
-     * @return a value zero or greater.
-     */
-    int size();
+  /**
+   * get the number of computer systems in the collection.
+   *
+   * @return a value zero or greater.
+   */
+  int size();
 
-    /**
-     * get a single computer system.
-     *
-     * @param computerSystemPath the path on the server implementing Redfish to a computer system.
-     * @return null if the path is not found in this class otherwise a computer system.
-     */
-    RedHxComputerSystem getComputerSystem(RedHxUriPath computerSystemPath);
+  /**
+   * get a single computer system.
+   *
+   * @param computerSystemPath the path on the server implementing Redfish to a computer system.
+   * @return null if the path is not found in this class otherwise a computer system.
+   */
+  RedHxComputerSystem getComputerSystem(RedHxUriPath computerSystemPath);
 }

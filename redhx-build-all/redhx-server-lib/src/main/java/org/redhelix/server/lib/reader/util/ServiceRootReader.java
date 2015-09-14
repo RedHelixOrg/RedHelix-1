@@ -87,10 +87,9 @@ class ServiceRootReader {
   public static RedHxServiceRootLocator getServiceRootLocator(final ODataClient client,
       final RedHxTcpProtocolTypeEnum httpProtocol, final String hostName, final int tcpPortNumber,
       final String servicePrefix, final RedHxRedfishProtocolVersionEnum redfishProtocolVersion)
-      throws URISyntaxException, RedHxHttpResponseException {
-    RedHxServiceRootId serviceRoot =
-        new RedHxServiceRootIdImpl(httpProtocol, hostName, tcpPortNumber, servicePrefix,
-            redfishProtocolVersion);
+          throws URISyntaxException, RedHxHttpResponseException {
+    RedHxServiceRootId serviceRoot = new RedHxServiceRootIdImpl(httpProtocol, hostName,
+        tcpPortNumber, servicePrefix, redfishProtocolVersion);
     final String serviceRootStr = serviceRoot.getServiceRootString();
     final URI redfishEntitySetURI =
         client.newURIBuilder(serviceRootStr).appendEntitySetSegment(ENTITY_SET_NAME).build();
@@ -146,9 +145,8 @@ class ServiceRootReader {
 
               idToUriMap.put(serviceId, serviceUri);
             } else {
-              String msg =
-                  "Can not find service for " + serviceRootName + " set by host " + hostName + ":"
-                      + tcpPortNumber;
+              String msg = "Can not find service for " + serviceRootName + " set by host "
+                  + hostName + ":" + tcpPortNumber;
 
               logger.error(msg);
 
@@ -157,9 +155,8 @@ class ServiceRootReader {
           }
         }
 
-        locator =
-            new RedHxServiceRootLocatorImpl(serviceRoot, tcpProtocolStr, hostName, tcpPortNumber,
-                idToUriMap);
+        locator = new RedHxServiceRootLocatorImpl(serviceRoot, tcpProtocolStr, hostName,
+            tcpPortNumber, idToUriMap);
       }
     } else {
       logger.info("error retriving JSON message from " + hostName + ":" + tcpPortNumber
