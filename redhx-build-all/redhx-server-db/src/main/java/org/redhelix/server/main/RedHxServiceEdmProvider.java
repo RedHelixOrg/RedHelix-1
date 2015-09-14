@@ -24,15 +24,16 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainerInfo;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
-import org.redhelix.server.main.chassis.RedHxChassisServiceEdmProvider;
-import org.redhelix.server.main.computer.system.RedHxComputerSystemServiceEdmProvider;
-import org.redhelix.server.main.edm.RedHxEdmProvider;
+import org.redhelix.server.message.edm.RedHxEdmProvider;
+import org.redhelix.server.message.op.chassis.RedHxChassisServiceEdmProvider;
+import org.redhelix.server.message.op.computer.system.RedHxComputerSystemServiceEdmProvider;
+import org.redhelix.server.message.op.discover.RedHxDiscoverSystemEdmProvider;
 
 /**
  *
  * Create the Entity Data Model for the RedHelix JSON messages. RedHelix entitys are added to the
  * data model by adding them to the static list in {@link #createEdmList() }. Each entry in the
- * liust implements the {@link org.redhelix.server.main.edm.RedHxEdmProvider} class which is a
+ * liust implements the {@link org.redhelix.server.message.edm.RedHxEdmProvider} class which is a
  * package public class that describes each of the major services provided by RedHelix.
  *
  * @since RedHelix Version 0.2
@@ -42,6 +43,7 @@ import org.redhelix.server.main.edm.RedHxEdmProvider;
 public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
 
   // EDM Container
+
   private static final String CONTAINER_NAME = "Container";
   private static final FullQualifiedName CONTAINER =
       new FullQualifiedName(RedHxEdmProvider.NAMESPACE, CONTAINER_NAME);
@@ -72,13 +74,12 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
       throws ODataException {
     CsdlEntityContainerInfo entityContainerInfo = null;
+
     // This method is invoked when displaying the Service Document at e.g.
     // http://localhost:8080/RedHelix.svc/
     if ((entityContainerName == null) || entityContainerName.equals(CONTAINER)) {
       entityContainerInfo = new CsdlEntityContainerInfo();
-
       entityContainerInfo.setContainerName(CONTAINER);
-
     }
 
     return entityContainerInfo;
@@ -90,11 +91,9 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
     CsdlEntitySet entitySet = null;
 
     if (entityContainer.equals(CONTAINER)) {
-
       for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
         if (entitySetName.equals(edmProvider.getEntitySetName())) {
           entitySet = new CsdlEntitySet();
-
           entitySet.setName(edmProvider.getEntitySetName());
           entitySet.setType(edmProvider.getFqdName());
 
@@ -152,8 +151,12 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   private static List<RedHxEdmProvider> createEdmList() {
     List<RedHxEdmProvider> list = new ArrayList<>();
 
+    /*
+     * aranged in alph order by RedHx name.
+     */
     list.add(new RedHxChassisServiceEdmProvider());
     list.add(new RedHxComputerSystemServiceEdmProvider());
+    list.add(new RedHxDiscoverSystemEdmProvider());
 
     return list;
   }

@@ -53,7 +53,8 @@ RedHelix provides a database contaning multiple servers that implement Redfish a
 each server. At present the database is only in limited to what is in memory and when the Java Virtual Machine shuts down all history is destroyed.
 
 #### Discovery of the RESTful interface
-Redfish has an optional protocol called "SimpleService Discovery Protocol" (SSDP), that allows to discovery Redfish enabled servers. RedHelix does not.
+Redfish has an optional protocol called "SimpleService Discovery Protocol" (SSDP), that allows discovery of Redfish enabled servers. RedHelix servers
+can not be discovered using SSDP.
 Prior knowledge of the IP address and TCP port number, and possibly account name and number, are required to access a RedHelix server. The user of
 RedHelix can define how Redfish servers are found. It may be a scan of IP address, a fixed set IPs or enabling the use of SSDP. 
 
