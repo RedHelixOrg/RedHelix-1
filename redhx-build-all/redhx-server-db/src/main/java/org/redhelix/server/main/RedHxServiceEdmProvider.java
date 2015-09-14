@@ -25,7 +25,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.redhelix.server.main.chassis.RedHxChassisServiceEdmProvider;
-import org.redhelix.server.main.chassis.computer.system.RedHxComputerSystemServiceEdmProvider;
+import org.redhelix.server.main.computer.system.RedHxComputerSystemServiceEdmProvider;
 import org.redhelix.server.main.edm.RedHxEdmProvider;
 
 /**

@@ -28,7 +28,7 @@ import org.redhelix.core.service.root.RedHxServiceRootLocator;
  * Redfish implemention of different UDP ports with any URL path the service that a vendor may
  * choose.
  *
- * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */

@@ -14,9 +14,10 @@
 package org.redhelix.core.service.root;
 
 /**
- * The types of service that could be in the top level OData service root description.
+ * The types of service that could be in the top level of a Redfish OData service root description.
+ * For example, the {@link #SESSION_SERVICE} may not be define in the service root description.
  *
- * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */

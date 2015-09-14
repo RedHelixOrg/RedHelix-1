@@ -12,7 +12,7 @@
  * the License
  *
  */
-package org.redhelix.server.main.chassis.computer.system;
+package org.redhelix.server.main.computer.system;
 
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;

@@ -17,7 +17,7 @@ package org.redhelix.core.computer.system.boot;
  *
  *
  *
- * @since RedHelix Version 0.1 It will be replaced when checked in to the master branch
+ * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
