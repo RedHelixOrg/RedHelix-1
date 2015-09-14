@@ -1,27 +1,20 @@
 /*
  * Copyright 2015 JBlade LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License
- *
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License
  */
-
-
-
 package org.redhelix.core.computer.system;
 
-import org.redhelix.core.util.RedHxOperatingStatus;
-
 import java.util.Objects;
+import org.redhelix.core.util.RedHxOperatingStatus;
 
 /**
  *
@@ -30,99 +23,86 @@ import java.util.Objects;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerMemorySummaryImpl
-        implements RedHxComputerMemorySummary
-{
-    private final RedHxOperatingStatus operatingStatus;
-    private final long                 totalSystemMemoryGiB;
+public final class RedHxComputerMemorySummaryImpl implements RedHxComputerMemorySummary {
 
-    public RedHxComputerMemorySummaryImpl( RedHxOperatingStatus operatingStatus,
-            long                                                totalSystemMemoryGiB )
-    {
-        this.operatingStatus      = operatingStatus;
-        this.totalSystemMemoryGiB = totalSystemMemoryGiB;
+  private final RedHxOperatingStatus operatingStatus;
+  private final long totalSystemMemoryGiB;
 
-        if (totalSystemMemoryGiB < 0)
-        {
-            throw new IllegalArgumentException("invalid totalSystemMemoryGiB. It is less than zero. Invalid value of "
-                                               + totalSystemMemoryGiB);
-        }
+  public RedHxComputerMemorySummaryImpl(RedHxOperatingStatus operatingStatus,
+      long totalSystemMemoryGiB) {
+    this.operatingStatus = operatingStatus;
+    this.totalSystemMemoryGiB = totalSystemMemoryGiB;
+
+    if (totalSystemMemoryGiB < 0) {
+      throw new IllegalArgumentException(
+          "invalid totalSystemMemoryGiB. It is less than zero. Invalid value of "
+              + totalSystemMemoryGiB);
+    }
+  }
+
+  private RedHxComputerMemorySummaryImpl() {
+    this.operatingStatus = null;
+    this.totalSystemMemoryGiB = 0;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    private RedHxComputerMemorySummaryImpl( )
-    {
-        this.operatingStatus      = null;
-        this.totalSystemMemoryGiB = 0;
+    if (obj == null) {
+      return false;
     }
 
-    @Override
-    public boolean equals( Object obj )
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        if (obj == null)
-        {
-            return false;
-        }
-
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final RedHxComputerMemorySummaryImpl other = (RedHxComputerMemorySummaryImpl) obj;
-
-        if (this.totalSystemMemoryGiB != other.totalSystemMemoryGiB)
-        {
-            return false;
-        }
-
-        if (!Objects.equals(this.operatingStatus, other.operatingStatus))
-        {
-            return false;
-        }
-
-        return true;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
 
-    @Override
-    public RedHxOperatingStatus getMemoryOperatingStatus( )
-    {
-        return operatingStatus;
+    final RedHxComputerMemorySummaryImpl other = (RedHxComputerMemorySummaryImpl) obj;
+
+    if (this.totalSystemMemoryGiB != other.totalSystemMemoryGiB) {
+      return false;
     }
 
-    @Override
-    public long getTotalSystemMemoryGigaBytes( )
-    {
-        return totalSystemMemoryGiB;
+    if (!Objects.equals(this.operatingStatus, other.operatingStatus)) {
+      return false;
     }
 
-    @Override
-    public int hashCode( )
-    {
-        int hash = 5;
+    return true;
+  }
 
-        hash = 43 * hash + Objects.hashCode(this.operatingStatus);
-        hash = 43 * hash + (int) this.totalSystemMemoryGiB;
+  @Override
+  public RedHxOperatingStatus getMemoryOperatingStatus() {
+    return operatingStatus;
+  }
 
-        return hash;
-    }
+  @Override
+  public long getTotalSystemMemoryGigaBytes() {
+    return totalSystemMemoryGiB;
+  }
 
-    @Override
-    public String toString( )
-    {
-        StringBuilder sb = new StringBuilder();
+  @Override
+  public int hashCode() {
+    int hash = 5;
 
-        sb.append("[ ");
-        sb.append("operatingStatus=");
-        sb.append(operatingStatus);
-        sb.append(", totalSystemMemoryGiB=");
-        sb.append(totalSystemMemoryGiB);
-        sb.append(" ]");
+    hash = 43 * hash + Objects.hashCode(this.operatingStatus);
+    hash = 43 * hash + (int) this.totalSystemMemoryGiB;
 
-        return sb.toString();
-    }
+    return hash;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[ ");
+    sb.append("operatingStatus=");
+    sb.append(operatingStatus);
+    sb.append(", totalSystemMemoryGiB=");
+    sb.append(totalSystemMemoryGiB);
+    sb.append(" ]");
+
+    return sb.toString();
+  }
 }
