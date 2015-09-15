@@ -129,7 +129,7 @@ public class RedHelixClientReport {
        *
        */
       ctx.openConnection(
-          (protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP,
+          (protocol.equals("https")) ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP,
           hostname, portNum, prefix);
 
       Set<RedHxUriPath> chassisPathSet;
