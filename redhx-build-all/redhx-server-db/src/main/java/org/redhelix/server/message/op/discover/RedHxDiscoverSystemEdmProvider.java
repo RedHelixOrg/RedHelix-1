@@ -41,7 +41,7 @@ public final class RedHxDiscoverSystemEdmProvider extends RedHxAbstractEdmProvid
 
   public RedHxDiscoverSystemEdmProvider() {
     super(ET_DISCOVER_SYSTEM_NAME);
-    tcpProctocolFqn = addEnumType(HTTP_PROTOCOL_NAME_TYPE, "HTTP", "HTTPS");
+    tcpProctocolFqn = addEnumType(HTTP_PROTOCOL_NAME_TYPE, true, "HTTP", "HTTPS");
   }
 
   @Override

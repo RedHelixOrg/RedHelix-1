@@ -12,7 +12,8 @@
         <module>redhx-server-lib</module>
         <module>redhx-server-util</module>
         <module>redhx-server-db</module>
-    </modules>
+        <module>redsun-gui</module>
+  </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
