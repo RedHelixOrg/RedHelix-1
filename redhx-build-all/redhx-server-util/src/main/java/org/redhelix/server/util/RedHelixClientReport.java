@@ -57,6 +57,8 @@ public class RedHelixClientReport {
   private static final String PROP_NAME_PROTOCOL = "param_protocol";
   private static final String PROP_NAME_HOST_NAME = "param_hostname";
   private static final String PROP_NAME_REMOTE_TCP_PORT = "param_port";
+  private static final String PROP_NAME_HTTP_USER_NAME = "param_username";
+  private static final String PROP_NAME_HTTP_PASSWORD = "param_password";
 
   /**
    * @param args
@@ -86,12 +88,16 @@ public class RedHelixClientReport {
 
     logMissingProperty(port, PROP_NAME_REMOTE_TCP_PORT);
 
-    final String prefix = System.getProperty("param_prefix");
+    /**
+     * get the optional HTTP basic security params.
+     */
+    final String username = System.getProperty(PROP_NAME_HTTP_USER_NAME);
+    final String password = System.getProperty(PROP_NAME_HTTP_PASSWORD);
 
     if ((protocol != null) && (hostname != null) && (port != null)) {
       final int portNum = Integer.parseInt(port);
 
-      openServerConnection(protocol, hostname, portNum, prefix);
+      openServerConnection(protocol, hostname, portNum, username, password);
     } else {
       printUsage();
     }
@@ -110,17 +116,25 @@ public class RedHelixClientReport {
    * @param protocol
    * @param hostname
    * @param portNum
-   * @param prefix
    */
   private static void openServerConnection(String protocol, String hostname, int portNum,
-      String prefix) {
+      String username, String password) {
+    final RedHxTcpProtocolTypeEnum httpProtocol =
+        (protocol.equals("https")) ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP;
 
     /*
      * create a communication context that will be used to talk with a single Redfish server. This
      * does not allocate and nextwork sockets.
      */
-    RedHxServerConnectionContext ctx =
-        new RedHxServerConnectionContext(RedHxRedfishProtocolVersionEnum.VERSION_1);
+    final RedHxServerConnectionContext ctx;
+
+    if (username == null) {
+      ctx = new RedHxServerConnectionContext(RedHxRedfishProtocolVersionEnum.VERSION_1,
+          httpProtocol, hostname, portNum);
+    } else {
+      ctx = new RedHxServerConnectionContext(RedHxRedfishProtocolVersionEnum.VERSION_1,
+          httpProtocol, hostname, portNum, username, password);
+    }
 
     try {
       /**
@@ -128,9 +142,7 @@ public class RedHelixClientReport {
        * is started with the command "node server.js"
        *
        */
-      ctx.openConnection(
-          (protocol.equals("https")) ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP,
-          hostname, portNum, prefix);
+      ctx.openConnection();
 
       Set<RedHxUriPath> chassisPathSet;
 
@@ -186,7 +198,15 @@ public class RedHelixClientReport {
   }
 
   private static void printUsage() {
-    System.out.println("Example command.");
+    System.out.println("Usage: ");
+    System.out.println("Required Parameters:  ");
+    System.out.println(PROP_NAME_PROTOCOL + "=https | http");
+    System.out.println(PROP_NAME_HOST_NAME + "=redfishServerName");
+    System.out.println(PROP_NAME_REMOTE_TCP_PORT + "=redfishServerPortNumber");
+    System.out.println("Optional Parameters:  ");
+    System.out.println(PROP_NAME_HTTP_USER_NAME + "=httpUserName");
+    System.out.println(PROP_NAME_HTTP_PASSWORD + "=httpPassword");
+    System.out.println("Example command:");
     System.out.println(
         "java -Dparam_protocol=\"http\" -Dparam_hostname=\"localhost\" -Dparam_port=\"9080\" -jar ./redhx-server-util/target/redhx-server-util-0.1-SNAPSHOT.jar");
   }

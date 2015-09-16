@@ -30,10 +30,9 @@ As of September 13, 2015 RedHelix is developing with the DMTF mockup files found
 RedHelix is designed to run in a single Java Virtual Machine(JVM). The connection to manage servers implementing Redfish is accomplished using
 the Apache Olingo  [Olingo](http://olingo.apache.org/doc/odata4/index.html). library for version 4 of the OData protocol. The connection to the Web Browsers will use Google's AngularJS, an implemntation of JavaScript.
 As of RedHelix 0.1 this has not been implemented. 
-![RedHelix Architecture](https://rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-1.svg)
-<!-- perment cached CDN comment. https://cdn.rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-1.svg -->
+![RedHelix Architecture](https://rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-2.svg)
+<!-- perment cached CDN comment. https://cdn.rawgit.com/RedHelixOrg/RedHelix-1/master/doc/redhelix-toplevel-architecture-2.svg -->
 An overview of the architecture is found at [RedHelix Design](./doc/design.md)
-
 
 ## OEM Extensions
 Redfish allows OEM extensions to the Chassis, Computer System, etc. It's not clear how these will be implemented. If you are implementing an

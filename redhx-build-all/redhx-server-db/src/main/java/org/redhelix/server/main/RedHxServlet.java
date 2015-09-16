@@ -24,7 +24,8 @@ import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.ODataHttpHandler;
 import org.apache.olingo.server.api.ServiceMetadata;
 import org.apache.olingo.server.api.edmx.EdmxReference;
-import org.redhelix.server.main.chassis.RedHxChassisCollectionProcessor;
+import org.redhelix.server.message.op.chassis.RedHxChassisCollectionProcessor;
+import org.redhelix.server.message.op.discover.RedHxDiscoveryProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,44 +33,58 @@ import org.slf4j.LoggerFactory;
  *
  * @author Hank Bruning
  */
-public class RedHxServlet extends HttpServlet {
+public class RedHxServlet
+        extends HttpServlet
+{
 
-  private static final long serialVersionUID = 1L;
-  private static final Logger LOG = LoggerFactory.getLogger(RedHxServlet.class);
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(RedHxServlet.class);
 
-  /**
-   * Returns a short description of the servlet.
-   *
-   * @return a String containing servlet description
-   */
-  @Override
-  public String getServletInfo() {
-    return "RedHelix OData v4 service";
-  }
-
-  @Override
-  public void init() throws ServletException {
-    super.init();
-  }
-
-  @Override
-  protected void service(final HttpServletRequest req, final HttpServletResponse resp)
-      throws ServletException, IOException {
-    try {
-      // create odata handler and configure it with CsdlEdmProvider and Processor
-      OData odata = OData.newInstance();
-      ServiceMetadata edm = odata.createServiceMetadata(new RedHxServiceEdmProvider(),
-          new ArrayList<EdmxReference>());
-      ODataHttpHandler handler = odata.createHandler(edm);
-
-      handler.register(new RedHxChassisCollectionProcessor());
-
-      // let the handler do the work
-      handler.process(req, resp);
-    } catch (RuntimeException ex) {
-      LOG.error("Server Error occurred in RedHxServlet", ex);
-
-      throw new ServletException(ex);
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo()
+    {
+        return "RedHelix OData v4 service";
     }
-  }
+
+    @Override
+    public void init()
+            throws ServletException
+    {
+        super.init();
+    }
+
+    @Override
+    protected void service(final HttpServletRequest req,
+                           final HttpServletResponse resp)
+            throws ServletException,
+                   IOException
+    {
+        try
+        {
+            // create odata handler and configure it with CsdlEdmProvider and Processor
+            OData odata = OData.newInstance();
+            ServiceMetadata edm = odata.createServiceMetadata(new RedHxServiceEdmProvider(),
+                                                              new ArrayList<EdmxReference>());
+            ODataHttpHandler handler = odata.createHandler(edm);
+
+            handler.register(new RedHxChassisCollectionProcessor());
+            handler.register(new RedHxDiscoveryProcessor());
+
+            // let the handler do the work
+            handler.process(req,
+                            resp);
+        }
+        catch (RuntimeException ex)
+        {
+            LOG.error("Server Error occurred in RedHxServlet",
+                      ex);
+
+            throw new ServletException(ex);
+        }
+    }
 }

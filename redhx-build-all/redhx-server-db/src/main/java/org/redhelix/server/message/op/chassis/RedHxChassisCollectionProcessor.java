@@ -12,7 +12,7 @@
  * the License
  *
  */
-package org.redhelix.server.main.chassis;
+package org.redhelix.server.message.op.chassis;
 
 import java.util.List;
 import org.apache.olingo.commons.api.data.ContextURL;
