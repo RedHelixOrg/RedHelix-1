@@ -44,70 +44,57 @@ import org.apache.olingo.server.api.uri.UriResourceEntitySet;
  * @author Hank Bruning
  *
  */
-public final class RedHxDiscoveryProcessor
-        implements EntityCollectionProcessor
-{
+public final class RedHxDiscoveryProcessor implements EntityCollectionProcessor {
 
-    private OData odata;
-    private ServiceMetadata serviceMetadata;
+  private OData odata;
+  private ServiceMetadata serviceMetadata;
 
-    @Override
-    public void init(OData odata,
-                     ServiceMetadata serviceMetadata)
-    {
-        this.odata = odata;
-        this.serviceMetadata = serviceMetadata;
+  @Override
+  public void init(OData odata, ServiceMetadata serviceMetadata) {
+    this.odata = odata;
+    this.serviceMetadata = serviceMetadata;
+  }
+
+  @Override
+  public void readEntityCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo,
+      ContentType responseFormat) throws ODataApplicationException, SerializerException {
+
+    List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
+    UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0); // in
+
+    EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
+    System.out.println("HFB5: received discovery request msg =" + request);
+    // 2nd: fetch the data from backend for this requested EntitySetName
+    // it has to be delivered as EntitySet object
+    EntityCollection entitySet = getData(edmEntitySet);
+
+    // 3rd: create a serializer based on the requested format (json)
+    ODataFormat format = ODataFormat.fromContentType(responseFormat);
+    ODataSerializer serializer = odata.createSerializer(format);
+
+    // 4th: Now serialize the content: transform from the EntitySet object to InputStream
+    EdmEntityType edmEntityType = edmEntitySet.getEntityType();
+    ContextURL contextUrl = ContextURL.with().entitySet(edmEntitySet).build();
+    EntityCollectionSerializerOptions opts =
+        EntityCollectionSerializerOptions.with().contextURL(contextUrl).build();
+    SerializerResult serializedContent =
+        serializer.entityCollection(serviceMetadata, edmEntityType, entitySet, opts);
+
+    // Finally: configure the response object: set the body, headers and status code
+    response.setContent(serializedContent.getContent());
+    response.setStatusCode(HttpStatusCode.OK.getStatusCode());
+    response.setHeader(HttpHeader.CONTENT_TYPE, responseFormat.toContentTypeString());
+  }
+
+  private EntityCollection getData(EdmEntitySet edmEntitySet) {
+    EntityCollection entityCollection = new EntityCollection();
+
+    // check for which EdmEntitySet the data is requested
+    if (RedHxDiscoverSystemEdmProvider.ET_DISCOVER_SYSTEM_NAME.equals(edmEntitySet.getName())) {
+
+      System.out.println("HFB5: received discovery msg =");
     }
 
-    @Override
-    public void readEntityCollection(ODataRequest request,
-                                     ODataResponse response,
-                                     UriInfo uriInfo,
-                                     ContentType responseFormat)
-            throws ODataApplicationException,
-                   SerializerException
-    {
-
-        List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
-        UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0);    // in
-
-        EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
-        System.out.println("HFB5: received discovery request msg =" + request);
-        // 2nd: fetch the data from backend for this requested EntitySetName
-        // it has to be delivered as EntitySet object
-        EntityCollection entitySet = getData(edmEntitySet);
-
-        // 3rd: create a serializer based on the requested format (json)
-        ODataFormat format = ODataFormat.fromContentType(responseFormat);
-        ODataSerializer serializer = odata.createSerializer(format);
-
-        // 4th: Now serialize the content: transform from the EntitySet object to InputStream
-        EdmEntityType edmEntityType = edmEntitySet.getEntityType();
-        ContextURL contextUrl = ContextURL.with().entitySet(edmEntitySet).build();
-        EntityCollectionSerializerOptions opts = EntityCollectionSerializerOptions.with().contextURL(contextUrl).build();
-        SerializerResult serializedContent = serializer.entityCollection(serviceMetadata,
-                                                                         edmEntityType,
-                                                                         entitySet,
-                                                                         opts);
-
-        // Finally: configure the response object: set the body, headers and status code
-        response.setContent(serializedContent.getContent());
-        response.setStatusCode(HttpStatusCode.OK.getStatusCode());
-        response.setHeader(HttpHeader.CONTENT_TYPE,
-                           responseFormat.toContentTypeString());
-    }
-
-    private EntityCollection getData(EdmEntitySet edmEntitySet)
-    {
-        EntityCollection entityCollection = new EntityCollection();
-
-        // check for which EdmEntitySet the data is requested
-        if (RedHxDiscoverSystemEdmProvider.ET_DISCOVER_SYSTEM_NAME.equals(edmEntitySet.getName()))
-        {
-
-            System.out.println("HFB5: received discovery msg =");
-        }
-
-        return entityCollection;
-    }
+    return entityCollection;
+  }
 }
