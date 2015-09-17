@@ -23,6 +23,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainer;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainerInfo;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
+import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.redhelix.server.message.edm.RedHxEdmProvider;
 import org.redhelix.server.message.op.chassis.RedHxChassisServiceEdmProvider;
@@ -42,14 +43,27 @@ import org.redhelix.server.message.op.discover.RedHxDiscoverSystemEdmProvider;
  */
 public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
 
-  // EDM Container
+  private static final String RED_HELIX_SCHEMA_ORG_NAMESPACE = "RedHelix.OData";
 
+  /**
+   * This tag is used to seperate the schema name space from other RedHelix.OData schemas. For
+   * example there may be a schema of RedHelix.OData.admin
+   */
+  private static final String SCHEMA_SUFFIX_NAME = "moon"; // arbitray. This was written on a night
+                                                           // with a full moon.
+
+  public static final String SCHEMA_NAME_SPACE =
+      RED_HELIX_SCHEMA_ORG_NAMESPACE + "." + SCHEMA_SUFFIX_NAME;
+
+  // EDM Container
   private static final String CONTAINER_NAME = "Container";
   private static final FullQualifiedName CONTAINER =
-      new FullQualifiedName(RedHxEdmProvider.NAMESPACE, CONTAINER_NAME);
+      new FullQualifiedName(SCHEMA_NAME_SPACE, CONTAINER_NAME);
   private static final List<RedHxEdmProvider> EDM_PROVIDER_LIST = createEdmList();
 
-  public RedHxServiceEdmProvider() {}
+  public RedHxServiceEdmProvider() {
+
+  }
 
   @Override
   public CsdlEntityContainer getEntityContainer() throws ODataException {
@@ -126,9 +140,23 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
     // create Schema
     CsdlSchema schema = new CsdlSchema();
 
-    schema.setNamespace(RedHxEdmProvider.NAMESPACE);
+    schema.setNamespace(SCHEMA_NAME_SPACE);
 
-    // add EntityTypes
+    /*
+     * set all enum type.
+     */
+    List<CsdlEnumType> enumTypesList = new ArrayList<>();
+
+    for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
+      enumTypesList.addAll(edmProvider.getEnumTypeList());
+    }
+
+    System.out.println("HFB5: enum count " + enumTypesList.size());
+    schema.setEnumTypes(enumTypesList);
+
+    /*
+     *
+     */
     List<CsdlEntityType> entityTypes = new ArrayList<>();
 
     for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {

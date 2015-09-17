@@ -120,7 +120,7 @@ public class RedHelixClientReport {
   private static void openServerConnection(String protocol, String hostname, int portNum,
       String username, String password) {
     final RedHxTcpProtocolTypeEnum httpProtocol =
-        (protocol == "https") ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP;
+        (protocol.equals("https")) ? RedHxTcpProtocolTypeEnum.HTTPS : RedHxTcpProtocolTypeEnum.HTTP;
 
     /*
      * create a communication context that will be used to talk with a single Redfish server. This
