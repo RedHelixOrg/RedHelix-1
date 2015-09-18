@@ -33,67 +33,53 @@ import org.slf4j.LoggerFactory;
  *
  * @author Hank Bruning
  */
-public class RedHxServlet
-        extends HttpServlet
-{
+public class RedHxServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(RedHxServlet.class);
+  private static final long serialVersionUID = 1L;
+  private static final Logger LOG = LoggerFactory.getLogger(RedHxServlet.class);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo()
-    {
-        return "RedHelix OData v4 service";
+  /**
+   * Returns a short description of the servlet.
+   *
+   * @return a String containing servlet description
+   */
+  @Override
+  public String getServletInfo() {
+    return "RedHelix OData v4 service";
+  }
+
+  @Override
+  public void init() throws ServletException {
+    super.init();
+  }
+
+  @Override
+  protected void service(final HttpServletRequest req, final HttpServletResponse resp)
+      throws ServletException, IOException {
+
+    try {
+      /*
+       * create odata handler and configure it with CsdlEdmProvider and Processor. todo: this needs
+       * to be rewritten the list does not have to be recreated each time. The advantage of this is
+       * that the multiple threads calling this are seperated.
+       */
+      OData odata = OData.newInstance();
+      ServiceMetadata edm = odata.createServiceMetadata(new RedHxServiceEdmProvider(),
+          new ArrayList<EdmxReference>());
+      ODataHttpHandler handler = odata.createHandler(edm);
+
+      // System.out.println("HFB5: in service call. " + req.getAuthType() + ", " +
+      // req.getContentType() + ", " + req.getPathInfo());
+      handler.register(new RedHxChassisCollectionProcessor());
+      handler.register(new RedHxDiscoveryProcessor());
+
+      // let the handler do the work
+      handler.process(req, resp);
+
+    } catch (RuntimeException ex) {
+      LOG.error("Server Error occurred in RedHxServlet", ex);
+
+      throw new ServletException(ex);
     }
-
-    @Override
-    public void init()
-            throws ServletException
-    {
-        super.init();
-    }
-
-    @Override
-    protected void service(final HttpServletRequest req,
-                           final HttpServletResponse resp)
-            throws ServletException,
-                   IOException
-    {
-
-        // HFB5: in service. req/RedHelix.svc/v1/$metadata/
-        System.out.println("HFB5: in service. req " + req.getPathInfo());
-        try
-        {
-            /*
-             * create odata handler and configure it with CsdlEdmProvider and Processor. todo: this needs
-             * to be rewritten the list does not have to be recreated each time. The advantage of this is
-             * that the multiple threads calling this are seperated.
-             */
-            OData odata = OData.newInstance();
-            ServiceMetadata edm = odata.createServiceMetadata(new RedHxServiceEdmProvider(),
-                                                              new ArrayList<EdmxReference>());
-            ODataHttpHandler handler = odata.createHandler(edm);
-
-            // System.out.println("HFB5: in service call. " + req.getAuthType() + ", " +
-            // req.getContentType() + ", " + req.getPathInfo());
-            handler.register(new RedHxChassisCollectionProcessor());
-            handler.register(new RedHxDiscoveryProcessor());
-
-            // let the handler do the work
-            handler.process(req,
-                            resp);
-        }
-        catch (RuntimeException ex)
-        {
-            LOG.error("Server Error occurred in RedHxServlet",
-                      ex);
-
-            throw new ServletException(ex);
-        }
-    }
+  }
 }
