@@ -14,6 +14,7 @@
         <module>redhx-server-db</module>
         <module>redsun-gui</module>
         <module>redhx-server-db-test</module>
+        <module>redhx-server-db-test2</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
