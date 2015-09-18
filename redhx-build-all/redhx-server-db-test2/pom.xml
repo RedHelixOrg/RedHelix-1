@@ -8,25 +8,56 @@
     </parent>
     <artifactId>redhx-server-db-test2</artifactId>
     <packaging>jar</packaging>
-    
+
+    <properties>
+        <resteasy.version>3.0.13.Final</resteasy.version>
+    </properties>
     
 
     <dependencies>
+        <!--
+        RESTEasy
+        -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-spring</artifactId>
-            <version>3.0.10.Final</version>
+            <version>${resteasy.version}</version>
+             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
-            <version>3.0.10.Final</version>
+            <version>${resteasy.version}</version>
+               <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.10.Final</version>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy.version}</version>
+               <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>tjws</artifactId>
+            <version>${resteasy.version}</version>
+               <scope>test</scope>
+        </dependency>
+      
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>${resteasy.version}</version>
+               <scope>test</scope>
+        </dependency>
+        <!--
+        -->
+          <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -41,17 +72,21 @@
             <scope>test</scope>
         </dependency>
 
+        <!--
+             <dependency>
+                 <groupId>org.jboss.spec.javax.servlet</groupId>
+                 <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+                 <version>1.0.0.Final</version>
+             </dependency>
+        -->  
+        
+        
         <dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.1_spec</artifactId>
-            <version>1.0.0.Final</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>redhx-server-db</artifactId>
+            <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>tjws</artifactId>
-            <version>3.0.10.Final</version>
-            <scope>test</scope>
-        </dependency>
+       
     </dependencies>
 
     

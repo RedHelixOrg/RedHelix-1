@@ -59,9 +59,6 @@ public class InMemoryRestTest
     @Path("myresource")
     public static class MyResource
     {
-//      @POST
-//      @Consumes(MediaType.TEXT_PLAIN)
-//      @Produces(MediaType.APPLICATION_JSON)
 
         @POST
         //  @Path("/myresource/{result}")
