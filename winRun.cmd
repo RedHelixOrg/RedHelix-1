@@ -31,10 +31,11 @@ if not exist %keystore% (
 )
 cd redhx-build-all
 java ^
- "-Dparm_protocol=https" ^
+ "-Dparam_protocol=https" ^
+ "-Dparam_port=443" ^
  "-Dparam_hostname=%server%" ^
  "-Dparam_username=%username%" ^
  "-Dparam_password=%password%" ^
  "-Djavax.net.ssl.trustStore=%cd%\..\%keystore%" ^
- -cp "..\jars\*" org.redhelix.server.main.RedMatrixServerDb
+ -cp "..\jars\*" org.redhelix.server.util.RedHelixClientReport
 endlocal
