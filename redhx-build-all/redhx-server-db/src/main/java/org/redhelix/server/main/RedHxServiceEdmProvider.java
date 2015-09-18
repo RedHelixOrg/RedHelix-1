@@ -16,7 +16,6 @@ package org.redhelix.server.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.olingo.commons.api.ODataException;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlAbstractEdmProvider;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainer;
@@ -50,8 +49,8 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
    * example there may be a schema of RedHelix.OData.admin
    */
   private static final String SCHEMA_SUFFIX_NAME = "moon"; // arbitray. This was written on a night
-                                                           // with a full moon.
 
+  // with a full moon.
   public static final String SCHEMA_NAME_SPACE =
       RED_HELIX_SCHEMA_ORG_NAMESPACE + "." + SCHEMA_SUFFIX_NAME;
 
@@ -61,12 +60,10 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
       new FullQualifiedName(SCHEMA_NAME_SPACE, CONTAINER_NAME);
   private static final List<RedHxEdmProvider> EDM_PROVIDER_LIST = createEdmList();
 
-  public RedHxServiceEdmProvider() {
-
-  }
+  public RedHxServiceEdmProvider() {}
 
   @Override
-  public CsdlEntityContainer getEntityContainer() throws ODataException {
+  public CsdlEntityContainer getEntityContainer() {
 
     // create EntitySets
     List<CsdlEntitySet> entitySets = new ArrayList<>();
@@ -85,8 +82,7 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   }
 
   @Override
-  public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
-      throws ODataException {
+  public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName) {
     CsdlEntityContainerInfo entityContainerInfo = null;
 
     // This method is invoked when displaying the Service Document at e.g.
@@ -100,8 +96,7 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   }
 
   @Override
-  public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName)
-      throws ODataException {
+  public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName) {
     CsdlEntitySet entitySet = null;
 
     if (entityContainer.equals(CONTAINER)) {
@@ -120,7 +115,7 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   }
 
   @Override
-  public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) throws ODataException {
+  public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) {
     CsdlEntityType entityType = null;
 
     for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
@@ -135,7 +130,7 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
   }
 
   @Override
-  public List<CsdlSchema> getSchemas() throws ODataException {
+  public List<CsdlSchema> getSchemas() {
 
     // create Schema
     CsdlSchema schema = new CsdlSchema();
@@ -151,7 +146,6 @@ public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
       enumTypesList.addAll(edmProvider.getEnumTypeList());
     }
 
-    System.out.println("HFB5: enum count " + enumTypesList.size());
     schema.setEnumTypes(enumTypesList);
 
     /*

@@ -67,6 +67,8 @@ public class RedHxServlet extends HttpServlet {
           new ArrayList<EdmxReference>());
       ODataHttpHandler handler = odata.createHandler(edm);
 
+      // System.out.println("HFB5: in service call. " + req.getAuthType() + ", " +
+      // req.getContentType() + ", " + req.getPathInfo());
       handler.register(new RedHxChassisCollectionProcessor());
       handler.register(new RedHxDiscoveryProcessor());
 

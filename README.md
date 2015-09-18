@@ -1,5 +1,5 @@
 #RedHelix GitHub Repository
-Date September 13, 2015, Version 0.1
+Date September 17, 2015, Version 0.2
 ## Major Implementation change.
 On September 12,2015 the maven projects were renamed and the main method has moved. See  [RedHelix Development Status](./doc/dev-status.md)
 

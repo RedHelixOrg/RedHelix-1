@@ -20,7 +20,7 @@ import org.apache.olingo.client.api.ODataClient;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataEntityRequest;
 import org.apache.olingo.client.api.domain.ClientEntity;
 import org.apache.olingo.client.core.ODataClientFactory;
-import org.apache.olingo.commons.api.format.ODataFormat;
+import org.apache.olingo.commons.api.format.ContentType;
 import org.redhelix.core.service.root.RedHxServiceRootIdEum;
 import org.redhelix.core.service.root.RedHxServiceRootLocator;
 import org.redhelix.core.service.root.RedHxTcpProtocolTypeEnum;
@@ -80,7 +80,7 @@ public final class RedHxServerConnectionContext {
 
     //
     this.client = ODataClientFactory.getClient();
-    this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
+    this.client.getConfiguration().setDefaultPubFormat(ContentType.JSON_NO_METADATA);
   }
 
   /**
@@ -104,7 +104,7 @@ public final class RedHxServerConnectionContext {
 
     //
     this.client = ODataClientFactory.getClient();
-    this.client.getConfiguration().setDefaultPubFormat(ODataFormat.JSON_NO_METADATA);
+    this.client.getConfiguration().setDefaultPubFormat(ContentType.JSON_NO_METADATA);
   }
 
   private RedHxServerConnectionContext() {

@@ -105,32 +105,53 @@ public abstract class RedHxAbstractEdmProvider implements RedHxEdmProvider {
   /**
    * create an enum with upto 0xffff values. This may be larger than a Java VM may accept. The Java
    * Language Specication is silent on what the largest number of enums can be.
+   * <p>
+   * Enums can be used in request filters. The enum can represents a mututally exclusive state, for
+   * example a car color of RED or GREEN. In this case a filter use only RED or GREEN but not both.
+   * </p
+   * <p>
+   * Enums may also represent a properties that are not mutually exclusive and can be combined using
+   * bitwise operators. For example a file may have READ_ACCESS and WRITE_ACCESS. In this case a
+   * filter may list both READ_ACCESS and WRITE_ACCESS.
+   * </p>
+   * <p>
+   * When choosing between the two types of enums, think carefully about the enums use in a filter.
+   * While it may be true that a car comes in RED or GREEN and that is multually exclusive there may
+   * be an advantage to having a filter search for RED and GREEN cars.
+   * </p>
    *
-   * @param enumTypeName
-   * @param enumValues
+   * @param enumTypeName the name of the enum in the EDM.
+   * @param isEnumValuesMututallyExclusive if true a query of the enums can only contain one enum.
+   *        If false multiple enums of the same type can be listed in the query.
+   * @param enumValues the values of the enum in the EDM.
    * @return the full qualified name of the enumeration. This value would be used by the caller when
    *         it needs to define the enum
    */
-  protected FullQualifiedName addEnumType(String enumTypeName, String... enumValues) {
+  protected FullQualifiedName addEnumType(String enumTypeName,
+      boolean isEnumValuesMututallyExclusive, String... enumValues) {
     List<CsdlEnumMember> list = new ArrayList<>();
-    EdmPrimitiveTypeKind primitiveTypeKind = EdmPrimitiveTypeKind.SByte;
     int i = 0;
 
     for (String currentName : enumValues) {
       CsdlEnumMember cem = new CsdlEnumMember().setName(currentName);
 
       cem.setValue(i + "");
+
       list.add(cem);
       ++i;
-
-      if ((i >= 255) && (i < 0xffff)) {
-        primitiveTypeKind = EdmPrimitiveTypeKind.Int16;
-      } else if (i >= 0xffff) {
-        primitiveTypeKind = EdmPrimitiveTypeKind.Int32;
-      }
     }
 
-    final CsdlEnumType enumProvider = new CsdlEnumType().setName(enumTypeName).setMembers(list) // .setFlags(true)
+    final EdmPrimitiveTypeKind primitiveTypeKind;
+
+    if (i <= 255) {
+      primitiveTypeKind = EdmPrimitiveTypeKind.SByte;
+    } else if (i <= 0xffff) {
+      primitiveTypeKind = EdmPrimitiveTypeKind.Int16;
+    } else {
+      primitiveTypeKind = EdmPrimitiveTypeKind.Int32;
+    }
+
+    final CsdlEnumType enumProvider = new CsdlEnumType().setName(enumTypeName).setMembers(list)
         .setUnderlyingType(primitiveTypeKind.getFullQualifiedName());
 
     enumTypeList.add(enumProvider);
