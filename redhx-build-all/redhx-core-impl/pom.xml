@@ -23,13 +23,10 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.redhelix</groupId>
+             <groupId>${project.groupId}</groupId>
             <artifactId>redhx-core-api</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+    
 </project>

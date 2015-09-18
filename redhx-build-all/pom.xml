@@ -13,9 +13,72 @@
         <module>redhx-server-util</module>
         <module>redhx-server-db</module>
         <module>redsun-gui</module>
-  </modules>
-
+        <module>redhx-server-db-test</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>1.7.7</slf4j.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <olingo.version>4.0.0-RC03</olingo.version>
+        <!--
+        properties used to test RedHelix
+        -->
+        <servlet.version>3.1.0</servlet.version>
+        <tomcat.servlet.port>22211</tomcat.servlet.port>
+        <tomcat.version>7.0.55</tomcat.version>
+        <spring.version>4.0.6.RELEASE</spring.version>
+        <commons.io.version>2.4</commons.io.version>
+        <commons.vfs.version>2.0</commons.vfs.version>
+        <commons.logging.version>1.2</commons.logging.version>
+        <esigate.version>4.3</esigate.version>
     </properties>
+    
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+              
+                
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

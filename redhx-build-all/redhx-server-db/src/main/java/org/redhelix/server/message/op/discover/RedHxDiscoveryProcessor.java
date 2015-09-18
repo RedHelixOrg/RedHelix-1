@@ -44,44 +44,55 @@ import org.apache.olingo.server.api.uri.UriResourceEntitySet;
  *
  */
 public final class RedHxDiscoveryProcessor implements EntityCollectionProcessor {
-  // if (RedHxDiscoverSystemEdmProvider.ET_DISCOVER_SYSTEM_NAME.equals(edmEntitySet.getName()))
 
+  // if (RedHxDiscoverSystemEdmProvider.ET_DISCOVER_SYSTEM_NAME.equals(edmEntitySet.getName()))
   private OData odata;
   private ServiceMetadata serviceMetadata;
 
   public RedHxDiscoveryProcessor() {}
 
   @Override
-  public void init(OData odata, ServiceMetadata serviceMetadata) {
+  public void init(final OData odata, final ServiceMetadata serviceMetadata) {
     this.odata = odata;
     this.serviceMetadata = serviceMetadata;
   }
 
   @Override
-  public void readEntityCollection(ODataRequest request, ODataResponse response, UriInfo uriInfo,
-      ContentType responseFormat) throws ODataApplicationException, SerializerException {
+  public void readEntityCollection(final ODataRequest request, final ODataResponse response,
+      final UriInfo uriInfo, final ContentType responseFormat)
+          throws ODataApplicationException, SerializerException {
 
     // 1st retrieve the requested EntitySet from the uriInfo (representation of the parsed URI)
-    List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
+    final List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
 
     // in our example, the first segment is the EntitySet
-    UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0);
-    EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
+    final UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0);
+    final EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
+
+    System.out.println("HFB5: discover request=" + request.getRawBaseUri());
+
+    System.out.println("HFB5: uriInfo resource parts=" + uriInfo.getUriResourceParts());
+    System.out.println("HFB5: uriInfo uriInfo=" + uriInfo);
+
+    System.out.println("HFB5: uriInfo uriInfo filter=" + uriInfo.getFilterOption());
+    System.out.println("HFB5: uriInfo uriInfo expand=" + uriInfo.getExpandOption());
+    System.out.println("HFB5: uriInfo uriInfo expand=" + uriInfo.getSearchOption());
+    System.out.println("HFB5: uriInfo uriInfo expand=" + uriInfo.getFragment());
 
     // 2nd: fetch the data from backend for this requested EntitySetName
     // it has to be delivered as EntitySet object
-    EntityCollection entitySet = null;// storage.readEntitySetData(edmEntitySet);
+    final EntityCollection entitySet = null; // storage.readEntitySetData(edmEntitySet);
 
     // 3rd: create a serializer based on the requested format (json)
-    ODataSerializer serializer = odata.createSerializer(responseFormat);
+    final ODataSerializer serializer = odata.createSerializer(responseFormat);
 
     // and serialize the content: transform from the EntitySet object to InputStream
-    EdmEntityType edmEntityType = edmEntitySet.getEntityType();
-    ContextURL contextUrl = ContextURL.with().entitySet(edmEntitySet).build();
+    final EdmEntityType edmEntityType = edmEntitySet.getEntityType();
+    final ContextURL contextUrl = ContextURL.with().entitySet(edmEntitySet).build();
     final String id = request.getRawBaseUri() + "/" + edmEntitySet.getName();
-    EntityCollectionSerializerOptions opts =
+    final EntityCollectionSerializerOptions opts =
         EntityCollectionSerializerOptions.with().id(id).contextURL(contextUrl).build();
-    SerializerResult serializedContent =
+    final SerializerResult serializedContent =
         serializer.entityCollection(serviceMetadata, edmEntityType, entitySet, opts);
 
     // Finally: configure the response object: set the body, headers and status code
@@ -89,5 +100,4 @@ public final class RedHxDiscoveryProcessor implements EntityCollectionProcessor 
     response.setStatusCode(HttpStatusCode.OK.getStatusCode());
     response.setHeader(HttpHeader.CONTENT_TYPE, responseFormat.toContentTypeString());
   }
-
 }
