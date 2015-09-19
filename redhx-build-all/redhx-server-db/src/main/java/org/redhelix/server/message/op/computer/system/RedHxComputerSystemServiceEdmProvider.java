@@ -14,15 +14,13 @@
  */
 package org.redhelix.server.message.op.computer.system;
 
+import java.util.Arrays;
+import java.util.Collections;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
-
-import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
-
-import java.util.Arrays;
-import java.util.Collections;
+import org.redhelix.server.message.edm.RedHxAbstractEdmEntityProvider;
 
 /**
  *
@@ -32,40 +30,43 @@ import java.util.Collections;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerSystemServiceEdmProvider extends RedHxAbstractEdmProvider {
+public final class RedHxComputerSystemServiceEdmProvider extends RedHxAbstractEdmEntityProvider
+{
 
-  /**
-   * Entity Types Names and is singular.
-   */
-  private static final String ET_COMPUTER_SYSTEM_NAME = "computerSystem";
+    /**
+     * Entity Types Names and is singular.
+     */
+    private static final String ET_COMPUTER_SYSTEM_NAME = "computerSystem";
 
-  public RedHxComputerSystemServiceEdmProvider() {
-    super(ET_COMPUTER_SYSTEM_NAME);
-  }
+    public RedHxComputerSystemServiceEdmProvider()
+    {
+        super(ET_COMPUTER_SYSTEM_NAME);
+    }
 
-  @Override
-  public CsdlEntityType getEntityType() {
+    @Override
+    public CsdlEntityType getEntityType()
+    {
 
-    // create EntityType properties
-    CsdlProperty id = new CsdlProperty().setName("CID")
-        .setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-    CsdlProperty name = new CsdlProperty().setName("CName")
-        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-    CsdlProperty description = new CsdlProperty().setName("CDescription")
-        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+        // create EntityType properties
+        CsdlProperty id = new CsdlProperty().setName("CID")
+                .setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+        CsdlProperty name = new CsdlProperty().setName("CName")
+                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+        CsdlProperty description = new CsdlProperty().setName("CDescription")
+                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
 
-    // create CsdlPropertyRef for Key element
-    CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+        // create CsdlPropertyRef for Key element
+        CsdlPropertyRef propertyRef = new CsdlPropertyRef();
 
-    propertyRef.setName("ID");
+        propertyRef.setName("ID");
 
-    // configure EntityType
-    CsdlEntityType entityType = new CsdlEntityType();
+        // configure EntityType
+        CsdlEntityType entityType = new CsdlEntityType();
 
-    entityType.setName(ET_COMPUTER_SYSTEM_NAME);
-    entityType.setProperties(Arrays.asList(id, name, description));
-    entityType.setKey(Collections.singletonList(propertyRef));
+        entityType.setName(ET_COMPUTER_SYSTEM_NAME);
+        entityType.setProperties(Arrays.asList(id, name, description));
+        entityType.setKey(Collections.singletonList(propertyRef));
 
-    return entityType;
-  }
+        return entityType;
+    }
 }

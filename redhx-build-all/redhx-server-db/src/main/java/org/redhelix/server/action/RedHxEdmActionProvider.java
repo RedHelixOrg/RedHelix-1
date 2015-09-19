@@ -12,13 +12,11 @@
  * the License
  *
  */
-package org.redhelix.server.message.edm;
+package org.redhelix.server.action;
 
 import java.util.List;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
-import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
+import org.apache.olingo.commons.api.edm.provider.CsdlAction;
 
 /**
  *
@@ -27,15 +25,12 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
  * @author Hank Bruning
  *
  */
-public interface RedHxEdmProvider {
+public interface RedHxEdmActionProvider
+{
 
-  CsdlEntitySet getEntitySet();
+  //  List<CsdlEnumType> getEnumTypeList();
+    List<CsdlAction> getActionList();
 
-  String getEntitySetName();
+    List<CsdlAction> getActions(FullQualifiedName actionName);
 
-  CsdlEntityType getEntityType();
-
-  List<CsdlEnumType> getEnumTypeList();
-
-  FullQualifiedName getFqdName();
 }

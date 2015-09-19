@@ -15,168 +15,246 @@
 package org.redhelix.server.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlAbstractEdmProvider;
+import org.apache.olingo.commons.api.edm.provider.CsdlAction;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainer;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainerInfo;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
-import org.redhelix.server.message.edm.RedHxEdmProvider;
+import org.apache.olingo.commons.api.ex.ODataException;
+import org.redhelix.server.action.RedHxEdmActionProvider;
+import org.redhelix.server.action.op.discover.RedHxDiscoverSystemEdmProvider;
+import org.redhelix.server.message.edm.RedHxEdmEntityProvider;
 import org.redhelix.server.message.op.chassis.RedHxChassisServiceEdmProvider;
 import org.redhelix.server.message.op.computer.system.RedHxComputerSystemServiceEdmProvider;
-import org.redhelix.server.message.op.discover.RedHxDiscoverSystemEdmProvider;
 
 /**
  *
- * Create the Entity Data Model for the RedHelix JSON messages. RedHelix entitys are added to the
- * data model by adding them to the static list in {@link #createEdmList() }. Each entry in the
- * liust implements the {@link org.redhelix.server.message.edm.RedHxEdmProvider} class which is a
- * package public class that describes each of the major services provided by RedHelix.
+ * Create the Entity Data Model for the RedHelix JSON messages. RedHelix entitys are added to the data model by adding them to the static
+ * list in {@link #createEdmList() }. Each entry in the liust implements the {@link org.redhelix.server.message.edm.RedHxEdmEntityProvider}
+ * class which is a package public class that describes each of the major services provided by RedHelix.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public final class RedHxServiceEdmProvider extends CsdlAbstractEdmProvider {
+public final class RedHxServiceEdmProvider
+        extends CsdlAbstractEdmProvider
+{
 
-  private static final String RED_HELIX_SCHEMA_ORG_NAMESPACE = "RedHelix.OData";
+    private static final String RED_HELIX_SCHEMA_ORG_NAMESPACE = "RedHelix.OData";
 
-  /**
-   * This tag is used to seperate the schema name space from other RedHelix.OData schemas. For
-   * example there may be a schema of RedHelix.OData.admin. The name moon arbitray. This was written
-   * on a night with a full moon.
-   */
-  private static final String SCHEMA_SUFFIX_NAME = "moon";
-  public static final String SCHEMA_NAME_SPACE =
-      RED_HELIX_SCHEMA_ORG_NAMESPACE + "." + SCHEMA_SUFFIX_NAME;
+    /**
+     * This tag is used to seperate the schema name space from other RedHelix.OData schemas. For example there may be a schema of
+     * RedHelix.OData.admin. The name moon arbitray. This was written on a night with a full moon.
+     */
+    private static final String SCHEMA_SUFFIX_NAME = "moon";
+    public static final String SCHEMA_NAME_SPACE = RED_HELIX_SCHEMA_ORG_NAMESPACE + "." + SCHEMA_SUFFIX_NAME;
 
-  // EDM Container
-  private static final String CONTAINER_NAME = "Container";
-  private static final FullQualifiedName CONTAINER =
-      new FullQualifiedName(SCHEMA_NAME_SPACE, CONTAINER_NAME);
-  private static final List<RedHxEdmProvider> EDM_PROVIDER_LIST = createEdmList();
+    // EDM Container
+    private static final String CONTAINER_NAME = "Container";
+    private static final FullQualifiedName CONTAINER = new FullQualifiedName(SCHEMA_NAME_SPACE,
+                                                                             CONTAINER_NAME);
+    private static final List<RedHxEdmEntityProvider> EDM_ENTITY_PROVIDER_LIST = createEdmList();
+    private static final List<RedHxEdmActionProvider> EDM_ACTION_PROVIDER_LIST = createActionList();
+    protected static final List<CsdlAction> EMPTY_ACTION_LIST = Collections.unmodifiableList(new ArrayList<CsdlAction>());
 
-  public RedHxServiceEdmProvider() {}
-
-  @Override
-  public CsdlEntityContainer getEntityContainer() {
-
-    // create EntitySets
-    List<CsdlEntitySet> entitySets = new ArrayList<>();
-
-    for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
-      entitySets.add(edmProvider.getEntitySet());
+    public RedHxServiceEdmProvider()
+    {
     }
 
-    // create EntityContainer
-    CsdlEntityContainer entityContainer = new CsdlEntityContainer();
+    @Override
+    public List<CsdlAction> getActions(FullQualifiedName actionName)
+            throws ODataException
+    {
+        List<CsdlAction> list = null;
 
-    entityContainer.setName(CONTAINER_NAME);
-    entityContainer.setEntitySets(entitySets);
+        /**
+         * todo change this lookup to a map.get();
+         */
+        for (RedHxEdmActionProvider edmProvider : EDM_ACTION_PROVIDER_LIST)
+        {
+            list = edmProvider.getActions(actionName);
 
-    return entityContainer;
-  }
-
-  @Override
-  public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName) {
-    CsdlEntityContainerInfo entityContainerInfo = null;
-
-    if ((entityContainerName == null) || entityContainerName.equals(CONTAINER)) {
-      entityContainerInfo = new CsdlEntityContainerInfo();
-      entityContainerInfo.setContainerName(CONTAINER);
-    }
-
-    return entityContainerInfo;
-  }
-
-  @Override
-  public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer, String entitySetName) {
-    CsdlEntitySet entitySet = null;
-
-    if (entityContainer.equals(CONTAINER)) {
-      for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
-        if (entitySetName.equals(edmProvider.getEntitySetName())) {
-          entitySet = new CsdlEntitySet();
-          entitySet.setName(edmProvider.getEntitySetName());
-          entitySet.setType(edmProvider.getFqdName());
-
-          break;
+            if (!list.isEmpty())
+            {
+                break;
+            }
         }
-      }
+
+        if (list == null)
+        {
+            list = EMPTY_ACTION_LIST;
+        }
+
+        return list;
     }
 
-    return entitySet;
-  }
+    @Override
+    public CsdlEntityContainer getEntityContainer()
+    {
 
-  @Override
-  public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) {
-    CsdlEntityType entityType = null;
+        // create EntitySets
+        List<CsdlEntitySet> entitySets = new ArrayList<>();
 
-    for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
-      if (entityTypeName.equals(edmProvider.getFqdName())) {
-        entityType = edmProvider.getEntityType();
+        for (RedHxEdmEntityProvider edmProvider : EDM_ENTITY_PROVIDER_LIST)
+        {
+            entitySets.add(edmProvider.getEntitySet());
+        }
 
-        break;
-      }
+        // create EntityContainer
+        CsdlEntityContainer entityContainer = new CsdlEntityContainer();
+
+        entityContainer.setName(CONTAINER_NAME);
+        entityContainer.setEntitySets(entitySets);
+
+        return entityContainer;
     }
 
-    return entityType;
-  }
+    @Override
+    public CsdlEntityContainerInfo getEntityContainerInfo(FullQualifiedName entityContainerName)
+    {
+        CsdlEntityContainerInfo entityContainerInfo = null;
 
-  @Override
-  public List<CsdlSchema> getSchemas() {
+        if ((entityContainerName == null) || entityContainerName.equals(CONTAINER))
+        {
+            entityContainerInfo = new CsdlEntityContainerInfo();
+            entityContainerInfo.setContainerName(CONTAINER);
+        }
 
-    // create Schema
-    CsdlSchema schema = new CsdlSchema();
-
-    schema.setNamespace(SCHEMA_NAME_SPACE);
-
-    /*
-     * set all enum type.
-     */
-    List<CsdlEnumType> enumTypesList = new ArrayList<>();
-
-    for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
-      enumTypesList.addAll(edmProvider.getEnumTypeList());
+        return entityContainerInfo;
     }
 
-    schema.setEnumTypes(enumTypesList);
+    @Override
+    public CsdlEntitySet getEntitySet(FullQualifiedName entityContainer,
+                                      String entitySetName)
+    {
+        CsdlEntitySet entitySet = null;
 
-    /*
-    *
-     */
-    List<CsdlEntityType> entityTypes = new ArrayList<>();
+        if (entityContainer.equals(CONTAINER))
+        {
+            for (RedHxEdmEntityProvider edmProvider : EDM_ENTITY_PROVIDER_LIST)
+            {
+                if (entitySetName.equals(edmProvider.getEntitySetName()))
+                {
+                    entitySet = new CsdlEntitySet();
+                    entitySet.setName(edmProvider.getEntitySetName());
+                    entitySet.setType(edmProvider.getFqdName());
 
-    for (RedHxEdmProvider edmProvider : EDM_PROVIDER_LIST) {
-      entityTypes.add(edmProvider.getEntityType());
+                    break;
+                }
+            }
+        }
+
+        return entitySet;
     }
 
-    schema.setEntityTypes(entityTypes);
+    @Override
+    public CsdlEntityType getEntityType(FullQualifiedName entityTypeName)
+    {
+        CsdlEntityType entityType = null;
 
-    // add EntityContainer
-    schema.setEntityContainer(getEntityContainer());
+        for (RedHxEdmEntityProvider edmProvider : EDM_ENTITY_PROVIDER_LIST)
+        {
+            if (entityTypeName.equals(edmProvider.getFqdName()))
+            {
+                entityType = edmProvider.getEntityType();
 
-    // finally
-    List<CsdlSchema> schemas = new ArrayList<>();
+                break;
+            }
+        }
 
-    schemas.add(schema);
+        return entityType;
+    }
 
-    return schemas;
-  }
+    @Override
+    public List<CsdlSchema> getSchemas()
+    {
 
-  private static List<RedHxEdmProvider> createEdmList() {
-    List<RedHxEdmProvider> list = new ArrayList<>();
+        // create Schema
+        CsdlSchema schema = new CsdlSchema();
 
-    /*
-     * aranged in alph order by RedHx name.
-     */
-    list.add(new RedHxChassisServiceEdmProvider());
-    list.add(new RedHxComputerSystemServiceEdmProvider());
-    list.add(new RedHxDiscoverSystemEdmProvider());
+        schema.setNamespace(SCHEMA_NAME_SPACE);
 
-    return list;
-  }
+        /*
+         * set all enum type.
+         */
+        List<CsdlEnumType> enumTypesList = new ArrayList<>();
+
+        for (RedHxEdmEntityProvider edmProvider : EDM_ENTITY_PROVIDER_LIST)
+        {
+            enumTypesList.addAll(edmProvider.getEnumTypeList());
+        }
+
+//      // get an enums defind by the actions.
+//      for (RedHxEdmActionProvider edmProvider : EDM_ACTION_PROVIDER_LIST)
+//      {
+//          enumTypesList.addAll(edmProvider.getEnumTypeList());
+//      }
+        schema.setEnumTypes(enumTypesList);
+
+        /*
+         * set Entity types
+         */
+        List<CsdlEntityType> entityTypes = new ArrayList<>();
+
+        for (RedHxEdmEntityProvider edmProvider : EDM_ENTITY_PROVIDER_LIST)
+        {
+            entityTypes.add(edmProvider.getEntityType());
+        }
+
+        schema.setEntityTypes(entityTypes);
+
+        /*
+         * set Actions
+         */
+        List<CsdlAction> actionList = new ArrayList<>();
+
+        for (RedHxEdmActionProvider edmProvider : EDM_ACTION_PROVIDER_LIST)
+        {
+            actionList.addAll(edmProvider.getActionList());
+        }
+
+        System.out.println("HFB5: create EDM with " + actionList.size() + " actions.");
+        schema.setActions(actionList);
+
+        /**
+         * set the entity container
+         */
+        schema.setEntityContainer(getEntityContainer());
+
+        // finally
+        List<CsdlSchema> schemas = new ArrayList<>();
+
+        schemas.add(schema);
+
+        return schemas;
+    }
+
+    private static List<RedHxEdmActionProvider> createActionList()
+    {
+        List<RedHxEdmActionProvider> list = new ArrayList<>();
+
+        list.add(new RedHxDiscoverSystemEdmProvider());
+
+        return list;
+    }
+
+    private static List<RedHxEdmEntityProvider> createEdmList()
+    {
+        List<RedHxEdmEntityProvider> list = new ArrayList<>();
+
+        /*
+         * aranged in alph order by RedHx name.
+         */
+        list.add(new RedHxChassisServiceEdmProvider());
+        list.add(new RedHxComputerSystemServiceEdmProvider());
+
+        return list;
+    }
 }

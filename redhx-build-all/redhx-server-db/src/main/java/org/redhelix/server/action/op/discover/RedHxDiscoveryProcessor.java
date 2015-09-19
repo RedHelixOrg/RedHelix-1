@@ -12,7 +12,7 @@
  * the License
  *
  */
-package org.redhelix.server.message.op.discover;
+package org.redhelix.server.action.op.discover;
 
 import java.util.List;
 import org.apache.olingo.commons.api.data.ContextURL;

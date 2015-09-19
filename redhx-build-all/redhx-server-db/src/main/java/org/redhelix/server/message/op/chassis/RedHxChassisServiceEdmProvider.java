@@ -20,7 +20,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
-import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
+import org.redhelix.server.message.edm.RedHxAbstractEdmEntityProvider;
 
 /**
  *
@@ -30,50 +30,53 @@ import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmProvider {
+public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntityProvider
+{
 
-  // Entity Types Names and is singluar
-  private static final String ET_CHASSIS_NAME = "chassis";
+    // Entity Types Names and is singluar
+    private static final String ET_CHASSIS_NAME = "chassis";
 
-  /*
+    /*
    * Entity Set Names and is plural. Because the plural of chassis is the exact same spelling a x
    * has been added to the plural form and super's constructor is used with two arguments. This no
    * normal and if a the Entity type name can end with a "s" the prefered super construtor with
    * single argument is perfered.
-   */
-  static final String ES_CHASSISX_NAME = "chassisx";
+     */
+    static final String ES_CHASSISX_NAME = "chassisx";
 
-  public RedHxChassisServiceEdmProvider() {
-    super(ET_CHASSIS_NAME, ES_CHASSISX_NAME);
-  }
+    public RedHxChassisServiceEdmProvider()
+    {
+        super(ET_CHASSIS_NAME, ES_CHASSISX_NAME);
+    }
 
-  /**
-   *
-   *
-   * @return
-   */
-  @Override
-  public CsdlEntityType getEntityType() {
-    // create EntityType properties
-    CsdlProperty id =
-        new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-    CsdlProperty name = new CsdlProperty().setName("Name")
-        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-    CsdlProperty description = new CsdlProperty().setName("Description")
-        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+    /**
+     *
+     *
+     * @return
+     */
+    @Override
+    public CsdlEntityType getEntityType()
+    {
+        // create EntityType properties
+        CsdlProperty id
+                     = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+        CsdlProperty name = new CsdlProperty().setName("Name")
+                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+        CsdlProperty description = new CsdlProperty().setName("Description")
+                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
 
-    // create CsdlPropertyRef for Key element
-    CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+        // create CsdlPropertyRef for Key element
+        CsdlPropertyRef propertyRef = new CsdlPropertyRef();
 
-    propertyRef.setName("ID");
+        propertyRef.setName("ID");
 
-    // configure EntityType
-    CsdlEntityType entityType = new CsdlEntityType();
+        // configure EntityType
+        CsdlEntityType entityType = new CsdlEntityType();
 
-    entityType.setName(ET_CHASSIS_NAME);
-    entityType.setProperties(Arrays.asList(id, name, description));
-    entityType.setKey(Collections.singletonList(propertyRef));
+        entityType.setName(ET_CHASSIS_NAME);
+        entityType.setProperties(Arrays.asList(id, name, description));
+        entityType.setKey(Collections.singletonList(propertyRef));
 
-    return entityType;
-  }
+        return entityType;
+    }
 }
