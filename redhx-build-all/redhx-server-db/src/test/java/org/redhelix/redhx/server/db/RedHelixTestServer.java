@@ -12,7 +12,7 @@
  * the License
  *
  */
-package org.redhelix.redhx.server.db.test3;
+package org.redhelix.redhx.server.db;
 
 import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
 import org.redhelix.server.main.RedHxServlet;
@@ -27,7 +27,6 @@ import org.redhelix.server.main.RedHxServlet;
 public final class RedHelixTestServer {
 
   public static final int TCP_PORT_NUMBER = 6701;
-
   public static String HTTP_URL = "/RedHelix.svc/v1";
 
   static TJWSEmbeddedJaxrsServer startServer() {

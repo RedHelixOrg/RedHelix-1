@@ -1,12 +1,16 @@
-package org.redhelix.redhx.server.db.test3;
+package org.redhelix.redhx.server.db;
 
+import java.io.IOException;
 import org.apache.olingo.client.api.ODataClient;
+import org.apache.olingo.client.api.communication.request.retrieve.EdmMetadataRequest;
 import org.apache.olingo.client.api.communication.request.retrieve.ODataServiceDocumentRequest;
 import org.apache.olingo.client.api.communication.response.ODataRetrieveResponse;
-import org.apache.olingo.client.api.domain.ClientServiceDocument;
 import org.apache.olingo.client.core.ODataClientFactory;
+import org.apache.olingo.commons.api.edm.Edm;
+import org.apache.olingo.commons.api.edm.EdmSchema;
 import org.apache.olingo.commons.api.format.ContentType;
 import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,31 +29,45 @@ import org.junit.Test;
  *
  */
 /**
- *
+ * Read a service OData Entity Data Model(EDM) and validate it contains only one schema with the
+ * namespace of {@link #RED_HELIX_NAME_SPACE}.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public final class DiscoveryTest {
+public final class EdmTest {
 
-  private static TJWSEmbeddedJaxrsServer embeddedServer;
+  private static final String RED_HELIX_NAME_SPACE = "RedHelix.OData.moon";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
-    embeddedServer = RedHelixTestServer.startServer();
+    TJWSEmbeddedJaxrsServer embeddedServer = RedHelixTestServer.startServer();
   }
 
   @Test
   public void getMetaData() throws Exception {
-    ODataClient client = ODataClientFactory.getClient();
-    String url = "http://localhost:" + RedHelixTestServer.TCP_PORT_NUMBER
-        + RedHelixTestServer.HTTP_URL + "/$metadata";
-    ODataServiceDocumentRequest req =
+    final ODataClient client = ODataClientFactory.getClient();
+    final String url =
+        "http://localhost:" + RedHelixTestServer.TCP_PORT_NUMBER + RedHelixTestServer.HTTP_URL;
+    final ODataServiceDocumentRequest req =
         client.getRetrieveRequestFactory().getServiceDocumentRequest(url);
 
     req.setFormat(ContentType.APPLICATION_XML);
 
-    ODataRetrieveResponse<ClientServiceDocument> res = req.execute();
+    final Edm redHelixEdm = readEdm(client, url);
+
+    Assert.assertEquals(1, redHelixEdm.getSchemas().size());
+
+    for (EdmSchema schema : redHelixEdm.getSchemas()) {
+      Assert.assertEquals(RED_HELIX_NAME_SPACE, schema.getNamespace());
+    }
+  }
+
+  private Edm readEdm(ODataClient client, String serviceUrl) throws IOException {
+    EdmMetadataRequest request = client.getRetrieveRequestFactory().getMetadataRequest(serviceUrl);
+    ODataRetrieveResponse<Edm> response = request.execute();
+
+    return response.getBody();
   }
 }
