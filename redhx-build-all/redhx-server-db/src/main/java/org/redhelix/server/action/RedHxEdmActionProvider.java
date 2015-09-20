@@ -29,7 +29,6 @@ import org.apache.olingo.commons.api.edm.provider.CsdlActionImport;
 public interface RedHxEdmActionProvider
 {
 
-    //  List<CsdlEnumType> getEnumTypeList();
     List<CsdlAction> getActionList();
 
     List<CsdlActionImport> getActionImportList();

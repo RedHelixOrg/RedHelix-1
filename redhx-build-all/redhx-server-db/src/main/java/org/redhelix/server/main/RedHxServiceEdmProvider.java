@@ -29,6 +29,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.redhelix.server.action.RedHxEdmActionProvider;
+import org.redhelix.server.action.op.discover.RedHxDiscoverSystemEdmProvider;
 import org.redhelix.server.message.edm.RedHxEdmEntityProvider;
 import org.redhelix.server.message.op.chassis.RedHxChassisServiceEdmProvider;
 
@@ -46,7 +47,7 @@ public final class RedHxServiceEdmProvider
         extends CsdlAbstractEdmProvider
 {
 
-    private static final String RED_HELIX_SCHEMA_ORG_NAMESPACE = "RedHelixOData";
+    public static final String RED_HELIX_SCHEMA_ORG_NAMESPACE = "RedHelixOData";
 
     /**
      * This tag is used to seperate the schema name space from other RedHelixOData schemas. For example there may be a schema of
@@ -230,14 +231,15 @@ public final class RedHxServiceEdmProvider
         /*
          * set Actions
          */
-//        List<CsdlAction> actionList = new ArrayList<>();
-//
-//        for (RedHxEdmActionProvider edmProvider : EDM_ACTION_PROVIDER_LIST)
-//        {
-//            actionList.addAll(edmProvider.getActionList());
-//        }
-//
-//        schema.setActions(actionList);
+        List<CsdlAction> actionList = new ArrayList<>();
+
+        for (RedHxEdmActionProvider edmProvider : EDM_ACTION_PROVIDER_LIST)
+        {
+            actionList.addAll(edmProvider.getActionList());
+        }
+
+        System.out.println("HFB5: added " + actionList.size() + " actions.");
+        schema.setActions(actionList);
         /**
          * set the entity container
          */
@@ -255,7 +257,7 @@ public final class RedHxServiceEdmProvider
     {
         List<RedHxEdmActionProvider> list = new ArrayList<>();
 
-    //    list.add(new RedHxDiscoverSystemEdmProvider());
+        list.add(new RedHxDiscoverSystemEdmProvider());
         return list;
     }
 

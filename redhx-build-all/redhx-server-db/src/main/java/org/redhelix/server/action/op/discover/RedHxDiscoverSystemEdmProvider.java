@@ -96,7 +96,7 @@ public final class RedHxDiscoverSystemEdmProvider
         actionImport.setAction(ACTION_NAME_FQN);
 
         list.add(actionImport);
-        System.out.println("HFB5: action=" + actionImport.getName() + ", " + actionImport.getActionFQN().getFullQualifiedNameAsString());
+        System.out.println("HFB5: crating CSDL for discover action=" + actionImport.getName() + ", " + actionImport.getActionFQN().getFullQualifiedNameAsString());
         return list;
     }
 
@@ -115,6 +115,7 @@ public final class RedHxDiscoverSystemEdmProvider
         CsdlAction action = new CsdlAction();
 
         action.setName(ET_DISCOVER_SYSTEM_NAME);
+
 //
 //        
 //        // action.setReturnType();
@@ -128,7 +129,6 @@ public final class RedHxDiscoverSystemEdmProvider
 //
 //        // parm.setReturnType(new CsdlReturnType().setType(nameETTwoBase));
 //        action.setParameters(paramList);
-
         return action;
     }
 

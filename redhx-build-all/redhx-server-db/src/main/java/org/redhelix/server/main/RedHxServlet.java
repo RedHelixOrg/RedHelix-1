@@ -24,6 +24,8 @@ import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.ODataHttpHandler;
 import org.apache.olingo.server.api.ServiceMetadata;
 import org.apache.olingo.server.api.edmx.EdmxReference;
+import org.apache.olingo.server.core.ODataHttpHandlerImpl;
+import org.redhelix.server.action.op.discover.RedHxDiscoveryProcessor;
 import org.redhelix.server.message.op.chassis.RedHxChassisCollectionProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Hank Bruning
  */
-public class RedHxServlet extends HttpServlet
+public class RedHxServlet
+        extends HttpServlet
 {
 
     private static final long serialVersionUID = 1L;
@@ -50,40 +53,52 @@ public class RedHxServlet extends HttpServlet
     }
 
     @Override
-    public void init() throws ServletException
+    public void init()
+            throws ServletException
     {
         super.init();
+
+        ODataHttpHandlerImpl dd;
     }
 
     @Override
-    protected void service(final HttpServletRequest req, final HttpServletResponse resp)
-            throws ServletException, IOException
+    protected void service(final HttpServletRequest req,
+                           final HttpServletResponse resp)
+            throws ServletException,
+                   IOException
     {
-
         try
         {
             /*
-       * create odata handler and configure it with CsdlEdmProvider and Processor. todo: this needs
-       * to be rewritten the list does not have to be recreated each time. The advantage of this is
-       * that the multiple threads calling this are seperated.
+             * create odata handler and configure it with CsdlEdmProvider and Processor. todo: this needs
+             * to be rewritten the list does not have to be recreated each time. The advantage of this is
+             * that the multiple threads calling this are seperated.
              */
             OData odata = OData.newInstance();
             ServiceMetadata edm = odata.createServiceMetadata(new RedHxServiceEdmProvider(),
                                                               new ArrayList<EdmxReference>());
             ODataHttpHandler handler = odata.createHandler(edm);
 
-            System.out.println("HFB5: in service call. " + req.getAuthType() + ", "
-                    + req.getContentType() + ", " + req.getPathInfo());
+            System.out.println("HFB5: in service call. " + req.getAuthType() + ", " + req.getContentType() + ", " + req.getPathInfo());
             handler.register(new RedHxChassisCollectionProcessor());
-//            handler.register(new RedHxDiscoveryProcessor());
+            handler.register(new RedHxDiscoveryProcessor(odata,
+                                                         edm.getEdm()));
 
             // let the handler do the work
-            handler.process(req, resp);
+            handler.process(req,
+                            resp);
 
+            /**
+             * todo Olingo source. fix ODataHandler line 203 public void register(final Processor processor) { processors.add(0, processor);
+             * }
+             *
+             * so that it can not insert duplicte Processor classes.
+             */
         }
         catch (RuntimeException ex)
         {
-            LOG.error("Server Error occurred in RedHxServlet", ex);
+            LOG.error("Server Error occurred in RedHxServlet",
+                      ex);
 
             throw new ServletException(ex);
         }
