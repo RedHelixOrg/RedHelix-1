@@ -14,7 +14,7 @@
  *  limitations under the License
  *
  */
-package org.redhelix.server.jpa;
+package org.redhelix.server.db;
 
 /**
  *

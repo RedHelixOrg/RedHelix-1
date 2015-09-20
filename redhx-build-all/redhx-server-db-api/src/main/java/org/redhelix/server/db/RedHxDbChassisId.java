@@ -14,38 +14,24 @@
  *  limitations under the License
  *
  */
-package org.redhelix.server.jpa;
+package org.redhelix.server.db;
 
 /**
- *
+ * an id that uniquely identifies a chassis in RedHelix.For a single Computer System the string may change each time the JVM is started.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-final class ChassisId
-        extends AbstractPersistantId
-        implements RedHxDbChassisId
+public interface RedHxDbChassisId extends Comparable<RedHxDbChassisId>
 {
-
-    private static final String ID_PREFIX = "Cha";
-
-    ChassisId(int seqId)
-    {
-        super(seqId,
-              ID_PREFIX);
-    }
-
+    
     @Override
-    public int compareTo(RedHxDbChassisId other)
-    {
-        int retVal = this.getSeqId() - super.getSeqId();
 
-        if (retVal != 0)
-        {
-            retVal = this.getSeqId() < super.getSeqId() ? -1 : 1;
-        }
-
-        return retVal;
-    }
+    /**
+     * get the chassisId as a string. For a single Computer System the string may change each time the JVM is started.
+     *
+     * @return a string with the prefix "Cha".
+     */
+    String toString();
 }

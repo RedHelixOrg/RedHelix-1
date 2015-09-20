@@ -14,24 +14,25 @@
  *  limitations under the License
  *
  */
-package org.redhelix.server.jpa;
+package org.redhelix.server.db;
+
+import java.net.InetAddress;
+import org.redhelix.core.computer.system.RedHxComputerSystem;
 
 /**
- * an id that uniquely identifies a chassis in RedHelix.For a single Computer System the string may change each time the JVM is started.
+ *
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public interface RedHxDbChassisId extends Comparable<RedHxDbChassisId>
+public interface RedHxDbComputerSystemOperations
 {
-    
-    @Override
 
-    /**
-     * get the chassisId as a string. For a single Computer System the string may change each time the JVM is started.
-     *
-     * @return a string with the prefix "Cha".
-     */
-    String toString();
+    RedHxComputerSystem addComputerSystem(RedHxDbComputerId id,
+                                          RedHxComputerSystem computerSystem);
+
+    RedHxDbComputerId getComputerSystemId(InetAddress ipAddress);
+
+    RedHxComputerSystem getComputerSystem(RedHxDbComputerId id);
 }

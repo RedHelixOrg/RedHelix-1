@@ -1,4 +1,6 @@
-package org.redhelix.server.jpa;
+package org.redhelix.server.db;
+
+import org.redhelix.server.db.RedHxDbComputerId;
 
 /*
 * Copyright 2015 JBlade LLC

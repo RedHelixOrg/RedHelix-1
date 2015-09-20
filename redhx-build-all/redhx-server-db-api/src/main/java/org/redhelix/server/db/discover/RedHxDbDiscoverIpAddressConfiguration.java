@@ -14,7 +14,9 @@
  *  limitations under the License
  * 
  */
-package org.redhelix.server.jpa;
+package org.redhelix.server.db.discover;
+
+import java.net.InetAddress;
 
 /**
  *
@@ -23,7 +25,8 @@ package org.redhelix.server.jpa;
  * @author Hank Bruning
  *
  */
-public interface RedHxDbChassisOpertions
+public interface RedHxDbDiscoverIpAddressConfiguration extends RedHxDbDiscoverConfiguration
 {
 
+    InetAddress getInetAddress();
 }

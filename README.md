@@ -1,5 +1,5 @@
 #RedHelix GitHub Repository
-Date September 17, 2015, Version 0.2
+Date September 20, 2015, Version 0.2
 ## Major Implementation change.
 On September 12,2015 the maven projects were renamed and the main method has moved. See  [RedHelix Development Status](./doc/dev-status.md)
 
@@ -47,8 +47,18 @@ From the dir RedHelix-1/redhx-build-all run the command
 mvn package 
 
 ## Running
-After building the software in can run with the Redfish mock server using the command. From the dir redhx-build-all run:
+After building the software in can run with the Redfish mock server using the command.
 
+#### SQL Database setup
+A connection to SQL database is necessary. For MySql Login in mysql under an account that has all privileges and run. 
+
+1. CREATE USER 'redHelixAdmin'@'localhost' IDENTIFIED BY 'redHelixAdmin';
+2. GRANT ALL PRIVILEGES ON *.* TO 'redHelixAdmin'@'localhost'  WITH GRANT OPTION;
+3. CREATE DATABASE RedHelixMoon;
+ 
+
+#### Mockup Changes
+ From the dir redhx-build-all run:
 1. java -Dparam_protocol="http" -Dparam_hostname="localhost" -Dparam_port="9080" -jar ./redhx-server-util/target/redhx-server-util-0.1-SNAPSHOT.jar
 If the executable throws and exception indicating a premature End of File when parsing the JSON messages and a single line to the Redfish file server.js.
 The line to be inserted at line number 104 is

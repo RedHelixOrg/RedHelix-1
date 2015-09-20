@@ -14,8 +14,10 @@
  *  limitations under the License
  * 
  */
-package org.redhelix.server.jpa;
+package org.redhelix.server.db;
 
+import org.redhelix.server.db.RedHxDbPersistantDatabase;
+import org.redhelix.server.db.RedHxDbComputerId;
 import java.net.InetAddress;
 import org.redhelix.core.computer.system.RedHxComputerSystem;
 
