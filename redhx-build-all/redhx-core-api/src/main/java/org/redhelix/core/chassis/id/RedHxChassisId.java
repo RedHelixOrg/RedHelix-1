@@ -16,18 +16,18 @@ package org.redhelix.core.chassis.id;
 import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- *
- *
- *
+ * The chassis ID created by Redfish. Redfish does not require this data. The Chassis ID may not be unique and Redfish Chassis systems may
+ * share the same Computer ID.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning
  *
  */
-public interface RedHxChassisId extends RedHxStringProperty {
+public interface RedHxChassisId extends RedHxStringProperty
+{
 
-  /**
-   * The maximum number of characters allowed in a chassisId.
-   */
-  public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 50; // arbitrary
+    /**
+     * The maximum number of characters allowed in a chassisId.
+     */
+    public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 50; // arbitrary
 }
