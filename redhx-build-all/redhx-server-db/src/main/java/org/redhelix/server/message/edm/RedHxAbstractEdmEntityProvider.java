@@ -88,6 +88,7 @@ public abstract class RedHxAbstractEdmEntityProvider implements RedHxEdmEntityPr
 
         entitySet.setName(entitySetName);
         entitySet.setType(getFqdName());
+        entitySet.setIncludeInServiceDocument(true);
 
         return entitySet;
     }

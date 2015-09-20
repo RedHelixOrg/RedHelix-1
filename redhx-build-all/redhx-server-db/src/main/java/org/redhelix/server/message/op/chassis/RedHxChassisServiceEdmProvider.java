@@ -34,7 +34,7 @@ public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntity
 {
 
     // Entity Types Names and is singluar
-    private static final String ET_CHASSIS_NAME = "chassis";
+    static final String ET_CHASSIS_NAME = "chassis";
 
     /*
    * Entity Set Names and is plural. Because the plural of chassis is the exact same spelling a x
@@ -42,11 +42,10 @@ public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntity
    * normal and if a the Entity type name can end with a "s" the prefered super construtor with
    * single argument is perfered.
      */
-    static final String ES_CHASSISX_NAME = "chassisx";
-
+    //   static final String ES_CHASSISX_NAME = "chassisx";
     public RedHxChassisServiceEdmProvider()
     {
-        super(ET_CHASSIS_NAME, ES_CHASSISX_NAME);
+        super(ET_CHASSIS_NAME, ET_CHASSIS_NAME);
     }
 
     /**

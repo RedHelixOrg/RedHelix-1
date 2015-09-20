@@ -22,7 +22,7 @@ public final class EdmTest
         extends RedHexlixAbstractServiceTest
 {
 
-    private static final String RED_HELIX_NAME_SPACE = "RedHelix.OData.moon";
+    private static final String RED_HELIX_NAME_SPACE = "RedHelixOData.moon";
 
     @Test
     public void getEdmTest()

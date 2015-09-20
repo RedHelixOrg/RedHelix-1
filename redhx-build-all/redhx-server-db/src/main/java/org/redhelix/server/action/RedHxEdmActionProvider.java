@@ -17,6 +17,7 @@ package org.redhelix.server.action;
 import java.util.List;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlAction;
+import org.apache.olingo.commons.api.edm.provider.CsdlActionImport;
 
 /**
  *
@@ -28,9 +29,11 @@ import org.apache.olingo.commons.api.edm.provider.CsdlAction;
 public interface RedHxEdmActionProvider
 {
 
-  //  List<CsdlEnumType> getEnumTypeList();
+    //  List<CsdlEnumType> getEnumTypeList();
     List<CsdlAction> getActionList();
 
-    List<CsdlAction> getActions(FullQualifiedName actionName);
+    List<CsdlActionImport> getActionImportList();
+
+    List<CsdlAction> getActionList(FullQualifiedName actionName);
 
 }

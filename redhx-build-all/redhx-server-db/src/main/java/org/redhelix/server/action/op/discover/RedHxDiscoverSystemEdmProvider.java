@@ -16,10 +16,9 @@ package org.redhelix.server.action.op.discover;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlAction;
-import org.apache.olingo.commons.api.edm.provider.CsdlParameter;
+import org.apache.olingo.commons.api.edm.provider.CsdlActionImport;
 import org.redhelix.server.action.RedHxAbstractEdmActionProvider;
 import org.redhelix.server.main.RedHxServiceEdmProvider;
 
@@ -39,24 +38,28 @@ public final class RedHxDiscoverSystemEdmProvider
     /**
      * Entity Types Names and is singular.
      */
-    static final String ET_DISCOVER_SYSTEM_NAME = "discoverSystem";
-    public static final FullQualifiedName nameETTwoBase = new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE,
-                                                                                "RedHxDiscoveryParam1");
+    static final String ET_DISCOVER_SYSTEM_NAME = "discoverSystemAction";
 
-    // private static final String HTTP_PROTOCOL_NAME_TYPE = "TcpProtocol";
+    public static final FullQualifiedName ACTION_NAME_FQN = new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE,
+                                                                                  ET_DISCOVER_SYSTEM_NAME);
+
+    public static final FullQualifiedName DISCOVER_PARAM_1 = new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE,
+                                                                                   ET_DISCOVER_SYSTEM_NAME + ".RedHxDiscoveryParam1");
+    private final List<CsdlActionImport> actionImportList;
     private final List<CsdlAction> actionList;
+    private final CsdlAction discoverAction;
 
-    // private final FullQualifiedName DISCOVER_FQN;
-    // private final FullQualifiedName tcpProctocolFqn;
     public RedHxDiscoverSystemEdmProvider()
     {
+        discoverAction = createDiscoverAction();
+        actionList = createActionList(discoverAction);
+        actionImportList = createActionImportList(discoverAction);
+    }
 
-//      super(ET_DISCOVER_SYSTEM_NAME);
-//      DISCOVER_FQN = new FullQualifiedName(super.getFqdName().getFullQualifiedNameAsString(),
-//                                           ET_DISCOVER_SYSTEM_NAME);
-//      tcpProctocolFqn = addEnumType(HTTP_PROTOCOL_NAME_TYPE, true, "HTTP", "HTTPS");
-        // actionList = new ArrayList<>();
-        actionList = createActionList();
+    @Override
+    public List<CsdlActionImport> getActionImportList()
+    {
+        return actionImportList;
     }
 
     @Override
@@ -66,7 +69,7 @@ public final class RedHxDiscoverSystemEdmProvider
     }
 
     @Override
-    public List<CsdlAction> getActions(FullQualifiedName actionName)
+    public List<CsdlAction> getActionList(FullQualifiedName actionName)
     {
         List<CsdlAction> list = new ArrayList<>();
 
@@ -84,30 +87,49 @@ public final class RedHxDiscoverSystemEdmProvider
         return list;
     }
 
-    private static List<CsdlAction> createActionList()
+    private static List<CsdlActionImport> createActionImportList(CsdlAction discoverAction)
+    {
+        List<CsdlActionImport> list = new ArrayList<>();
+        CsdlActionImport actionImport = new CsdlActionImport();
+
+        actionImport.setName(discoverAction.getName());
+        actionImport.setAction(ACTION_NAME_FQN);
+
+        list.add(actionImport);
+        System.out.println("HFB5: action=" + actionImport.getName() + ", " + actionImport.getActionFQN().getFullQualifiedNameAsString());
+        return list;
+    }
+
+    private static List<CsdlAction> createActionList(final CsdlAction discoverAction)
     {
         List<CsdlAction> actionList = new ArrayList<>();
 
-        // actionList=     Collections.singletonList(
-        CsdlAction action = new CsdlAction().setName(ET_DISCOVER_SYSTEM_NAME);
-        List<CsdlParameter> paramList = new ArrayList<>();
-        CsdlParameter parm = new CsdlParameter().setName("ParameterInt16");
-
-        parm.setType(EdmPrimitiveTypeKind.Int16.getFullQualifiedName());
-
-        // parm.setReturnType(new CsdlReturnType().setType(nameETTwoBase));
-        action.setParameters(paramList);
-
-        actionList.add(action);
+        actionList.add(discoverAction);
 
         return actionList;
 
-        /*
-         *  return OData.newInstance().createDeserializer(CONTENT_TYPE_JSON)
-         *   .actionParameters(new ByteArrayInputStream(input.getBytes()),
-         *       edm.getBoundAction(new FullQualifiedName("Namespace1_Alias", actionName),
-         *           new FullQualifiedName("Namespace1_Alias", typeName), false)).getActionParameters();
-         */
+    }
+
+    private CsdlAction createDiscoverAction()
+    {
+        CsdlAction action = new CsdlAction();
+
+        action.setName(ET_DISCOVER_SYSTEM_NAME);
+//
+//        
+//        // action.setReturnType();
+//        //   action.setBound(true);
+// 
+//        List<CsdlParameter> paramList = new ArrayList<>();
+//        CsdlParameter parm = new CsdlParameter().setName("ParameterInt16");
+//
+//        parm.setType(EdmPrimitiveTypeKind.Int16.getFullQualifiedName());
+//        paramList.add(parm);
+//
+//        // parm.setReturnType(new CsdlReturnType().setType(nameETTwoBase));
+//        action.setParameters(paramList);
+
+        return action;
     }
 
 //

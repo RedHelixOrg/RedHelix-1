@@ -24,7 +24,6 @@ import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.ODataHttpHandler;
 import org.apache.olingo.server.api.ServiceMetadata;
 import org.apache.olingo.server.api.edmx.EdmxReference;
-import org.redhelix.server.action.op.discover.RedHxDiscoveryProcessor;
 import org.redhelix.server.message.op.chassis.RedHxChassisCollectionProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +75,7 @@ public class RedHxServlet extends HttpServlet
             System.out.println("HFB5: in service call. " + req.getAuthType() + ", "
                     + req.getContentType() + ", " + req.getPathInfo());
             handler.register(new RedHxChassisCollectionProcessor());
-            handler.register(new RedHxDiscoveryProcessor());
+//            handler.register(new RedHxDiscoveryProcessor());
 
             // let the handler do the work
             handler.process(req, resp);

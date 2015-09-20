@@ -74,7 +74,7 @@ public abstract class RedHexlixAbstractServiceTest
                                                                                final Map<String, ClientValue> parameters,
                                                                                final boolean returnMinimal)
     {
-        final ODataClient client = getODataClient();
+
         final URI actionURI = client.newURIBuilder(serviceUrl).appendActionCallSegment(name).build();
         ODataInvokeRequest<T> request = client.getInvokeRequestFactory().getActionInvokeRequest(actionURI,
                                                                                                 resultRef,
