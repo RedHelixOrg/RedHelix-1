@@ -16,9 +16,8 @@ package org.redhelix.core.computer.system.id;
 import org.redhelix.core.util.RedHxStringProperty;
 
 /**
- *
- *
- *
+ * The computer system ID created by Redfish. Redfish does not require this data. The Computer ID
+ * may not be unique and Redfish Computer systems may share the same Computer ID.
  *
  * @since RedHelix Version 0.1
  * @author Hank Bruning

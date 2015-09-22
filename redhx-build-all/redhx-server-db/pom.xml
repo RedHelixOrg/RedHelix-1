@@ -17,6 +17,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <resteasy.version>3.0.13.Final</resteasy.version>
     </properties>
     
     <dependencies>
@@ -25,12 +26,83 @@
             <artifactId>redhx-server-lib</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+                <!--
+        JPA 2.1. There is not maven repository artifact for JPA 2.1. Use the hibernate version and hope
+        -->
+        <dependency>
+	<groupId>org.hibernate.javax.persistence</groupId>
+	<artifactId>hibernate-jpa-2.1-api</artifactId>
+	<version>1.0.0.Final</version>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.6.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.6.Final</version>
+        </dependency>
+        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        
+        <!--
+        RESTEasy
+        -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-spring</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>tjws</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
+        </dependency>
+      
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        
+        <!--
+        JUnit
+        -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        
+        
     </dependencies>
 
     <build>

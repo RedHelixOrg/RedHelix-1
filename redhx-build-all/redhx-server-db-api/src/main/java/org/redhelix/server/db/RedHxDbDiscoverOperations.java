@@ -10,23 +10,17 @@
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License
+ * 
  */
-package org.redhelix.core.chassis.id;
-
-import org.redhelix.core.util.RedHxStringProperty;
+package org.redhelix.server.db;
 
 /**
- * The chassis ID created by Redfish. Redfish does not require this data. The Chassis ID may not be
- * unique and Redfish Chassis systems may share the same Computer ID.
  *
- * @since RedHelix Version 0.1
+ *
+ * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public interface RedHxChassisId extends RedHxStringProperty {
+public interface RedHxDbDiscoverOperations {
 
-  /**
-   * The maximum number of characters allowed in a chassisId.
-   */
-  public final static short MAX_CHAR_COUNT_RED_HELIX_DEFINED = 50; // arbitrary
 }

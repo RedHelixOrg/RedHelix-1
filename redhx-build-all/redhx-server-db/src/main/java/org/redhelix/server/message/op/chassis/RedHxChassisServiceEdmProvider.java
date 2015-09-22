@@ -20,7 +20,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
-import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
+import org.redhelix.server.message.edm.RedHxAbstractEdmEntityProvider;
 
 /**
  *
@@ -30,10 +30,10 @@ import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmProvider {
+public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntityProvider {
 
   // Entity Types Names and is singluar
-  private static final String ET_CHASSIS_NAME = "chassis";
+  static final String ET_CHASSIS_NAME = "chassis";
 
   /*
    * Entity Set Names and is plural. Because the plural of chassis is the exact same spelling a x
@@ -41,10 +41,9 @@ public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmProvid
    * normal and if a the Entity type name can end with a "s" the prefered super construtor with
    * single argument is perfered.
    */
-  static final String ES_CHASSISX_NAME = "chassisx";
-
+  // static final String ES_CHASSISX_NAME = "chassisx";
   public RedHxChassisServiceEdmProvider() {
-    super(ET_CHASSIS_NAME, ES_CHASSISX_NAME);
+    super(ET_CHASSIS_NAME, ET_CHASSIS_NAME);
   }
 
   /**

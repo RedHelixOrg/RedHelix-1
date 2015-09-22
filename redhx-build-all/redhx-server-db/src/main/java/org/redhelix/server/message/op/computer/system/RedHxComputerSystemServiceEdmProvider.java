@@ -14,15 +14,13 @@
  */
 package org.redhelix.server.message.op.computer.system;
 
+import java.util.Arrays;
+import java.util.Collections;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
-
-import org.redhelix.server.message.edm.RedHxAbstractEdmProvider;
-
-import java.util.Arrays;
-import java.util.Collections;
+import org.redhelix.server.message.edm.RedHxAbstractEdmEntityProvider;
 
 /**
  *
@@ -32,7 +30,7 @@ import java.util.Collections;
  * @author Hank Bruning
  *
  */
-public final class RedHxComputerSystemServiceEdmProvider extends RedHxAbstractEdmProvider {
+public final class RedHxComputerSystemServiceEdmProvider extends RedHxAbstractEdmEntityProvider {
 
   /**
    * Entity Types Names and is singular.

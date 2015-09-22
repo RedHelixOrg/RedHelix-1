@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.redhelix</groupId>
+        <artifactId>redhx-build-all</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>redhx-server-db-ipml</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>redhx-server-db-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--
+        JPA 2.1. There is not maven repository artifact for JPA 2.1. Use the hibernate version and hope
+        -->
+        <dependency>
+	<groupId>org.hibernate.javax.persistence</groupId>
+	<artifactId>hibernate-jpa-2.1-api</artifactId>
+	<version>1.0.0.Final</version>
+        </dependency>
+        <!--
+        Hibernate
+        -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.6.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.6.Final</version>
+        </dependency>
+        
+    </dependencies>
+</project>

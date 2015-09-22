@@ -11,9 +11,10 @@
         <module>redhx-core-impl</module>
         <module>redhx-server-lib</module>
         <module>redhx-server-util</module>
+        <module>redhx-server-db-api</module>
+        <module>redhx-server-db-ipml</module>
         <module>redhx-server-db</module>
         <module>redsun-gui</module>
-        <module>redhx-server-db-test</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
