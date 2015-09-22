@@ -55,6 +55,10 @@ A connection to SQL database is necessary. For MySql Login in mysql under an acc
 1. CREATE USER 'redHelixAdmin'@'localhost' IDENTIFIED BY 'redHelixAdmin';
 2. GRANT ALL PRIVILEGES ON *.* TO 'redHelixAdmin'@'localhost'  WITH GRANT OPTION;
 3. CREATE DATABASE RedHelixMoon;
+
+If the SQL user name or password need to be changed edit the file:
+
+./redhx-build-all/redhx-server-db/src/main/resources/hibernate.cfg.xml
  
 
 #### Mockup Changes

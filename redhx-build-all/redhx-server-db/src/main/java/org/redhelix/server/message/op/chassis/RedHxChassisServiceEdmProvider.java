@@ -30,52 +30,49 @@ import org.redhelix.server.message.edm.RedHxAbstractEdmEntityProvider;
  * @author Hank Bruning
  *
  */
-public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntityProvider
-{
+public final class RedHxChassisServiceEdmProvider extends RedHxAbstractEdmEntityProvider {
 
-    // Entity Types Names and is singluar
-    static final String ET_CHASSIS_NAME = "chassis";
+  // Entity Types Names and is singluar
+  static final String ET_CHASSIS_NAME = "chassis";
 
-    /*
+  /*
    * Entity Set Names and is plural. Because the plural of chassis is the exact same spelling a x
    * has been added to the plural form and super's constructor is used with two arguments. This no
    * normal and if a the Entity type name can end with a "s" the prefered super construtor with
    * single argument is perfered.
-     */
-    //   static final String ES_CHASSISX_NAME = "chassisx";
-    public RedHxChassisServiceEdmProvider()
-    {
-        super(ET_CHASSIS_NAME, ET_CHASSIS_NAME);
-    }
+   */
+  // static final String ES_CHASSISX_NAME = "chassisx";
+  public RedHxChassisServiceEdmProvider() {
+    super(ET_CHASSIS_NAME, ET_CHASSIS_NAME);
+  }
 
-    /**
-     *
-     *
-     * @return
-     */
-    @Override
-    public CsdlEntityType getEntityType()
-    {
-        // create EntityType properties
-        CsdlProperty id
-                     = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-        CsdlProperty name = new CsdlProperty().setName("Name")
-                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-        CsdlProperty description = new CsdlProperty().setName("Description")
-                .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+  /**
+   *
+   *
+   * @return
+   */
+  @Override
+  public CsdlEntityType getEntityType() {
+    // create EntityType properties
+    CsdlProperty id =
+        new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+    CsdlProperty name = new CsdlProperty().setName("Name")
+        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+    CsdlProperty description = new CsdlProperty().setName("Description")
+        .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
 
-        // create CsdlPropertyRef for Key element
-        CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+    // create CsdlPropertyRef for Key element
+    CsdlPropertyRef propertyRef = new CsdlPropertyRef();
 
-        propertyRef.setName("ID");
+    propertyRef.setName("ID");
 
-        // configure EntityType
-        CsdlEntityType entityType = new CsdlEntityType();
+    // configure EntityType
+    CsdlEntityType entityType = new CsdlEntityType();
 
-        entityType.setName(ET_CHASSIS_NAME);
-        entityType.setProperties(Arrays.asList(id, name, description));
-        entityType.setKey(Collections.singletonList(propertyRef));
+    entityType.setName(ET_CHASSIS_NAME);
+    entityType.setProperties(Arrays.asList(id, name, description));
+    entityType.setKey(Collections.singletonList(propertyRef));
 
-        return entityType;
-    }
+    return entityType;
+  }
 }

@@ -24,138 +24,137 @@ import org.redhelix.server.main.RedHxServiceEdmProvider;
 
 /**
  *
- * Create the Entity Data Model for the RedHelix Discover System service JSON messages. The Discover System message configures how Redfish
- * servers are discovered.
+ * Create the Entity Data Model for the RedHelix Discover System service JSON messages. The Discover
+ * System message configures how Redfish servers are discovered.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public final class RedHxDiscoverSystemEdmProvider
-        extends RedHxAbstractEdmActionProvider
-{
+public final class RedHxDiscoverSystemEdmProvider extends RedHxAbstractEdmActionProvider {
 
-    /**
-     * Entity Types Names and is singular.
-     */
-    static final String ET_DISCOVER_SYSTEM_NAME = "discoverSystemAction";
+  /**
+   * Entity Types Names and is singular.
+   */
+  static final String ET_DISCOVER_SYSTEM_NAME = "discoverSystemAction";
 
-    public static final FullQualifiedName ACTION_NAME_FQN = new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE,
-                                                                                  ET_DISCOVER_SYSTEM_NAME);
+  public static final FullQualifiedName ACTION_NAME_FQN =
+      new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE, ET_DISCOVER_SYSTEM_NAME);
 
-    public static final FullQualifiedName DISCOVER_PARAM_1 = new FullQualifiedName(RedHxServiceEdmProvider.SCHEMA_NAME_SPACE,
-                                                                                   ET_DISCOVER_SYSTEM_NAME + ".RedHxDiscoveryParam1");
-    private final List<CsdlActionImport> actionImportList;
-    private final List<CsdlAction> actionList;
-    private final CsdlAction discoverAction;
+  public static final FullQualifiedName DISCOVER_PARAM_1 = new FullQualifiedName(
+      RedHxServiceEdmProvider.SCHEMA_NAME_SPACE, ET_DISCOVER_SYSTEM_NAME + ".RedHxDiscoveryParam1");
+  private final List<CsdlActionImport> actionImportList;
+  private final List<CsdlAction> actionList;
+  private final CsdlAction discoverAction;
 
-    public RedHxDiscoverSystemEdmProvider()
-    {
-        discoverAction = createDiscoverAction();
-        actionList = createActionList(discoverAction);
-        actionImportList = createActionImportList(discoverAction);
+  public RedHxDiscoverSystemEdmProvider() {
+    discoverAction = createDiscoverAction();
+    actionList = createActionList(discoverAction);
+    actionImportList = createActionImportList(discoverAction);
+  }
+
+  @Override
+  public List<CsdlActionImport> getActionImportList() {
+    return actionImportList;
+  }
+
+  @Override
+  public List<CsdlAction> getActionList() {
+    return actionList;
+  }
+
+  @Override
+  public List<CsdlAction> getActionList(FullQualifiedName actionName) {
+    List<CsdlAction> list = new ArrayList<>();
+
+    for (CsdlAction action : actionList) {
+      if (action.getName().equals(actionName.getName())) {
+        list.add(action);
+      }
     }
 
-    @Override
-    public List<CsdlActionImport> getActionImportList()
-    {
-        return actionImportList;
-    }
+    System.out.println("HFB5: looking up action name=" + actionName.getFullQualifiedNameAsString()
+        + " found " + list.size() + " actions.");
 
-    @Override
-    public List<CsdlAction> getActionList()
-    {
-        return actionList;
-    }
+    return list;
+  }
 
-    @Override
-    public List<CsdlAction> getActionList(FullQualifiedName actionName)
-    {
-        List<CsdlAction> list = new ArrayList<>();
+  private static List<CsdlActionImport> createActionImportList(CsdlAction discoverAction) {
+    List<CsdlActionImport> list = new ArrayList<>();
+    CsdlActionImport actionImport = new CsdlActionImport();
 
-        for (CsdlAction action : actionList)
-        {
-            if (action.getName().equals(actionName.getName()))
-            {
-                list.add(action);
-            }
-        }
+    actionImport.setName(discoverAction.getName());
+    actionImport.setAction(ACTION_NAME_FQN);
 
-        System.out.println("HFB5: looking up action name=" + actionName.getFullQualifiedNameAsString() + " found " + list.size()
-                + " actions.");
+    list.add(actionImport);
+    System.out.println("HFB5: crating CSDL for discover action=" + actionImport.getName() + ", "
+        + actionImport.getActionFQN().getFullQualifiedNameAsString());
+    return list;
+  }
 
-        return list;
-    }
+  private static List<CsdlAction> createActionList(final CsdlAction discoverAction) {
+    List<CsdlAction> actionList = new ArrayList<>();
 
-    private static List<CsdlActionImport> createActionImportList(CsdlAction discoverAction)
-    {
-        List<CsdlActionImport> list = new ArrayList<>();
-        CsdlActionImport actionImport = new CsdlActionImport();
+    actionList.add(discoverAction);
 
-        actionImport.setName(discoverAction.getName());
-        actionImport.setAction(ACTION_NAME_FQN);
+    return actionList;
 
-        list.add(actionImport);
-        System.out.println("HFB5: crating CSDL for discover action=" + actionImport.getName() + ", " + actionImport.getActionFQN().getFullQualifiedNameAsString());
-        return list;
-    }
+  }
 
-    private static List<CsdlAction> createActionList(final CsdlAction discoverAction)
-    {
-        List<CsdlAction> actionList = new ArrayList<>();
+  private CsdlAction createDiscoverAction() {
+    CsdlAction action = new CsdlAction();
 
-        actionList.add(discoverAction);
+    action.setName(ET_DISCOVER_SYSTEM_NAME);
 
-        return actionList;
+    //
+    //
+    // // action.setReturnType();
+    // // action.setBound(true);
+    //
+    // List<CsdlParameter> paramList = new ArrayList<>();
+    // CsdlParameter parm = new CsdlParameter().setName("ParameterInt16");
+    //
+    // parm.setType(EdmPrimitiveTypeKind.Int16.getFullQualifiedName());
+    // paramList.add(parm);
+    //
+    // // parm.setReturnType(new CsdlReturnType().setType(nameETTwoBase));
+    // action.setParameters(paramList);
+    return action;
+  }
 
-    }
-
-    private CsdlAction createDiscoverAction()
-    {
-        CsdlAction action = new CsdlAction();
-
-        action.setName(ET_DISCOVER_SYSTEM_NAME);
-
-//
-//        
-//        // action.setReturnType();
-//        //   action.setBound(true);
-// 
-//        List<CsdlParameter> paramList = new ArrayList<>();
-//        CsdlParameter parm = new CsdlParameter().setName("ParameterInt16");
-//
-//        parm.setType(EdmPrimitiveTypeKind.Int16.getFullQualifiedName());
-//        paramList.add(parm);
-//
-//        // parm.setReturnType(new CsdlReturnType().setType(nameETTwoBase));
-//        action.setParameters(paramList);
-        return action;
-    }
-
-//
-//  @Override
-//  public CsdlEntityType getEntityType()
-//  {
-//
-//      // create EntityType properties
-//      CsdlProperty hostName = new CsdlProperty().setName("HostName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-//      CsdlProperty ipV4 = new CsdlProperty().setName("IPv4").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-//      CsdlProperty ipV6Low = new CsdlProperty().setName("IPv6Low").setType(EdmPrimitiveTypeKind.Int64.getFullQualifiedName());
-//      CsdlProperty ipV6High = new CsdlProperty().setName("IPv6High").setType(EdmPrimitiveTypeKind.Int64.getFullQualifiedName());
-//
-//      //
-//      CsdlProperty tcpPortNumber = new CsdlProperty().setName("TcpPortNumber").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-//      CsdlProperty tcpProtocol = new CsdlProperty().setName(HTTP_PROTOCOL_NAME_TYPE).setType(tcpProctocolFqn);
-//      CsdlProperty httpUserName = new CsdlProperty().setName("HttpUserName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-//      CsdlProperty httpPassword = new CsdlProperty().setName("HttpPassword").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-//
-//      // configure EntityType
-//      CsdlEntityType entityType = new CsdlEntityType();
-//
-//      entityType.setName(ET_DISCOVER_SYSTEM_NAME);
-//      entityType.setProperties(Arrays.asList(hostName, ipV4, ipV6Low, ipV6High, tcpPortNumber, tcpProtocol, httpUserName, httpPassword));
-//
-//      // entityType.setKey(Collections.singletonList(propertyRef));
-//      return entityType;
-//  }
+  //
+  // @Override
+  // public CsdlEntityType getEntityType()
+  // {
+  //
+  // // create EntityType properties
+  // CsdlProperty hostName = new
+  // CsdlProperty().setName("HostName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+  // CsdlProperty ipV4 = new
+  // CsdlProperty().setName("IPv4").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+  // CsdlProperty ipV6Low = new
+  // CsdlProperty().setName("IPv6Low").setType(EdmPrimitiveTypeKind.Int64.getFullQualifiedName());
+  // CsdlProperty ipV6High = new
+  // CsdlProperty().setName("IPv6High").setType(EdmPrimitiveTypeKind.Int64.getFullQualifiedName());
+  //
+  // //
+  // CsdlProperty tcpPortNumber = new
+  // CsdlProperty().setName("TcpPortNumber").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+  // CsdlProperty tcpProtocol = new
+  // CsdlProperty().setName(HTTP_PROTOCOL_NAME_TYPE).setType(tcpProctocolFqn);
+  // CsdlProperty httpUserName = new
+  // CsdlProperty().setName("HttpUserName").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+  // CsdlProperty httpPassword = new
+  // CsdlProperty().setName("HttpPassword").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+  //
+  // // configure EntityType
+  // CsdlEntityType entityType = new CsdlEntityType();
+  //
+  // entityType.setName(ET_DISCOVER_SYSTEM_NAME);
+  // entityType.setProperties(Arrays.asList(hostName, ipV4, ipV6Low, ipV6High, tcpPortNumber,
+  // tcpProtocol, httpUserName, httpPassword));
+  //
+  // // entityType.setKey(Collections.singletonList(propertyRef));
+  // return entityType;
+  // }
 }

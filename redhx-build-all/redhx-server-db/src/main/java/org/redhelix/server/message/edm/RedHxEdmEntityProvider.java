@@ -27,17 +27,16 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEnumType;
  * @author Hank Bruning
  *
  */
-public interface RedHxEdmEntityProvider
-{
+public interface RedHxEdmEntityProvider {
 
-    CsdlEntitySet getEntitySet();
+  CsdlEntitySet getEntitySet();
 
-    String getEntitySetName();
+  String getEntitySetName();
 
-    CsdlEntityType getEntityType();
+  CsdlEntityType getEntityType();
 
-    List<CsdlEnumType> getEnumTypeList();
+  List<CsdlEnumType> getEnumTypeList();
 
-    FullQualifiedName getFqdName();
+  FullQualifiedName getFqdName();
 
 }

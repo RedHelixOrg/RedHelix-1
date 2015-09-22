@@ -26,13 +26,12 @@ import org.apache.olingo.commons.api.edm.provider.CsdlActionImport;
  * @author Hank Bruning
  *
  */
-public interface RedHxEdmActionProvider
-{
+public interface RedHxEdmActionProvider {
 
-    List<CsdlAction> getActionList();
+  List<CsdlAction> getActionList();
 
-    List<CsdlActionImport> getActionImportList();
+  List<CsdlActionImport> getActionImportList();
 
-    List<CsdlAction> getActionList(FullQualifiedName actionName);
+  List<CsdlAction> getActionList(FullQualifiedName actionName);
 
 }

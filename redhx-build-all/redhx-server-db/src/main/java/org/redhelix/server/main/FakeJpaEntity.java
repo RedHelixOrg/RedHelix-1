@@ -12,24 +12,21 @@
  * the License
  *
  */
-package org.redhelix.server.db;
+package org.redhelix.server.main;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * an id that uniquely identifies a computer system in RedHelix. For a single Chassis the string may
- * change each time the JVM is started.
+ *
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public interface RedHxDbComputerId extends Comparable<RedHxDbComputerId> {
+@Entity
+public class FakeJpaEntity {
 
-  /**
-   * get the chassisId as a string. For a single Chassis the string may change each time the JVM is
-   * started.
-   *
-   * @return a string with the prefix "Com".
-   */
-  @Override
-  String toString();
+  @Id
+  private int id;
 }

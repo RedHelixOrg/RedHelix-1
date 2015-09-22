@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    
+    <persistence-unit name="org.redhelix.persistanceUnit">
+        <properties>
+            <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+            <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+            <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/RedHelixMoon</property>
+            <property name="hibernate.connection.username">redHelixAdmin</property>
+            <property name="hibernate.connection.password">redHelixAdmin</property>
+            <property name="hibernate.show_sql">true</property>
+            <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+        </properties>
+    </persistence-unit>
+</persistence>
+
