@@ -1,7 +1,5 @@
 #RedHelix GitHub Repository
-Date September 20, 2015, Version 0.2
-## Major Implementation change.
-On September 12,2015 the maven projects were renamed and the main method has moved. See  [RedHelix Development Status](./doc/dev-status.md)
+Date October 11, 2015, Version 0.2
 
 ##Overview
 RedHelix is a Java library and a server to monitor hardware using the [DMTF Redfish](http://www.dmtf.org/standards/redfish) specification. 
@@ -43,6 +41,9 @@ The output of the test program RedHelixClientReport when used with Redfish mocku
 
 ## Building
 From the dir RedHelix-1/redhx-build-all run the command 
+
+The version number of the maven projects such as Olingo, spring is changed in the file RedHelix-1/redhx-build-all/pom.xml
+
 
 mvn package 
 
