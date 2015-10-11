@@ -18,27 +18,34 @@ import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
 import org.redhelix.server.main.RedHxServlet;
 
 /**
- *
+ * Static classes to help start the embedded HTTP server used to test classes.
  *
  * @since RedHelix Version 0.2
  * @author Hank Bruning
  *
  */
-public final class RedHelixTestServer {
+public final class RedHelixTestServerHelper
+{
 
-  public static final int TCP_PORT_NUMBER = 6701;
-  public static String HTTP_URL = "/RedHelix.svc/v1";
+    public static final int TCP_PORT_NUMBER = 6701;
+    public static String HTTP_URL = "/RedHelix.svc/v1";
 
-  static TJWSEmbeddedJaxrsServer startServer() {
-    TJWSEmbeddedJaxrsServer tjws = new TJWSEmbeddedJaxrsServer();
+    private RedHelixTestServerHelper()
+    {
 
-    tjws.setPort(TCP_PORT_NUMBER);
+    }
 
-    RedHxServlet servlet = new RedHxServlet();
+    static TJWSEmbeddedJaxrsServer startServer()
+    {
+        TJWSEmbeddedJaxrsServer tjws = new TJWSEmbeddedJaxrsServer();
 
-    tjws.addServlet(HTTP_URL, servlet);
-    tjws.start();
+        tjws.setPort(TCP_PORT_NUMBER);
 
-    return tjws;
-  }
+        RedHxServlet servlet = new RedHxServlet();
+
+        tjws.addServlet(HTTP_URL, servlet);
+        tjws.start();
+
+        return tjws;
+    }
 }

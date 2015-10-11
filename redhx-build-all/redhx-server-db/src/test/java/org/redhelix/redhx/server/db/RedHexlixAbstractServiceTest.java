@@ -38,65 +38,89 @@ import org.junit.BeforeClass;
  * @author Hank Bruning
  *
  */
-public abstract class RedHexlixAbstractServiceTest {
+public abstract class RedHexlixAbstractServiceTest
+{
 
-  private static TJWSEmbeddedJaxrsServer embeddedServer;
-  private final ODataClient client;
-  private final UUID cookie;
-  private final String serviceUrl;
+    private static TJWSEmbeddedJaxrsServer embeddedServer;
+    private final ODataClient client;
+    private final UUID cookie;
+    private final String serviceUrl;
 
-  protected RedHexlixAbstractServiceTest() {
-    client = ODataClientFactory.getClient();
-    serviceUrl =
-        "http://localhost:" + RedHelixTestServer.TCP_PORT_NUMBER + RedHelixTestServer.HTTP_URL;
-    cookie = UUID.randomUUID();
-  }
-
-  @AfterClass
-  public static void afterClass() throws Exception {
-    embeddedServer.stop();
-  }
-
-  @BeforeClass
-  public static void beforeClass() throws Exception {
-    embeddedServer = RedHelixTestServer.startServer();
-  }
-
-  protected <T extends ClientInvokeResult> ODataInvokeResponse<T> callAction(final String name,
-      final Class<T> resultRef, final Map<String, ClientValue> parameters,
-      final boolean returnMinimal) {
-
-    final URI actionURI = client.newURIBuilder(serviceUrl).appendActionCallSegment(name).build();
-    ODataInvokeRequest<T> request =
-        client.getInvokeRequestFactory().getActionInvokeRequest(actionURI, resultRef, parameters);
-
-    if (returnMinimal) {
-      request.setPrefer(client.newPreferences().returnMinimal());
+    protected RedHexlixAbstractServiceTest()
+    {
+        client = ODataClientFactory.getClient();
+        serviceUrl = "http://localhost:" + RedHelixTestServerHelper.TCP_PORT_NUMBER + RedHelixTestServerHelper.HTTP_URL;
+        cookie = UUID.randomUUID();
     }
 
-    // We can re-use the session since our actions don't (yet?!) modify existing data.
-    setCookieHeader(request);
-
-    final ODataInvokeResponse<T> response = request.execute();
-
-    if (returnMinimal) {
-      assertEquals(HttpStatusCode.NO_CONTENT.getStatusCode(), response.getStatusCode());
-      assertEquals("return=minimal",
-          response.getHeader(HttpHeader.PREFERENCE_APPLIED).iterator().next());
+    @AfterClass
+    public static void afterClass()
+            throws Exception
+    {
+        embeddedServer.stop();
     }
 
-    return response;
-  }
+    @BeforeClass
+    public static void beforeClass()
+            throws Exception
+    {
+        embeddedServer = RedHelixTestServerHelper.startServer();
+    }
 
-  protected ODataClient getODataClient() {
-    return client;
-  }
+    /**
+     * Call and action in the OData RESTFull server. The action changes a state in the OData Server.
+     *
+     * @param <T>
+     * @param name
+     * @param resultRef
+     * @param parameters
+     * @param returnMinimal
+     * @return
+     */
+    protected <T extends ClientInvokeResult> ODataInvokeResponse<T> callAction(final String name,
+                                                                               final Class<T> resultRef,
+                                                                               final Map<String, ClientValue> parameters,
+                                                                               final boolean returnMinimal)
+    {
+        final URI actionURI = client.newURIBuilder(serviceUrl).appendActionCallSegment(name).build();
+        ODataInvokeRequest<T> request = client.getInvokeRequestFactory().getActionInvokeRequest(actionURI,
+                                                                                                resultRef,
+                                                                                                parameters);
 
-  protected String getServiceUrl() {
-    return serviceUrl;
-  }
+        if (returnMinimal)
+        {
+            request.setPrefer(client.newPreferences().returnMinimal());
+        }
 
-  protected void setCookieHeader(ODataRequest request) {
-    request.addCustomHeader(HttpHeader.COOKIE, cookie.toString());
-  }
+        // We can re-use the session since our actions don't (yet?!) modify existing data.
+        setCookieHeader(request);
+
+        final ODataInvokeResponse<T> response = request.execute();
+
+        if (returnMinimal)
+        {
+            assertEquals(HttpStatusCode.NO_CONTENT.getStatusCode(),
+                         response.getStatusCode());
+            assertEquals("return=minimal",
+                         response.getHeader(HttpHeader.PREFERENCE_APPLIED).iterator().next());
+        }
+
+        return response;
+    }
+
+    protected ODataClient getODataClient()
+    {
+        return client;
+    }
+
+    protected String getServiceUrl()
+    {
+        return serviceUrl;
+    }
+
+    protected void setCookieHeader(ODataRequest request)
+    {
+        request.addCustomHeader(HttpHeader.COOKIE,
+                                cookie.toString());
+    }
 }
